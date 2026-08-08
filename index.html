@@ -20,8 +20,8 @@
 
     .app {
       max-width: 480px;
-      margin: auto;
       min-height: 100vh;
+      margin: auto;
       background: white;
       padding: 24px 18px;
     }
@@ -64,10 +64,6 @@
       cursor: pointer;
     }
 
-    .skill:hover {
-      background: #cbd5e1;
-    }
-
     .description {
       font-size: 17px;
       line-height: 1.5;
@@ -86,19 +82,84 @@
       cursor: pointer;
     }
 
-    .primary-button:hover {
-      background: #1d4ed8;
+    .secondary-button {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #2563eb;
+      border-radius: 12px;
+      background: white;
+      color: #2563eb;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .back {
+      border: none;
+      background: none;
+      color: #2563eb;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .field {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    textarea.field {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 14px;
+    }
+
+    .profile-card {
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      margin-bottom: 12px;
+    }
+
+    .profile-card h3 {
+      margin-bottom: 6px;
+    }
+
+    .profile-card p {
+      margin-top: 5px;
+      color: #475569;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
+
+  <!-- HOME -->
+  <section id="homePage" class="page active">
 
     <div class="logo">GoSkill</div>
 
     <input
+      id="searchInput"
       class="search"
       type="text"
       placeholder="Search for a skill or profession..."
@@ -107,26 +168,354 @@
     <h2>Popular Skills</h2>
 
     <div class="skills">
+      <button class="skill" onclick="searchSkill('Video Editor')">
+        Video Editor
+      </button>
 
-      <button class="skill">Video Editor</button>
+      <button class="skill" onclick="searchSkill('Graphic Designer')">
+        Graphic Designer
+      </button>
 
-      <button class="skill">Graphic Designer</button>
+      <button class="skill" onclick="searchSkill('Developer')">
+        Developer
+      </button>
 
-      <button class="skill">Developer</button>
-
-      <button class="skill">Photographer</button>
-
+      <button class="skill" onclick="searchSkill('Photographer')">
+        Photographer
+      </button>
     </div>
 
     <p class="description">
       Find the right person for your project.
     </p>
 
-    <button class="primary-button">
+    <button
+      class="primary-button"
+      onclick="showPage('profilePage')"
+    >
       Offer Your Skill
     </button>
 
-  </div>
+    <div id="searchResults" style="margin-top:25px;"></div>
+
+  </section>
+
+
+  <!-- CREATE PROFILE -->
+  <section id="profilePage" class="page">
+
+    <button class="back" onclick="showPage('homePage')">
+      ← Back
+    </button>
+
+    <h2>Create Your Profile</h2>
+
+    <br>
+
+    <input
+      id="name"
+      class="field"
+      type="text"
+      placeholder="Enter your full name"
+    >
+
+    <input
+      id="skill"
+      class="field"
+      type="text"
+      placeholder="What is your skill or profession?"
+    >
+
+    <textarea
+      id="description"
+      class="field"
+      placeholder="Tell people about your skill"
+    ></textarea>
+
+    <input
+      id="hourlyPrice"
+      class="field"
+      type="number"
+      placeholder="Hourly price"
+    >
+
+    <input
+      id="projectPrice"
+      class="field"
+      type="number"
+      placeholder="Project price"
+    >
+
+    <button
+      class="primary-button"
+      onclick="createProfile()"
+    >
+      Create Profile
+    </button>
+
+    <p id="profileMessage" class="message"></p>
+
+  </section>
+
+
+  <!-- RESULTS -->
+  <section id="resultsPage" class="page">
+
+    <button class="back" onclick="showPage('homePage')">
+      ← Back
+    </button>
+
+    <h2>People on GoSkill</h2>
+
+    <br>
+
+    <div id="profilesList"></div>
+
+  </section>
+
+</div>
+
+
+<script>
+
+  /*
+    SUPABASE CONNECTION
+    Replace the two values below.
+  */
+
+  const SUPABASE_URL = "https://ffovbypaoltxuuycppgo.supabase.co/rest/v1/";
+
+  const SUPABASE_KEY = "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
+
+
+  /*
+    Change pages
+  */
+
+  function showPage(pageId) {
+
+    document.querySelectorAll(".page").forEach(page => {
+      page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    window.scrollTo(0, 0);
+  }
+
+
+  /*
+    Create a profile
+  */
+
+  async function createProfile() {
+
+    const name = document.getElementById("name").value.trim();
+    const skill = document.getElementById("skill").value.trim();
+    const description = document.getElementById("description").value.trim();
+    const hourlyPrice = document.getElementById("hourlyPrice").value;
+    const projectPrice = document.getElementById("projectPrice").value;
+
+    const message = document.getElementById("profileMessage");
+
+    if (!name || !skill) {
+      message.textContent = "Please enter your name and skill.";
+      return;
+    }
+
+    message.textContent = "Saving profile...";
+
+    try {
+
+      const response = await fetch(
+        SUPABASE_URL + "/rest/v1/profiles",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY,
+            "Prefer": "return=minimal"
+          },
+
+          body: JSON.stringify({
+            name: name,
+            skill: skill,
+            description: description,
+            hourly_price: hourlyPrice ? Number(hourlyPrice) : null,
+            project_price: projectPrice ? Number(projectPrice) : null
+          })
+        }
+      );
+
+      if (!response.ok) {
+
+        const error = await response.text();
+
+        console.log(error);
+
+        message.textContent =
+          "Could not save profile. Check the database settings.";
+
+        return;
+      }
+
+      message.textContent =
+        "Profile created successfully!";
+
+      document.getElementById("name").value = "";
+      document.getElementById("skill").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("hourlyPrice").value = "";
+      document.getElementById("projectPrice").value = "";
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      message.textContent =
+        "Connection error. Please try again.";
+
+    }
+
+  }
+
+
+  /*
+    Search
+  */
+
+  async function searchSkill(skill) {
+
+    showPage("resultsPage");
+
+    const list = document.getElementById("profilesList");
+
+    list.innerHTML = "Searching...";
+
+    try {
+
+      const response = await fetch(
+        SUPABASE_URL +
+        "/rest/v1/profiles?skill=ilike.*" +
+        encodeURIComponent(skill) +
+        "*&select=*",
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+      const profiles = await response.json();
+
+      displayProfiles(profiles);
+
+    }
+
+    catch (error) {
+
+      console.error(error);
+
+      list.innerHTML =
+        "<p>Could not load profiles.</p>";
+
+    }
+
+  }
+
+
+  /*
+    Display profiles
+  */
+
+  function displayProfiles(profiles) {
+
+    const list = document.getElementById("profilesList");
+
+    if (!profiles || profiles.length === 0) {
+
+      list.innerHTML =
+        "<p>No profiles found yet.</p>";
+
+      return;
+    }
+
+    list.innerHTML = "";
+
+    profiles.forEach(profile => {
+
+      const card = document.createElement("div");
+
+      card.className = "profile-card";
+
+      card.innerHTML = `
+        <h3>${escapeHtml(profile.name)}</h3>
+
+        <strong>${escapeHtml(profile.skill)}</strong>
+
+        <p>${escapeHtml(profile.description || "")}</p>
+
+        ${
+          profile.hourly_price
+          ? `<p>Hourly: ₹${profile.hourly_price}</p>`
+          : ""
+        }
+
+        ${
+          profile.project_price
+          ? `<p>Project: ₹${profile.project_price}</p>`
+          : ""
+        }
+      `;
+
+      list.appendChild(card);
+
+    });
+
+  }
+
+
+  /*
+    Search input
+  */
+
+  document
+    .getElementById("searchInput")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+
+        const skill = this.value.trim();
+
+        if (skill) {
+          searchSkill(skill);
+        }
+
+      }
+
+    });
+
+
+  /*
+    Basic HTML safety
+  */
+
+  function escapeHtml(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent = value || "";
+
+    return div.innerHTML;
+
+  }
+
+</script>
 
 </body>
 </html>
