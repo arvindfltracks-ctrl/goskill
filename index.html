@@ -437,71 +437,59 @@ body: JSON.stringify({
     Search profiles
   */
 
-  async function searchSkill(skill) {
+async function searchSkill(skill) {
 
-    showPage("resultsPage");
+  showPage("resultsPage");
 
-    const list =
-      document.getElementById("profilesList");
+  const list = document.getElementById("profilesList");
 
-    list.innerHTML =
-      "Searching...";
+  list.innerHTML = "Searching...";
 
+  try {
 
-    try {
+    const url =
+      SUPABASE_URL +
+      "/profiles?select=*&skill=ilike." +
+      encodeURIComponent("*" + skill + "*");
 
-      const response = await fetch(
+    console.log("Search URL:", url);
 
-        SUPABASE_URL +
-        "/profiles?skill=ilike.*" +
-        encodeURIComponent(skill) +
-        "*&select=*",
+    const response = await fetch(url, {
+      method: "GET",
 
-        {
-          method: "GET",
-
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization":
-              "Bearer " + SUPABASE_KEY
-          }
-        }
-
-      );
-
-
-      if (!response.ok) {
-
-        const error =
-          await response.text();
-
-        console.error(
-          "Supabase search error:",
-          error
-        );
-
-        list.innerHTML =
-          "<p>Could not load profiles.</p>";
-
-        return;
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": "Bearer " + SUPABASE_KEY
       }
+    });
 
+    if (!response.ok) {
 
-      const profiles =
-        await response.json();
+      const error = await response.text();
 
-      displayProfiles(profiles);
-
-    }
-
-
-    catch (error) {
-
-      console.error(error);
+      console.error("Supabase search error:", error);
 
       list.innerHTML =
         "<p>Could not load profiles.</p>";
 
+      return;
+    }
+
+    const profiles = await response.json();
+
+    console.log("Profiles found:", profiles);
+
+    displayProfiles(profiles);
+
+  } catch (error) {
+
+    console.error("Search connection error:", error);
+
+    list.innerHTML =
+      "<p>Could not load profiles.</p>";
+
+  }
+}
     }
 
   }
