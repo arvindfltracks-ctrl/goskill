@@ -195,8 +195,6 @@
       Offer Your Skill
     </button>
 
-    <div id="searchResults"></div>
-
   </section>
 
 
@@ -281,10 +279,8 @@
     SUPABASE CONNECTION
 
     IMPORTANT:
-    Put your Supabase API URL here.
-    Put your Publishable key here.
-
-    Do NOT put the Secret key here.
+    Replace these two values with your own.
+    NEVER use the Supabase Secret key here.
   */
 
   const SUPABASE_URL = "https://ffovbypaoltxuuycppgo.supabase.co/rest/v1/";
@@ -293,7 +289,7 @@
 
 
   /*
-    Change pages
+    PAGE NAVIGATION
   */
 
   function showPage(pageId) {
@@ -309,7 +305,7 @@
 
 
   /*
-    Create a profile
+    CREATE PROFILE
   */
 
   async function createProfile() {
@@ -359,25 +355,27 @@
             "Authorization": "Bearer " + SUPABASE_KEY,
             "Prefer": "return=minimal"
           },
-body: JSON.stringify({
 
-  name: name,
+          body: JSON.stringify({
 
-  skill: skill,
+            name: name,
 
-  description: description,
+            skill: skill,
 
-  hourly_price:
-    hourlyPrice
-    ? Number(hourlyPrice)
-    : null,
+            description: description,
 
-  project_price:
-    projectPrice
-    ? Number(projectPrice)
-    : null,
+            hourly_price:
+              hourlyPrice
+              ? Number(hourlyPrice)
+              : null,
 
-  created_at: new Date().toISOString()
+            project_price:
+              projectPrice
+              ? Number(projectPrice)
+              : null,
+
+            created_at:
+              new Date().toISOString()
 
           })
         }
@@ -434,69 +432,98 @@ body: JSON.stringify({
 
 
   /*
-    Search profiles
+    SEARCH PROFILES
   */
 
-async function searchSkill(skill) {
+  async function searchSkill(skill) {
 
-  showPage("resultsPage");
+    showPage("resultsPage");
 
-  const list = document.getElementById("profilesList");
+    const list =
+      document.getElementById("profilesList");
 
-  list.innerHTML = "Searching...";
+    list.innerHTML =
+      "Searching...";
 
-  try {
 
-    const url =
-      SUPABASE_URL +
-      "/profiles?select=*&skill=ilike." +
-      encodeURIComponent("*" + skill + "*");
+    try {
 
-    console.log("Search URL:", url);
+      const url =
+        SUPABASE_URL +
+        "/profiles?select=*&skill=ilike." +
+        encodeURIComponent("*" + skill + "*");
 
-    const response = await fetch(url, {
-      method: "GET",
 
-      headers: {
-        "apikey": SUPABASE_KEY,
-        "Authorization": "Bearer " + SUPABASE_KEY
+      console.log(
+        "Search URL:",
+        url
+      );
+
+
+      const response =
+        await fetch(
+          url,
+          {
+            method: "GET",
+
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization":
+                "Bearer " + SUPABASE_KEY
+            }
+          }
+        );
+
+
+      if (!response.ok) {
+
+        const error =
+          await response.text();
+
+        console.error(
+          "Supabase search error:",
+          error
+        );
+
+        list.innerHTML =
+          "<p>Could not load profiles.</p>";
+
+        return;
       }
-    });
 
-    if (!response.ok) {
 
-      const error = await response.text();
+      const profiles =
+        await response.json();
 
-      console.error("Supabase search error:", error);
+
+      console.log(
+        "Profiles found:",
+        profiles
+      );
+
+
+      displayProfiles(profiles);
+
+    }
+
+
+    catch (error) {
+
+      console.error(
+        "Search connection error:",
+        error
+      );
 
       list.innerHTML =
         "<p>Could not load profiles.</p>";
 
-      return;
-    }
-
-    const profiles = await response.json();
-
-    console.log("Profiles found:", profiles);
-
-    displayProfiles(profiles);
-
-  } catch (error) {
-
-    console.error("Search connection error:", error);
-
-    list.innerHTML =
-      "<p>Could not load profiles.</p>";
-
-  }
-}
     }
 
   }
 
 
   /*
-    Display profiles
+    DISPLAY PROFILES
   */
 
   function displayProfiles(profiles) {
@@ -505,8 +532,10 @@ async function searchSkill(skill) {
       document.getElementById("profilesList");
 
 
-    if (!profiles ||
-        profiles.length === 0) {
+    if (
+      !profiles ||
+      profiles.length === 0
+    ) {
 
       list.innerHTML =
         "<p>No profiles found yet.</p>";
@@ -522,6 +551,7 @@ async function searchSkill(skill) {
 
       const card =
         document.createElement("div");
+
 
       card.className =
         "profile-card";
@@ -566,7 +596,7 @@ async function searchSkill(skill) {
 
 
   /*
-    Search box
+    SEARCH BOX
   */
 
   document
@@ -579,6 +609,7 @@ async function searchSkill(skill) {
 
           const skill =
             this.value.trim();
+
 
           if (skill) {
 
@@ -593,7 +624,7 @@ async function searchSkill(skill) {
 
 
   /*
-    Basic HTML safety
+    BASIC HTML SAFETY
   */
 
   function escapeHtml(value) {
