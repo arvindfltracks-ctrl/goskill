@@ -64,6 +64,10 @@
       cursor: pointer;
     }
 
+    .skill:hover {
+      background: #cbd5e1;
+    }
+
     .description {
       font-size: 17px;
       line-height: 1.5;
@@ -82,16 +86,8 @@
       cursor: pointer;
     }
 
-    .secondary-button {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #2563eb;
-      border-radius: 12px;
-      background: white;
-      color: #2563eb;
-      font-size: 16px;
-      cursor: pointer;
-      margin-top: 12px;
+    .primary-button:hover {
+      background: #1d4ed8;
     }
 
     .page {
@@ -119,6 +115,7 @@
       border-radius: 10px;
       font-size: 16px;
       outline: none;
+      font-family: inherit;
     }
 
     textarea.field {
@@ -168,6 +165,7 @@
     <h2>Popular Skills</h2>
 
     <div class="skills">
+
       <button class="skill" onclick="searchSkill('Video Editor')">
         Video Editor
       </button>
@@ -183,6 +181,7 @@
       <button class="skill" onclick="searchSkill('Photographer')">
         Photographer
       </button>
+
     </div>
 
     <p class="description">
@@ -196,7 +195,7 @@
       Offer Your Skill
     </button>
 
-    <div id="searchResults" style="margin-top:25px;"></div>
+    <div id="searchResults"></div>
 
   </section>
 
@@ -258,7 +257,7 @@
   </section>
 
 
-  <!-- RESULTS -->
+  <!-- SEARCH RESULTS -->
   <section id="resultsPage" class="page">
 
     <button class="back" onclick="showPage('homePage')">
@@ -280,7 +279,12 @@
 
   /*
     SUPABASE CONNECTION
-    Replace the two values below.
+
+    IMPORTANT:
+    Put your Supabase API URL here.
+    Put your Publishable key here.
+
+    Do NOT put the Secret key here.
   */
 
   const SUPABASE_URL = "https://ffovbypaoltxuuycppgo.supabase.co/rest/v1/";
@@ -310,25 +314,42 @@
 
   async function createProfile() {
 
-    const name = document.getElementById("name").value.trim();
-    const skill = document.getElementById("skill").value.trim();
-    const description = document.getElementById("description").value.trim();
-    const hourlyPrice = document.getElementById("hourlyPrice").value;
-    const projectPrice = document.getElementById("projectPrice").value;
+    const name =
+      document.getElementById("name").value.trim();
 
-    const message = document.getElementById("profileMessage");
+    const skill =
+      document.getElementById("skill").value.trim();
+
+    const description =
+      document.getElementById("description").value.trim();
+
+    const hourlyPrice =
+      document.getElementById("hourlyPrice").value;
+
+    const projectPrice =
+      document.getElementById("projectPrice").value;
+
+    const message =
+      document.getElementById("profileMessage");
+
 
     if (!name || !skill) {
-      message.textContent = "Please enter your name and skill.";
+
+      message.textContent =
+        "Please enter your name and skill.";
+
       return;
     }
 
-    message.textContent = "Saving profile...";
+
+    message.textContent =
+      "Saving profile...";
+
 
     try {
 
       const response = await fetch(
-        SUPABASE_URL + "/rest/v1/profiles",
+        SUPABASE_URL + "/profiles",
         {
           method: "POST",
 
@@ -340,20 +361,37 @@
           },
 
           body: JSON.stringify({
+
             name: name,
+
             skill: skill,
+
             description: description,
-            hourly_price: hourlyPrice ? Number(hourlyPrice) : null,
-            project_price: projectPrice ? Number(projectPrice) : null
+
+            hourly_price:
+              hourlyPrice
+              ? Number(hourlyPrice)
+              : null,
+
+            project_price:
+              projectPrice
+              ? Number(projectPrice)
+              : null
+
           })
         }
       );
 
+
       if (!response.ok) {
 
-        const error = await response.text();
+        const error =
+          await response.text();
 
-        console.log(error);
+        console.error(
+          "Supabase error:",
+          error
+        );
 
         message.textContent =
           "Could not save profile. Check the database settings.";
@@ -361,20 +399,30 @@
         return;
       }
 
+
       message.textContent =
         "Profile created successfully!";
 
+
       document.getElementById("name").value = "";
+
       document.getElementById("skill").value = "";
+
       document.getElementById("description").value = "";
+
       document.getElementById("hourlyPrice").value = "";
+
       document.getElementById("projectPrice").value = "";
 
     }
 
+
     catch (error) {
 
-      console.error(error);
+      console.error(
+        "Connection error:",
+        error
+      );
 
       message.textContent =
         "Connection error. Please try again.";
@@ -385,37 +433,66 @@
 
 
   /*
-    Search
+    Search profiles
   */
 
   async function searchSkill(skill) {
 
     showPage("resultsPage");
 
-    const list = document.getElementById("profilesList");
+    const list =
+      document.getElementById("profilesList");
 
-    list.innerHTML = "Searching...";
+    list.innerHTML =
+      "Searching...";
+
 
     try {
 
       const response = await fetch(
+
         SUPABASE_URL +
-        "/rest/v1/profiles?skill=ilike.*" +
+        "/profiles?skill=ilike.*" +
         encodeURIComponent(skill) +
         "*&select=*",
+
         {
+          method: "GET",
+
           headers: {
             "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY
+            "Authorization":
+              "Bearer " + SUPABASE_KEY
           }
         }
+
       );
 
-      const profiles = await response.json();
+
+      if (!response.ok) {
+
+        const error =
+          await response.text();
+
+        console.error(
+          "Supabase search error:",
+          error
+        );
+
+        list.innerHTML =
+          "<p>Could not load profiles.</p>";
+
+        return;
+      }
+
+
+      const profiles =
+        await response.json();
 
       displayProfiles(profiles);
 
     }
+
 
     catch (error) {
 
@@ -435,9 +512,12 @@
 
   function displayProfiles(profiles) {
 
-    const list = document.getElementById("profilesList");
+    const list =
+      document.getElementById("profilesList");
 
-    if (!profiles || profiles.length === 0) {
+
+    if (!profiles ||
+        profiles.length === 0) {
 
       list.innerHTML =
         "<p>No profiles found yet.</p>";
@@ -445,20 +525,34 @@
       return;
     }
 
+
     list.innerHTML = "";
+
 
     profiles.forEach(profile => {
 
-      const card = document.createElement("div");
+      const card =
+        document.createElement("div");
 
-      card.className = "profile-card";
+      card.className =
+        "profile-card";
+
 
       card.innerHTML = `
-        <h3>${escapeHtml(profile.name)}</h3>
 
-        <strong>${escapeHtml(profile.skill)}</strong>
+        <h3>
+          ${escapeHtml(profile.name)}
+        </h3>
 
-        <p>${escapeHtml(profile.description || "")}</p>
+        <strong>
+          ${escapeHtml(profile.skill)}
+        </strong>
+
+        <p>
+          ${escapeHtml(
+            profile.description || ""
+          )}
+        </p>
 
         ${
           profile.hourly_price
@@ -471,7 +565,9 @@
           ? `<p>Project: ₹${profile.project_price}</p>`
           : ""
         }
+
       `;
+
 
       list.appendChild(card);
 
@@ -481,24 +577,30 @@
 
 
   /*
-    Search input
+    Search box
   */
 
   document
     .getElementById("searchInput")
-    .addEventListener("keydown", function(event) {
+    .addEventListener(
+      "keydown",
+      function(event) {
 
-      if (event.key === "Enter") {
+        if (event.key === "Enter") {
 
-        const skill = this.value.trim();
+          const skill =
+            this.value.trim();
 
-        if (skill) {
-          searchSkill(skill);
+          if (skill) {
+
+            searchSkill(skill);
+
+          }
+
         }
 
       }
-
-    });
+    );
 
 
   /*
@@ -507,9 +609,11 @@
 
   function escapeHtml(value) {
 
-    const div = document.createElement("div");
+    const div =
+      document.createElement("div");
 
-    div.textContent = value || "";
+    div.textContent =
+      value || "";
 
     return div.innerHTML;
 
