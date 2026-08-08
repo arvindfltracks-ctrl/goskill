@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoSkill</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+
+    .app {
+      max-width: 480px;
+      margin: auto;
+      min-height: 100vh;
+      background: white;
+      padding: 24px 18px;
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 800;
+      color: #2563eb;
+      margin-bottom: 24px;
+    }
+
+    .search {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: 21px;
+      margin-bottom: 16px;
+    }
+
+    .skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .skill {
+      border: none;
+      background: #e2e8f0;
+      padding: 16px 10px;
+      border-radius: 12px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .skill:hover {
+      background: #cbd5e1;
+    }
+
+    .description {
+      font-size: 17px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .primary-button {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .primary-button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <div class="logo">GoSkill</div>
+
+    <input
+      class="search"
+      type="text"
+      placeholder="Search for a skill or profession..."
+    >
+
+    <h2>Popular Skills</h2>
+
+    <div class="skills">
+
+      <button class="skill">Video Editor</button>
+
+      <button class="skill">Graphic Designer</button>
+
+      <button class="skill">Developer</button>
+
+      <button class="skill">Photographer</button>
+
+    </div>
+
+    <p class="description">
+      Find the right person for your project.
+    </p>
+
+    <button class="primary-button">
+      Offer Your Skill
+    </button>
+
+  </div>
+
+</body>
+</html>
