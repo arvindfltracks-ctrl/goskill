@@ -359,24 +359,25 @@
             "Authorization": "Bearer " + SUPABASE_KEY,
             "Prefer": "return=minimal"
           },
+body: JSON.stringify({
 
-          body: JSON.stringify({
+  name: name,
 
-            name: name,
+  skill: skill,
 
-            skill: skill,
+  description: description,
 
-            description: description,
+  hourly_price:
+    hourlyPrice
+    ? Number(hourlyPrice)
+    : null,
 
-            hourly_price:
-              hourlyPrice
-              ? Number(hourlyPrice)
-              : null,
+  project_price:
+    projectPrice
+    ? Number(projectPrice)
+    : null,
 
-            project_price:
-              projectPrice
-              ? Number(projectPrice)
-              : null
+  created_at: new Date().toISOString()
 
           })
         }
