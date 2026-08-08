@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>GoSkill</title>
+
 
   <style>
 
@@ -14,11 +21,13 @@
       padding: 0;
     }
 
+
     body {
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
       color: #111111;
     }
+
 
     .app {
       max-width: 480px;
@@ -27,6 +36,7 @@
       background: #ffffff;
       padding: 24px 18px 40px;
     }
+
 
     /* LOGO */
 
@@ -41,7 +51,15 @@
 
     /* SEARCH */
 
+    .search-container {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+
     .search {
+      flex: 1;
       width: 100%;
       padding: 15px 16px;
       border: 1px solid #bdbdbd;
@@ -50,16 +68,34 @@
       color: #111111;
       font-size: 16px;
       outline: none;
-      margin-bottom: 30px;
     }
+
 
     .search:focus {
       border-color: #111111;
       background: #ffffff;
     }
 
+
     .search::placeholder {
       color: #777777;
+    }
+
+
+    .search-button {
+      padding: 0 18px;
+      border: none;
+      border-radius: 12px;
+      background: #111111;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+
+    .search-button:hover {
+      background: #333333;
     }
 
 
@@ -82,6 +118,7 @@
       margin-bottom: 32px;
     }
 
+
     .skill {
       border: 1px solid #d0d0d0;
       background: #f2f2f2;
@@ -92,6 +129,7 @@
       cursor: pointer;
       transition: 0.2s;
     }
+
 
     .skill:hover {
       background: #111111;
@@ -125,6 +163,7 @@
       transition: 0.2s;
     }
 
+
     .primary-button:hover {
       background: #333333;
     }
@@ -135,6 +174,7 @@
     .page {
       display: none;
     }
+
 
     .page.active {
       display: block;
@@ -152,6 +192,7 @@
       margin-bottom: 22px;
       padding: 0;
     }
+
 
     .back:hover {
       color: #111111;
@@ -173,15 +214,18 @@
       font-family: inherit;
     }
 
+
     .field:focus {
       border-color: #111111;
       background: #ffffff;
     }
 
+
     textarea.field {
       min-height: 120px;
       resize: vertical;
     }
+
 
     .field::placeholder {
       color: #777777;
@@ -197,7 +241,7 @@
     }
 
 
-    /* PROFILE RESULTS */
+    /* PROFILE CARDS */
 
     .profile-card {
       padding: 18px;
@@ -208,9 +252,11 @@
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
+
     .profile-card:hover {
       border-color: #999999;
     }
+
 
     .profile-top {
       display: flex;
@@ -218,6 +264,7 @@
       gap: 12px;
       margin-bottom: 14px;
     }
+
 
     .profile-avatar {
       width: 48px;
@@ -233,17 +280,20 @@
       flex-shrink: 0;
     }
 
+
     .profile-name {
       font-size: 18px;
       font-weight: 700;
       color: #111111;
     }
 
+
     .profile-skill {
       font-size: 14px;
       color: #666666;
       margin-top: 3px;
     }
+
 
     .profile-description {
       color: #444444;
@@ -252,11 +302,13 @@
       margin-bottom: 14px;
     }
 
+
     .price-row {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
     }
+
 
     .price {
       background: #eeeeee;
@@ -265,6 +317,21 @@
       border-radius: 8px;
       font-size: 13px;
       font-weight: 600;
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 380px) {
+
+      .app {
+        padding: 20px 14px 35px;
+      }
+
+      .search-button {
+        padding: 0 13px;
+      }
+
     }
 
   </style>
@@ -278,9 +345,12 @@
 <div class="app">
 
 
-  <!-- HOME -->
+  <!-- HOME PAGE -->
 
-  <section id="homePage" class="page active">
+  <section
+    id="homePage"
+    class="page active"
+  >
 
 
     <div class="logo">
@@ -288,13 +358,28 @@
     </div>
 
 
-    <input
-      id="searchInput"
-      class="search"
-      type="text"
-      placeholder="Search for a skill or profession..."
-    >
+    <!-- SEARCH -->
 
+    <div class="search-container">
+
+      <input
+        id="searchInput"
+        class="search"
+        type="text"
+        placeholder="Search for a skill or profession..."
+      >
+
+      <button
+        class="search-button"
+        onclick="performSearch()"
+      >
+        Search
+      </button>
+
+    </div>
+
+
+    <!-- POPULAR SKILLS -->
 
     <h2>
       Popular Skills
@@ -356,9 +441,12 @@
 
 
 
-  <!-- CREATE PROFILE -->
+  <!-- CREATE PROFILE PAGE -->
 
-  <section id="profilePage" class="page">
+  <section
+    id="profilePage"
+    class="page"
+  >
 
 
     <button
@@ -434,7 +522,7 @@
 
 
 
-  <!-- SEARCH RESULTS -->
+  <!-- RESULTS PAGE -->
 
   <section
     id="resultsPage"
@@ -458,7 +546,9 @@
     <br>
 
 
-    <div id="profilesList"></div>
+    <div
+      id="profilesList"
+    ></div>
 
 
   </section>
@@ -474,8 +564,11 @@
   /*
     SUPABASE CONNECTION
 
-    Replace these two values
-    with your actual Supabase details.
+    IMPORTANT:
+    Replace these with your actual
+    Supabase API URL and Publishable key.
+
+    NEVER use the Secret key here.
   */
 
 
@@ -499,11 +592,15 @@
 
     document
       .querySelectorAll(".page")
-      .forEach(page => {
+      .forEach(
+        page => {
 
-        page.classList.remove("active");
+          page.classList.remove(
+            "active"
+          );
 
-      });
+        }
+      );
 
 
     document
@@ -511,7 +608,10 @@
       .classList.add("active");
 
 
-    window.scrollTo(0, 0);
+    window.scrollTo(
+      0,
+      0
+    );
 
   }
 
@@ -560,11 +660,16 @@
 
     const message =
       document
-        .getElementById("profileMessage");
+        .getElementById(
+          "profileMessage"
+        );
 
 
 
-    if (!name || !skill) {
+    if (
+      !name ||
+      !skill
+    ) {
 
       message.textContent =
         "Please enter your name and skill.";
@@ -586,7 +691,8 @@
       const response =
         await fetch(
 
-          SUPABASE_URL + "/profiles",
+          SUPABASE_URL +
+          "/profiles",
 
           {
 
@@ -623,12 +729,16 @@
 
                 hourly_price:
                   hourlyPrice
-                  ? Number(hourlyPrice)
+                  ? Number(
+                      hourlyPrice
+                    )
                   : null,
 
                 project_price:
                   projectPrice
-                  ? Number(projectPrice)
+                  ? Number(
+                      projectPrice
+                    )
                   : null,
 
                 created_at:
@@ -643,7 +753,9 @@
 
 
 
-      if (!response.ok) {
+      if (
+        !response.ok
+      ) {
 
 
         const error =
@@ -682,17 +794,23 @@
 
 
       document
-        .getElementById("description")
+        .getElementById(
+          "description"
+        )
         .value = "";
 
 
       document
-        .getElementById("hourlyPrice")
+        .getElementById(
+          "hourlyPrice"
+        )
         .value = "";
 
 
       document
-        .getElementById("projectPrice")
+        .getElementById(
+          "projectPrice"
+        )
         .value = "";
 
 
@@ -718,24 +836,29 @@
 
 
   /*
-    SEARCH PROFILES
+    SEARCH
   */
 
 
-  async function searchSkill(skill) {
+  async function searchSkill(
+    skill
+  ) {
 
 
-    showPage("resultsPage");
+    showPage(
+      "resultsPage"
+    );
 
 
     const list =
       document
-        .getElementById("profilesList");
+        .getElementById(
+          "profilesList"
+        );
 
 
     list.innerHTML =
       "Searching...";
-
 
 
     try {
@@ -745,16 +868,16 @@
         SUPABASE_URL +
         "/profiles?select=*&skill=ilike." +
         encodeURIComponent(
-          "*" + skill + "*"
+          "*" +
+          skill +
+          "*"
         );
-
 
 
       console.log(
         "Search URL:",
         url
       );
-
 
 
       const response =
@@ -765,7 +888,6 @@
           {
 
             method: "GET",
-
 
             headers: {
 
@@ -784,7 +906,9 @@
 
 
 
-      if (!response.ok) {
+      if (
+        !response.ok
+      ) {
 
 
         const error =
@@ -811,12 +935,10 @@
         await response.json();
 
 
-
       console.log(
         "Profiles found:",
         profiles
       );
-
 
 
       displayProfiles(
@@ -846,6 +968,64 @@
 
 
   /*
+    SEARCH BUTTON + ENTER
+  */
+
+
+  function performSearch() {
+
+
+    const skill =
+      document
+        .getElementById(
+          "searchInput"
+        )
+        .value
+        .trim();
+
+
+    if (
+      skill
+    ) {
+
+      searchSkill(
+        skill
+      );
+
+    }
+
+  }
+
+
+
+  document
+    .getElementById(
+      "searchInput"
+    )
+    .addEventListener(
+      "keydown",
+      function(event) {
+
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+
+          event.preventDefault();
+
+
+          performSearch();
+
+        }
+
+      }
+    );
+
+
+
+  /*
     DISPLAY PROFILES
   */
 
@@ -860,7 +1040,6 @@
         .getElementById(
           "profilesList"
         );
-
 
 
     if (
@@ -879,7 +1058,8 @@
 
 
 
-    list.innerHTML = "";
+    list.innerHTML =
+      "";
 
 
 
@@ -898,32 +1078,47 @@
           "profile-card";
 
 
-
         const firstLetter =
           profile.name
-            ? profile.name
-                .charAt(0)
-                .toUpperCase()
-            : "?";
+          ? profile.name
+              .charAt(0)
+              .toUpperCase()
+          : "?";
 
 
 
         card.innerHTML = `
 
-          <div class="profile-top">
+          <div
+            class="profile-top"
+          >
 
-            <div class="profile-avatar">
-              ${escapeHtml(firstLetter)}
+            <div
+              class="profile-avatar"
+            >
+              ${escapeHtml(
+                firstLetter
+              )}
             </div>
+
 
             <div>
 
-              <div class="profile-name">
-                ${escapeHtml(profile.name)}
+              <div
+                class="profile-name"
+              >
+                ${escapeHtml(
+                  profile.name
+                )}
               </div>
 
-              <div class="profile-skill">
-                ${escapeHtml(profile.skill)}
+
+              <div
+                class="profile-skill"
+              >
+                ${escapeHtml(
+                  profile.skill
+                )}
               </div>
 
             </div>
@@ -931,21 +1126,27 @@
           </div>
 
 
-          <div class="profile-description">
-
+          <div
+            class="profile-description"
+          >
             ${escapeHtml(
-              profile.description || ""
+              profile.description ||
+              ""
             )}
-
           </div>
 
 
-          <div class="price-row">
+          <div
+            class="price-row"
+          >
+
 
             ${
               profile.hourly_price
               ? `
-                <div class="price">
+                <div
+                  class="price"
+                >
                   ₹${profile.hourly_price}/hr
                 </div>
               `
@@ -956,12 +1157,15 @@
             ${
               profile.project_price
               ? `
-                <div class="price">
+                <div
+                  class="price"
+                >
                   ₹${profile.project_price} project
                 </div>
               `
               : ""
             }
+
 
           </div>
 
@@ -976,44 +1180,6 @@
     );
 
   }
-
-
-
-  /*
-    SEARCH BOX
-  */
-
-
-  document
-    .getElementById(
-      "searchInput"
-    )
-    .addEventListener(
-      "keydown",
-      function(event) {
-
-
-        if (
-          event.key === "Enter"
-        ) {
-
-
-          const skill =
-            this.value.trim();
-
-
-          if (skill) {
-
-            searchSkill(
-              skill
-            );
-
-          }
-
-        }
-
-      }
-    );
 
 
 
@@ -1047,4 +1213,5 @@
 
 
 </body>
+
 </html>
