@@ -636,14 +636,17 @@ const box=$("sentList");
 box.innerHTML='<div class="muted">Loading sent requests...</div>';
 
 try{
-const result=await client.rpc("get_my_sent_requests");
+const email=String(currentUser.email||"").trim().toLowerCase();
+
+const result=await client
+.from("hire_requests")
+.select("*")
+.ilike("sender_email",email)
+.order("created_at",{ascending:false});
 
 if(result.error)throw result.error;
 
-const rows=(result.data||[]).filter(function(r){
-return String(r.sender_email||"").toLowerCase()===
-String(currentUser.email||"").toLowerCase();
-});
+const rows=result.data||[];
 
 if(!rows.length){
 box.innerHTML='<div class="empty">No requests sent yet.</div>';
@@ -656,43 +659,26 @@ const status=r.status||"pending";
 return '<div class="card request-card">'+
 '<div class="request-top">'+
 '<div><strong>Hire Request</strong>'+
-'<div class="request-email">Request ID: '+escapeHtml(r.id)+'</div></div>'+
+'<div class="request-email">Request ID: '+escapeHtml(r.id)+'</div>'+
+'<div class="request-email">Sent to freelancer: '+escapeHtml(r.freelancer_id)+'</div></div>'+
 '<span class="status '+escapeHtml(status)+'">'+escapeHtml(status)+'</span>'+
 '</div>'+
 '<div class="request-message">'+escapeHtml(r.message)+'</div>'+
 (status==="accepted"?
-'<div id="accepted-'+escapeHtml(r.id)+'" style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">Loading freelancer email...</div>':
+'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">'+
+'Freelancer accepted the request. '+
+(r.freelancer_email?
+'Freelancer email: <strong>'+escapeHtml(r.freelancer_email)+'</strong>':
+'Continue using the contact information available after acceptance.')+
+'</div>':
 "")+
 '<div class="date">'+formatDate(r.created_at)+'</div>'+
 '</div>';
 }).join("");
 
-rows.filter(function(r){return r.status==="accepted"}).forEach(function(r){
-loadAcceptedEmail(r.id);
-});
-
 }catch(error){
-console.error("Sent:",error);
-box.innerHTML='<div class="empty">Could not load sent requests.</div>';
-}
-}
-
-async function loadAcceptedEmail(requestId){
-const element=$("accepted-"+requestId);
-if(!element)return;
-
-try{
-const result=await client.rpc("get_accepted_freelancer_email",{request_id:requestId});
-
-if(result.error)throw result.error;
-
-element.innerHTML=result.data?
-"Freelancer email: <strong>"+escapeHtml(result.data)+"</strong>":
-"Freelancer email unavailable.";
-
-}catch(error){
-console.error("Accepted email:",error);
-element.textContent="Freelancer email unavailable.";
+console.error("Sent requests:",error);
+box.innerHTML='<div class="empty">Could not load sent requests.<br><small>'+escapeHtml(error.message||"Database error")+'</small></div>';
 }
 }
 
@@ -701,13 +687,15 @@ const box=$("receivedList");
 box.innerHTML='<div class="muted">Loading received requests...</div>';
 
 try{
-const result=await client.rpc("get_my_received_requests");
+const result=await client
+.from("hire_requests")
+.select("*")
+.eq("freelancer_id",currentUser.id)
+.order("created_at",{ascending:false});
 
 if(result.error)throw result.error;
 
-const rows=(result.data||[]).filter(function(r){
-return String(r.freelancer_id||"")===String(currentUser.id||"");
-});
+const rows=result.data||[];
 
 if(!rows.length){
 box.innerHTML='<div class="empty">No requests received yet.</div>';
@@ -730,6 +718,12 @@ return '<div class="card request-card">'+
 '<button type="button" class="btn danger decline-button" data-id="'+escapeHtml(r.id)+'">Decline</button>'+
 '</div>':
 "")+
+(status==="accepted"?
+'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">You accepted this hire request.</div>':
+"")+
+(status==="declined"?
+'<div style="border:1px solid #733333;color:#ffaaaa;padding:12px;border-radius:8px">You declined this hire request.</div>':
+"")+
 '<div class="date">'+formatDate(r.created_at)+'</div>'+
 '</div>';
 }).join("");
@@ -743,17 +737,34 @@ b.onclick=function(){respondToRequest(b.dataset.id,"declined")};
 });
 
 }catch(error){
-console.error("Received:",error);
-box.innerHTML='<div class="empty">Could not load received requests.</div>';
+console.error("Received requests:",error);
+box.innerHTML='<div class="empty">Could not load received requests.<br><small>'+escapeHtml(error.message||"Database error")+'</small></div>';
 }
 }
 
 async function respondToRequest(requestId,status){
+if(!currentUser)return;
+
 try{
-const result=await client.rpc("update_my_hire_request",{
-request_id:requestId,
-new_status:status
-});
+const updates={
+status:status
+};
+
+if(status==="accepted"){
+updates.accepted_at=new Date().toISOString();
+updates.declined_at=null;
+}else{
+updates.declined_at=new Date().toISOString();
+updates.accepted_at=null;
+}
+
+const result=await client
+.from("hire_requests")
+.update(updates)
+.eq("id",requestId)
+.eq("freelancer_id",currentUser.id)
+.select()
+.single();
 
 if(result.error)throw result.error;
 
