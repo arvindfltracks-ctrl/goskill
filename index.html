@@ -96,7 +96,7 @@ textarea.input{min-height:115px;resize:vertical}
 <section id="dashboard" class="hidden">
 <div class="container">
   <div class="dashboard-head">
-    <div><h2>Dashboard</h2><div class="muted" id="userEmail"></div></div>
+    <div><h2>Dashboard</h2><div class="muted" id="userEmail"></div><div class="muted" id="userUid" style="font-size:11px;margin-top:4px"></div></div>
     <div class="dashboard-actions">
       <button class="btn white" onclick="openProfileModal()">Offer Your Skill</button>
       <button class="btn" onclick="refreshAll()">Refresh</button>
@@ -210,7 +210,7 @@ async function logout(){await db.auth.signOut();user=null;myProfile=null;showOnl
 
 async function openDashboard(){
   if(!user)return;
-  showOnly("dashboard");$("userEmail").textContent=user.email||"";
+  showOnly("dashboard");$("userEmail").textContent=user.email||"";$("userUid").textContent="Account: "+(user.id||"");
   await loadMyProfile();await searchProfiles();
 }
 async function refreshAll(){await loadMyProfile();await searchProfiles();await loadSent();await loadReceived();toast("Dashboard refreshed.","success")}
@@ -315,52 +315,154 @@ async function sendHireRequest(){
 async function loadSent(){
   $("sentRequests").innerHTML=`<div class="muted">Loading...</div>`;
   try{
-    const {data,error}=await db.from("hire_requests").select("*").eq("sender_email",user.email).order("created_at",{ascending:false});
+    /*
+      IMPORTANT:
+      Sent requests belong ONLY to the currently logged-in employer.
+      We use the secure RPC and then enforce the email match again
+      in the browser as a second safeguard.
+    */
+    const {data,error}=await db.rpc("get_my_sent_requests");
     if(error)throw error;
-    if(!data?.length){$("sentRequests").innerHTML=`<div class="empty">You haven't sent any hire requests yet.</div>`;return}
-    $("sentRequests").innerHTML=data.map(r=>`
+
+    const rows=(data||[]).filter(r =>
+      String(r.sender_email||"").toLowerCase() ===
+      String(user.email||"").toLowerCase()
+    );
+
+    if(!rows.length){
+      $("sentRequests").innerHTML=`<div class="empty">You haven't sent any hire requests yet.</div>`;
+      return;
+    }
+
+    $("sentRequests").innerHTML=rows.map(r=>`
       <div class="card request">
         <div class="request-top">
-          <div><div class="request-name">Hire Request</div><div class="request-email">Request ID: ${esc(r.id)}</div></div>
+          <div>
+            <div class="request-name">Hire Request</div>
+            <div class="request-email">Request ID: ${esc(r.id)}</div>
+          </div>
           <span class="status ${esc(r.status||"pending")}">${esc(r.status||"pending")}</span>
         </div>
-        <div class="request-message">${esc(r.message)}</div>
-        ${r.status==="accepted"?`<div id="email-${esc(r.id)}" class="request-message" style="border:1px solid #39734a;border-radius:8px;padding:12px;color:#a9efbb">Loading freelancer email...</div>`:""}
-        <div class="date">${dateText(r.created_at)}</div>
-      </div>`).join("");
-    for(const r of data.filter(x=>x.status==="accepted"))await loadAcceptedEmail(r.id);
-  }catch(e){console.error(e);$("sentRequests").innerHTML=`<div class="empty">Could not load sent requests.</div>`}
-}
 
-async function loadAcceptedEmail(requestId){
-  const target=$("email-"+requestId);if(!target)return;
-  try{
-    const {data,error}=await db.rpc("get_accepted_freelancer_email",{request_id:requestId});
-    if(error)throw error;
-    target.innerHTML=data?`Freelancer email: <strong>${esc(data)}</strong>`:"Freelancer email unavailable.";
-  }catch(e){console.error(e);target.textContent="Freelancer email unavailable."}
+        <div class="request-message">${esc(r.message)}</div>
+
+        ${r.status==="accepted"
+          ? `<div id="email-${esc(r.id)}"
+              class="request-message"
+              style="border:1px solid #39734a;border-radius:8px;padding:12px;color:#a9efbb">
+              Loading freelancer email...
+             </div>`
+          : ""}
+
+        <div class="date">${dateText(r.created_at)}</div>
+      </div>
+    `).join("");
+
+    for(const r of rows.filter(x=>x.status==="accepted")){
+      await loadAcceptedEmail(r.id);
+    }
+
+  }catch(e){
+    console.error("Sent requests error:",e);
+    $("sentRequests").innerHTML=
+      `<div class="empty">Could not load sent requests.<br><small>${esc(e.message||"")}</small></div>`;
+  }
 }
 
 async function loadReceived(){
   $("receivedRequests").innerHTML=`<div class="muted">Loading...</div>`;
+
   try{
-    const {data,error}=await db.from("hire_requests").select("*").eq("freelancer_id",user.id).order("created_at",{ascending:false});
+    /*
+      IMPORTANT:
+      Received requests belong ONLY to the currently logged-in
+      freelancer. We use the secure RPC and then explicitly check
+      freelancer_id against the current Supabase Auth UUID.
+    */
+    const {data,error}=await db.rpc("get_my_received_requests");
     if(error)throw error;
-    if(!data?.length){$("receivedRequests").innerHTML=`<div class="empty">You haven't received any hire requests yet.</div>`;return}
-    $("receivedRequests").innerHTML=data.map(r=>`
+
+    const rows=(data||[]).filter(r =>
+      String(r.freelancer_id||"") === String(user.id||"")
+    );
+
+    if(!rows.length){
+      $("receivedRequests").innerHTML=
+        `<div class="empty">You haven't received any hire requests yet.</div>`;
+      return;
+    }
+
+    $("receivedRequests").innerHTML=rows.map(r=>`
       <div class="card request">
         <div class="request-top">
-          <div><div class="request-name">${esc(r.sender_name)}</div><div class="request-email">${esc(r.sender_email)}</div></div>
-          <span class="status ${esc(r.status||"pending")}">${esc(r.status||"pending")}</span>
+          <div>
+            <div class="request-name">${esc(r.sender_name)}</div>
+            <div class="request-email">${esc(r.sender_email)}</div>
+          </div>
+
+          <span class="status ${esc(r.status||"pending")}">
+            ${esc(r.status||"pending")}
+          </span>
         </div>
+
         <div class="request-message">${esc(r.message)}</div>
-        ${r.status==="pending"?`<div class="card-actions"><button class="btn success" onclick="changeRequest('${r.id}','accepted')">Accept</button><button class="btn danger" onclick="changeRequest('${r.id}','declined')">Decline</button></div>`:""}
+
+        ${r.status==="pending"
+          ? `<div class="card-actions">
+               <button class="btn success"
+                 onclick="changeRequest('${esc(r.id)}','accepted')">
+                 Accept
+               </button>
+               <button class="btn danger"
+                 onclick="changeRequest('${esc(r.id)}','declined')">
+                 Decline
+               </button>
+             </div>`
+          : ""}
+
         <div class="date">${dateText(r.created_at)}</div>
-      </div>`).join("");
-  }catch(e){console.error(e);$("receivedRequests").innerHTML=`<div class="empty">Could not load received requests.</div>`}
+      </div>
+    `).join("");
+
+  }catch(e){
+    console.error("Received requests error:",e);
+    $("receivedRequests").innerHTML=
+      `<div class="empty">Could not load received requests.<br><small>${esc(e.message||"")}</small></div>`;
+  }
 }
 
 async function changeRequest(id,status){
+  try{
+    if(!user?.id)return toast("Please log in again.","error");
+
+    /*
+      The database function verifies that the logged-in user is the
+      freelancer who owns this request.
+    */
+    const {data,error}=await db.rpc("update_my_hire_request",{
+      request_id:id,
+      new_status:status
+    });
+
+    if(error)throw error;
+
+    toast(
+      status==="accepted"
+        ? "Hire request accepted."
+        : "Hire request declined.",
+      "success"
+    );
+
+    await loadReceived();
+    await loadSent();
+
+  }catch(e){
+    console.error("Update request error:",e);
+    toast(e.message||"Could not update request.","error");
+  }
+}
+
+
   try{
     const patch={status};
     if(status==="accepted")patch.accepted_at=new Date().toISOString();
