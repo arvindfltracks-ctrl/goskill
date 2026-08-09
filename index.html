@@ -1,3 +1,4 @@
+```html
 <script>
 
 /* =========================
@@ -9,6 +10,13 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
   "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
+
+/*
+  Your deployed Supabase Edge Function.
+*/
+const HIRE_FUNCTION_URL =
+  SUPABASE_URL +
+  "/functions/v1/super-action";
 
 
 /* =========================
@@ -673,6 +681,7 @@ async function createProfile() {
     document.getElementById("projectPrice").value = "";
     document.getElementById("avatarInput").value = "";
 
+
     selectedAvatarFile = null;
 
 
@@ -1237,9 +1246,30 @@ function openContactModal(profile) {
     "";
 
 
+  /*
+    Automatically use the logged-in
+    user's email when available.
+  */
+
+  const contactEmail =
+    document.getElementById(
+      "contactEmail"
+    );
+
+  if (currentUser && currentUser.email) {
+
+    contactEmail.value =
+      currentUser.email;
+  }
+
+
   modal.classList.add("active");
 }
 
+
+/* =========================
+   CLOSE CONTACT MODAL
+   ========================= */
 
 function closeContactModal() {
 
@@ -1250,7 +1280,7 @@ function closeContactModal() {
 
 
 /* =========================
-   SEND HIRE REQUEST
+   SEND CONTACT REQUEST
    ========================= */
 
 async function sendContactRequest() {
@@ -1279,6 +1309,10 @@ async function sendContactRequest() {
     );
 
 
+  /* =========================
+     VALIDATION
+     ========================= */
+
   if (!name || !email || !message) {
 
     status.textContent =
@@ -1297,25 +1331,38 @@ async function sendContactRequest() {
   }
 
 
-  if (!selectedProfile.user_id) {
+  /*
+    Prevent duplicate clicks while sending.
+  */
 
-    status.textContent =
-      "This freelancer profile is missing account information.";
+  const sendButton =
+    document.getElementById(
+      "sendContactButton"
+    );
 
-    return;
-  }
+  sendButton.disabled = true;
 
+  sendButton.textContent =
+    "Sending...";
 
   status.textContent =
-    "Sending request...";
+    "Sending your request...";
 
 
   try {
 
+    /*
+      Send the request to the Supabase
+      Edge Function.
+
+      The Edge Function finds the
+      freelancer's email using the
+      freelancer profile ID.
+    */
+
     const response =
       await fetch(
-        SUPABASE_URL +
-        "/functions/v1/super-action",
+        HIRE_FUNCTION_URL,
         {
           method: "POST",
 
@@ -1325,22 +1372,19 @@ async function sendContactRequest() {
               "application/json",
 
             "apikey":
-              SUPABASE_KEY,
+              SUPABASE_KEY
 
-            "Authorization":
-              "Bearer " +
-              accessToken
           },
 
           body: JSON.stringify({
 
-            freelancerId:
-              selectedProfile.user_id,
+            freelancer_id:
+              selectedProfile.id,
 
-            clientName:
+            sender_name:
               name,
 
-            clientEmail:
+            sender_email:
               email,
 
             message:
@@ -1355,6 +1399,12 @@ async function sendContactRequest() {
       await response.json();
 
 
+    console.log(
+      "Hire request response:",
+      data
+    );
+
+
     if (!response.ok) {
 
       console.error(
@@ -1364,27 +1414,51 @@ async function sendContactRequest() {
 
       status.textContent =
         data.error ||
-        "Could not send the request.";
+        "Could not send the request. Please try again.";
 
       return;
     }
 
 
+    /*
+      Successfully saved and sent.
+    */
+
     status.textContent =
-      "Request sent successfully!";
+      "Request sent successfully to " +
+      (selectedProfile.name ||
+        "the freelancer") +
+      ".";
 
+
+    /*
+      Clear the message after successful
+      submission.
+    */
 
     document
-      .getElementById("contactName")
+      .getElementById(
+        "contactMessage"
+      )
       .value = "";
 
-    document
-      .getElementById("contactEmail")
-      .value = "";
 
-    document
-      .getElementById("contactMessage")
-      .value = "";
+    /*
+      Keep the modal open briefly so
+      the user can see confirmation.
+    */
+
+    setTimeout(
+      function() {
+
+        closeContactModal();
+
+        status.textContent =
+          "";
+
+      },
+      1800
+    );
 
 
   } catch (error) {
@@ -1395,7 +1469,15 @@ async function sendContactRequest() {
     );
 
     status.textContent =
-      "Could not send the request. Please try again.";
+      "Connection error. Please try again.";
+
+  } finally {
+
+    sendButton.disabled =
+      false;
+
+    sendButton.textContent =
+      "Send Request";
   }
 }
 
@@ -1621,7 +1703,9 @@ document
 
       if (
         event.target ===
-        document.getElementById("contactModal")
+        document.getElementById(
+          "contactModal"
+        )
       ) {
 
         closeContactModal();
@@ -1641,3 +1725,4 @@ console.log(
 );
 
 </script>
+```
