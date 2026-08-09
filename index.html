@@ -356,9 +356,26 @@ currentProfile=null;
 showPage("home");
 }
 
-async function startDashboard(){
-if(!currentUser)return;
+async function getFreshUser(){
+const result=await client.auth.getUser();
+if(result.error)throw result.error;
+if(!result.data||!result.data.user)throw new Error("No active Supabase user session.");
+currentUser=result.data.user;
 $("loggedEmail").textContent=currentUser.email||"";
+return currentUser;
+}
+
+async function startDashboard(){
+if(!client)return;
+try{
+await getFreshUser();
+}catch(error){
+console.error("Session:",error);
+currentUser=null;
+currentProfile=null;
+showPage("home");
+return;
+}
 showPage("dashboard");
 await loadMyProfile();
 await loadProfiles();
@@ -401,10 +418,11 @@ showToast("Dashboard refreshed.","ok");
 }
 
 async function loadMyProfile(){
+const user=await getFreshUser();
 const result=await client
 .from("profiles")
 .select("*")
-.eq("user_id",currentUser.id)
+.eq("user_id",user.id)
 .maybeSingle();
 
 if(result.error){
@@ -412,7 +430,6 @@ console.error("Profile load:",result.error);
 currentProfile=null;
 return;
 }
-
 currentProfile=result.data||null;
 }
 
@@ -636,7 +653,12 @@ const box=$("sentList");
 box.innerHTML='<div class="muted">Loading sent requests...</div>';
 
 try{
-const email=String(currentUser.email||"").trim().toLowerCase();
+const user=await getFreshUser();
+const email=String(user.email||"").trim();
+
+if(!email){
+throw new Error("The current Supabase user has no email.");
+}
 
 const result=await client
 .from("hire_requests")
@@ -649,28 +671,22 @@ if(result.error)throw result.error;
 const rows=result.data||[];
 
 if(!rows.length){
-box.innerHTML='<div class="empty">No requests sent yet.</div>';
+box.innerHTML='<div class="empty">No requests sent from this account.</div>';
 return;
 }
 
 box.innerHTML=rows.map(function(r){
 const status=r.status||"pending";
-
 return '<div class="card request-card">'+
 '<div class="request-top">'+
 '<div><strong>Hire Request</strong>'+
 '<div class="request-email">Request ID: '+escapeHtml(r.id)+'</div>'+
-'<div class="request-email">Sent to freelancer: '+escapeHtml(r.freelancer_id)+'</div></div>'+
+'<div class="request-email">Freelancer UUID: '+escapeHtml(r.freelancer_id)+'</div></div>'+
 '<span class="status '+escapeHtml(status)+'">'+escapeHtml(status)+'</span>'+
 '</div>'+
 '<div class="request-message">'+escapeHtml(r.message)+'</div>'+
 (status==="accepted"?
-'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">'+
-'Freelancer accepted the request. '+
-(r.freelancer_email?
-'Freelancer email: <strong>'+escapeHtml(r.freelancer_email)+'</strong>':
-'Continue using the contact information available after acceptance.')+
-'</div>':
+'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">This freelancer accepted your request. Continue through email.</div>':
 "")+
 '<div class="date">'+formatDate(r.created_at)+'</div>'+
 '</div>';
@@ -687,10 +703,12 @@ const box=$("receivedList");
 box.innerHTML='<div class="muted">Loading received requests...</div>';
 
 try{
+const user=await getFreshUser();
+
 const result=await client
 .from("hire_requests")
 .select("*")
-.eq("freelancer_id",currentUser.id)
+.eq("freelancer_id",user.id)
 .order("created_at",{ascending:false});
 
 if(result.error)throw result.error;
@@ -698,7 +716,7 @@ if(result.error)throw result.error;
 const rows=result.data||[];
 
 if(!rows.length){
-box.innerHTML='<div class="empty">No requests received yet.</div>';
+box.innerHTML='<div class="empty">No requests received by this account.</div>';
 return;
 }
 
@@ -708,7 +726,8 @@ const status=r.status||"pending";
 return '<div class="card request-card">'+
 '<div class="request-top">'+
 '<div><strong>'+escapeHtml(r.sender_name||"Employer")+'</strong>'+
-'<div class="request-email">'+escapeHtml(r.sender_email||"")+'</div></div>'+
+'<div class="request-email">'+escapeHtml(r.sender_email||"")+'</div>'+
+'<div class="request-email">Freelancer UUID: '+escapeHtml(r.freelancer_id)+'</div></div>'+
 '<span class="status '+escapeHtml(status)+'">'+escapeHtml(status)+'</span>'+
 '</div>'+
 '<div class="request-message">'+escapeHtml(r.message)+'</div>'+
@@ -717,12 +736,6 @@ return '<div class="card request-card">'+
 '<button type="button" class="btn success accept-button" data-id="'+escapeHtml(r.id)+'">Accept</button>'+
 '<button type="button" class="btn danger decline-button" data-id="'+escapeHtml(r.id)+'">Decline</button>'+
 '</div>':
-"")+
-(status==="accepted"?
-'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">You accepted this hire request.</div>':
-"")+
-(status==="declined"?
-'<div style="border:1px solid #733333;color:#ffaaaa;padding:12px;border-radius:8px">You declined this hire request.</div>':
 "")+
 '<div class="date">'+formatDate(r.created_at)+'</div>'+
 '</div>';
@@ -743,12 +756,10 @@ box.innerHTML='<div class="empty">Could not load received requests.<br><small>'+
 }
 
 async function respondToRequest(requestId,status){
-if(!currentUser)return;
-
 try{
-const updates={
-status:status
-};
+const user=await getFreshUser();
+
+const updates={status:status};
 
 if(status==="accepted"){
 updates.accepted_at=new Date().toISOString();
@@ -762,7 +773,7 @@ const result=await client
 .from("hire_requests")
 .update(updates)
 .eq("id",requestId)
-.eq("freelancer_id",currentUser.id)
+.eq("freelancer_id",user.id)
 .select()
 .single();
 
