@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -280,28 +281,84 @@
     }
 
     /* =========================
+       AVATAR UPLOAD
+       ========================= */
+
+    .avatar-upload {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .avatar-preview {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #dddddd;
+      background: #eeeeee;
+      margin-bottom: 12px;
+    }
+
+    .avatar-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777777;
+      font-size: 36px;
+      font-weight: 600;
+    }
+
+    .upload-label {
+      display: inline-block;
+      padding: 9px 14px;
+      border: 1px solid #cccccc;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #111111;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .upload-label:hover {
+      background: #eeeeee;
+    }
+
+    #avatarInput {
+      display: none;
+    }
+
+    .upload-hint {
+      margin-top: 7px;
+      color: #777777;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* =========================
        PROFILE CARDS
        ========================= */
 
     .profile-card {
-      padding: 18px;
-      margin-bottom: 14px;
-      border: 1px solid #d5d5d5;
-      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
     .profile-top {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 13px;
+      margin-bottom: 15px;
     }
 
     .profile-avatar {
-      width: 48px;
-      height: 48px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -309,8 +366,15 @@
       background: #111111;
       color: #ffffff;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 21px;
       flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .profile-name {
@@ -319,16 +383,16 @@
     }
 
     .profile-skill {
-      margin-top: 3px;
+      margin-top: 4px;
       color: #666666;
       font-size: 14px;
     }
 
     .profile-description {
-      margin-bottom: 14px;
+      margin-bottom: 15px;
       color: #444444;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
     }
 
     .price-row {
@@ -344,6 +408,17 @@
       color: #222222;
       font-size: 13px;
       font-weight: 600;
+    }
+
+    .profile-divider {
+      height: 1px;
+      background: #eeeeee;
+      margin: 15px 0;
+    }
+
+    .verified-text {
+      color: #666666;
+      font-size: 12px;
     }
 
   </style>
@@ -561,6 +636,29 @@
 
     <br>
 
+    <div class="avatar-upload">
+
+      <div class="avatar-preview avatar-placeholder" id="avatarPreview">
+        +
+      </div>
+
+      <label class="upload-label" for="avatarInput">
+        Choose Profile Photo
+      </label>
+
+      <input
+        id="avatarInput"
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+      >
+
+      <div class="upload-hint">
+        JPG, PNG or WebP · Maximum 5MB
+      </div>
+
+    </div>
+
+
     <input
       id="name"
       class="field"
@@ -673,7 +771,12 @@ function showPage(pageId) {
 
 let currentUser = null;
 let accessToken = null;
+let selectedAvatarFile = null;
 
+
+/* =========================
+   AUTH UI
+   ========================= */
 
 function updateAuthUI() {
 
@@ -685,6 +788,7 @@ function updateAuthUI() {
 
   const userEmail =
     document.getElementById("userEmail");
+
 
   if (currentUser) {
 
@@ -951,10 +1055,184 @@ function logout() {
 
   currentUser = null;
   accessToken = null;
+  selectedAvatarFile = null;
 
   updateAuthUI();
 
   showPage("homePage");
+}
+
+
+/* =========================
+   AVATAR PREVIEW
+   ========================= */
+
+document
+  .getElementById("avatarInput")
+  .addEventListener(
+    "change",
+    function(event) {
+
+      const file =
+        event.target.files[0];
+
+      const preview =
+        document.getElementById(
+          "avatarPreview"
+        );
+
+
+      if (!file) {
+        return;
+      }
+
+
+      if (file.size > 5 * 1024 * 1024) {
+
+        alert(
+          "Please choose an image smaller than 5MB."
+        );
+
+        event.target.value = "";
+        selectedAvatarFile = null;
+
+        return;
+      }
+
+
+      if (
+        ![
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ].includes(file.type)
+      ) {
+
+        alert(
+          "Please choose a JPG, PNG or WebP image."
+        );
+
+        event.target.value = "";
+        selectedAvatarFile = null;
+
+        return;
+      }
+
+
+      selectedAvatarFile = file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(e) {
+
+          preview.className =
+            "avatar-preview";
+
+          preview.innerHTML =
+            "";
+
+          preview.style.backgroundImage =
+            "url('" +
+            e.target.result +
+            "')";
+
+          preview.style.backgroundSize =
+            "cover";
+
+          preview.style.backgroundPosition =
+            "center";
+        };
+
+
+      reader.readAsDataURL(file);
+    }
+  );
+
+
+/* =========================
+   UPLOAD AVATAR
+   ========================= */
+
+async function uploadAvatar() {
+
+  if (!selectedAvatarFile || !currentUser) {
+    return null;
+  }
+
+
+  const file =
+    selectedAvatarFile;
+
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+
+  const filePath =
+    currentUser.id +
+    "/" +
+    Date.now() +
+    "." +
+    extension;
+
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/storage/v1/object/avatars/" +
+      filePath,
+      {
+        method: "POST",
+
+        headers: {
+
+          "Authorization":
+            "Bearer " +
+            accessToken,
+
+          "apikey":
+            SUPABASE_KEY,
+
+          "Content-Type":
+            file.type,
+
+          "x-upsert":
+            "true"
+        },
+
+        body: file
+      }
+    );
+
+
+  if (!response.ok) {
+
+    const error =
+      await response.text();
+
+    console.error(
+      "Avatar upload error:",
+      error
+    );
+
+    throw new Error(
+      "Could not upload profile photo."
+    );
+  }
+
+
+  return (
+    SUPABASE_URL +
+    "/storage/v1/object/public/avatars/" +
+    filePath
+  );
 }
 
 
@@ -1025,6 +1303,23 @@ async function createProfile() {
 
   try {
 
+    let avatarUrl = null;
+
+
+    if (selectedAvatarFile) {
+
+      message.textContent =
+        "Uploading profile photo...";
+
+      avatarUrl =
+        await uploadAvatar();
+    }
+
+
+    message.textContent =
+      "Saving profile...";
+
+
     const response =
       await fetch(
         SUPABASE_URL +
@@ -1069,6 +1364,9 @@ async function createProfile() {
             user_id:
               currentUser.id,
 
+            avatar_url:
+              avatarUrl,
+
             created_at:
               new Date().toISOString()
 
@@ -1088,7 +1386,7 @@ async function createProfile() {
       );
 
       message.textContent =
-        "Could not save profile. Check the database settings.";
+        "Could not save profile. Check your database policies.";
 
       return;
     }
@@ -1103,6 +1401,26 @@ async function createProfile() {
     document.getElementById("description").value = "";
     document.getElementById("hourlyPrice").value = "";
     document.getElementById("projectPrice").value = "";
+    document.getElementById("avatarInput").value = "";
+
+
+    selectedAvatarFile = null;
+
+
+    const preview =
+      document.getElementById(
+        "avatarPreview"
+      );
+
+
+    preview.className =
+      "avatar-preview avatar-placeholder";
+
+    preview.style.backgroundImage =
+      "none";
+
+    preview.innerHTML =
+      "+";
 
 
   } catch (error) {
@@ -1113,6 +1431,7 @@ async function createProfile() {
     );
 
     message.textContent =
+      error.message ||
       "Connection error. Please try again.";
   }
 }
@@ -1256,12 +1575,29 @@ function displayProfiles(profiles) {
       "profile-avatar";
 
 
-    avatar.textContent =
-      profile.name
-        ? profile.name
-            .charAt(0)
-            .toUpperCase()
-        : "?";
+    if (profile.avatar_url) {
+
+      const image =
+        document.createElement("img");
+
+      image.src =
+        profile.avatar_url;
+
+      image.alt =
+        profile.name ||
+        "Profile photo";
+
+      avatar.appendChild(image);
+
+    } else {
+
+      avatar.textContent =
+        profile.name
+          ? profile.name
+              .charAt(0)
+              .toUpperCase()
+          : "?";
+    }
 
 
     const info =
@@ -1295,6 +1631,13 @@ function displayProfiles(profiles) {
     top.appendChild(info);
 
 
+    const divider =
+      document.createElement("div");
+
+    divider.className =
+      "profile-divider";
+
+
     const description =
       document.createElement("div");
 
@@ -1302,7 +1645,8 @@ function displayProfiles(profiles) {
       "profile-description";
 
     description.textContent =
-      profile.description || "";
+      profile.description ||
+      "No description provided.";
 
 
     const prices =
@@ -1352,9 +1696,24 @@ function displayProfiles(profiles) {
     }
 
 
+    const verified =
+      document.createElement("div");
+
+    verified.className =
+      "verified-text";
+
+    verified.style.marginTop =
+      "12px";
+
+    verified.textContent =
+      "GoSkill member";
+
+
     card.appendChild(top);
+    card.appendChild(divider);
     card.appendChild(description);
     card.appendChild(prices);
+    card.appendChild(verified);
 
     list.appendChild(card);
 
