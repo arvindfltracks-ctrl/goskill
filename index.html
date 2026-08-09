@@ -2,76 +2,33 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>GoSkill</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#050505;--card:#111;--card2:#171717;--text:#fff;--muted:#999;--border:#2b2b2b}
-body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-button,input,textarea{font:inherit}button{cursor:pointer}
-.hidden{display:none!important}
-.nav{height:76px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;background:#050505;z-index:10}
-.logo{font-size:38px;font-weight:900;letter-spacing:-2px}
-.nav-actions{display:flex;gap:14px}
-.btn{padding:11px 19px;border:1px solid #444;border-radius:8px;background:transparent;color:#fff}
-.btn:hover{background:#1e1e1e}
-.btn.white{background:#fff;color:#000;border-color:#fff}
-.btn.success{border-color:#39734a;color:#a9efbb}
-.btn.danger{border-color:#733333;color:#ffaaaa}
-.container{width:min(1150px,92%);margin:auto;padding:42px 0 80px}
-.hero{min-height:calc(100vh - 76px);display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px}
-.hero h1{font-size:clamp(60px,9vw,110px);letter-spacing:-6px;margin-bottom:22px}
-.hero p{font-size:20px;line-height:1.6;color:#bbb;max-width:700px}
-.actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
-.auth-wrap{min-height:calc(100vh - 76px);display:flex;align-items:center;justify-content:center;padding:30px 15px}
-.auth-card,.form-card{width:min(480px,100%);background:var(--card);border:1px solid var(--border);border-radius:15px;padding:30px}
-h2{font-size:32px;margin-bottom:8px}h3{font-size:22px}
-.subtitle,.muted{color:var(--muted)}
-.form-group{margin:17px 0}.form-group label{display:block;color:#ccc;font-size:14px;margin-bottom:8px}
-.input{width:100%;padding:13px 14px;background:#080808;color:#fff;border:1px solid #333;border-radius:8px;outline:none}
-.input:focus{border-color:#777}
-textarea.input{min-height:115px;resize:vertical}
-.auth-switch{text-align:center;color:#888;margin-top:18px}.link{background:none;border:0;color:#fff;text-decoration:underline}
-.dashboard-head{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:28px}
-.dashboard-actions{display:flex;gap:10px;flex-wrap:wrap}
-.tabs{display:flex;gap:6px;border-bottom:1px solid var(--border);margin-bottom:28px;overflow:auto}
-.tab{background:none;border:0;color:#888;padding:13px 17px;border-bottom:2px solid transparent;white-space:nowrap}
-.tab.active{color:#fff;border-bottom-color:#fff}
-.search{display:flex;gap:10px;margin:22px 0 30px}.search .input{flex:1}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:21px}
-.profile-card{min-height:245px;display:flex;flex-direction:column}
-.profile-card .description{flex:1;color:#bbb;line-height:1.5;margin-top:12px}
-.skill{font-weight:700;color:#ddd;margin-top:8px}.location{color:#777;margin-top:7px}
-.prices{display:flex;gap:15px;flex-wrap:wrap;color:#ddd;margin-top:16px}
-.card-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}
-.empty{padding:45px 20px;text-align:center;border:1px dashed #333;border-radius:13px;color:#777}
-.request{margin-bottom:15px}.request-top{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.request-name{font-size:20px;font-weight:bold}.request-email{color:#777;margin-top:4px}
-.status{padding:6px 11px;border:1px solid #444;border-radius:20px;font-size:13px;text-transform:capitalize;height:max-content}
-.status.accepted{color:#a9efbb;border-color:#39734a}.status.declined{color:#ffaaaa;border-color:#733333}
-.request-message{color:#bbb;line-height:1.5;margin:15px 0}.date{color:#666;font-size:13px}
-.modal{position:fixed;inset:0;background:#000c;display:flex;align-items:center;justify-content:center;padding:15px;z-index:50}
-.modal-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#111;border:1px solid #333;border-radius:15px;padding:28px}
-.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.close{background:none;border:0;color:#aaa;font-size:28px}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.toast{position:fixed;right:20px;bottom:20px;z-index:100;background:#191919;border:1px solid #444;border-radius:9px;padding:14px 18px;max-width:360px}.toast.success{border-color:#39734a}.toast.error{border-color:#733333}
-@media(max-width:650px){.nav{padding:0 4%;height:68px}.logo{font-size:30px}.nav-actions{gap:7px}.nav-actions .btn{padding:9px 12px;font-size:13px}.row{grid-template-columns:1fr}.search{flex-direction:column}}
+*{box-sizing:border-box}body{margin:0;background:#050505;color:#fff;font-family:Arial,Helvetica,sans-serif}button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.nav{height:74px;border-bottom:1px solid #292929;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;background:#050505;z-index:20}.logo{font-size:42px;font-weight:900;letter-spacing:-3px}.navBtns{display:flex;gap:12px}
+.btn{background:#080808;color:#fff;border:1px solid #444;border-radius:8px;padding:11px 18px}.btn:hover{background:#191919}.btn.white{background:#fff;color:#000;border-color:#fff}.btn.green{border-color:#39734a;color:#a9efbb}.btn.red{border-color:#733333;color:#ffaaaa}
+.hero{min-height:calc(100vh - 74px);display:flex;align-items:center;justify-content:center;text-align:center;padding:30px}.hero h1{font-size:clamp(70px,10vw,125px);letter-spacing:-7px;margin:0 0 20px}.hero p{color:#aaa;font-size:20px;line-height:1.6;max-width:680px}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.wrap{width:min(1150px,92%);margin:auto;padding:40px 0 80px}.auth{min-height:calc(100vh - 74px);display:flex;align-items:center;justify-content:center;padding:20px}.box{background:#111;border:1px solid #292929;border-radius:14px;padding:28px;width:min(500px,100%)}h2{font-size:32px;margin:0 0 8px}h3{margin:0;font-size:22px}.muted{color:#888}.field{margin:16px 0}.field label{display:block;color:#ccc;font-size:14px;margin-bottom:7px}.input{width:100%;padding:13px;background:#080808;color:#fff;border:1px solid #333;border-radius:8px;outline:none}.input:focus{border-color:#777}textarea.input{min-height:120px;resize:vertical}
+.switch{text-align:center;color:#888;margin-top:16px}.link{border:0;background:none;color:#fff;text-decoration:underline}
+.head{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}.headBtns{display:flex;gap:10px;flex-wrap:wrap}.tabs{display:flex;gap:5px;border-bottom:1px solid #292929;margin:30px 0;overflow:auto}.tab{border:0;border-bottom:2px solid transparent;background:none;color:#777;padding:13px 17px;white-space:nowrap}.tab.active{color:#fff;border-bottom-color:#fff}
+.search{display:flex;gap:10px;margin:20px 0 30px}.search .input{flex:1}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px}.card{background:#111;border:1px solid #292929;border-radius:13px;padding:20px}.profileCard{min-height:240px;display:flex;flex-direction:column}.profileCard .desc{flex:1;color:#bbb;line-height:1.5;margin-top:12px}.skill{font-weight:700;margin-top:8px}.location{color:#777;margin-top:6px}.prices{display:flex;gap:18px;flex-wrap:wrap;margin-top:15px;color:#ddd}.cardBtns{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.empty{border:1px dashed #333;border-radius:12px;text-align:center;padding:45px;color:#777}.request{margin-top:15px}.requestTop{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}.requestEmail{color:#777;margin-top:5px}.status{border:1px solid #444;border-radius:20px;padding:6px 11px;height:max-content;text-transform:capitalize}.status.accepted{color:#a9efbb;border-color:#39734a}.status.declined{color:#ffaaaa;border-color:#733333}.message{color:#bbb;line-height:1.5;margin:15px 0}.date{font-size:12px;color:#666}.modal{position:fixed;inset:0;background:#000d;display:flex;align-items:center;justify-content:center;padding:15px;z-index:50}.modalBox{width:min(540px,100%);max-height:92vh;overflow:auto;background:#111;border:1px solid #333;border-radius:14px;padding:27px}.modalHead{display:flex;justify-content:space-between;align-items:center}.close{background:none;border:0;color:#aaa;font-size:28px}.row{display:grid;grid-template-columns:1fr 1fr;gap:15px}.toast{position:fixed;right:18px;bottom:18px;background:#171717;border:1px solid #444;border-radius:9px;padding:14px 17px;z-index:100;max-width:360px}.toast.ok{border-color:#39734a}.toast.err{border-color:#733333}
+@media(max-width:650px){.logo{font-size:32px}.nav{height:68px;padding:0 4%}.navBtns{gap:6px}.navBtns .btn{padding:9px 11px;font-size:13px}.row{grid-template-columns:1fr}.search{flex-direction:column}}
 </style>
 </head>
 <body>
 
 <nav class="nav">
   <div class="logo">GoSkill</div>
-  <div class="nav-actions" id="navActions"></div>
+  <div id="navBtns" class="navBtns"></div>
 </nav>
 
 <section id="home">
   <div class="hero">
     <div>
       <h1>GoSkill</h1>
-      <p>Find skilled people. Offer your skills. Connect directly and get work done.</p>
+      <p>Find skilled people, offer your skills, and connect directly for work.</p>
       <div class="actions">
         <button class="btn white" onclick="showSignup()">Get Started</button>
         <button class="btn" onclick="showLogin()">Login</button>
@@ -81,81 +38,70 @@ textarea.input{min-height:115px;resize:vertical}
 </section>
 
 <section id="auth" class="hidden">
-  <div class="auth-wrap">
-    <div class="auth-card">
+  <div class="auth">
+    <div class="box">
       <h2 id="authTitle">Create account</h2>
-      <p class="subtitle" id="authSubtitle">Create your GoSkill account.</p>
-      <div class="form-group"><label>Email</label><input id="authEmail" class="input" type="email" placeholder="you@example.com"></div>
-      <div class="form-group"><label>Password</label><input id="authPassword" class="input" type="password" placeholder="Password"></div>
-      <button id="authButton" class="btn white" style="width:100%" onclick="submitAuth()">Create account</button>
-      <div class="auth-switch"><span id="switchText">Already have an account?</span> <button class="link" id="switchButton" onclick="toggleAuth()">Login</button></div>
+      <div class="muted" id="authSub">Create your GoSkill account.</div>
+      <div class="field"><label>Email</label><input id="email" class="input" type="email"></div>
+      <div class="field"><label>Password</label><input id="password" class="input" type="password"></div>
+      <button id="authBtn" class="btn white" style="width:100%" onclick="authSubmit()">Create account</button>
+      <div class="switch"><span id="switchText">Already have an account?</span> <button class="link" onclick="toggleAuth()" id="switchBtn">Login</button></div>
     </div>
   </div>
 </section>
 
-<section id="dashboard" class="hidden">
-<div class="container">
-  <div class="dashboard-head">
-    <div><h2>Dashboard</h2><div class="muted" id="userEmail"></div><div class="muted" id="userUid" style="font-size:11px;margin-top:4px"></div></div>
-    <div class="dashboard-actions">
-      <button class="btn white" onclick="openProfileModal()">Offer Your Skill</button>
-      <button class="btn" onclick="refreshAll()">Refresh</button>
+<section id="app" class="hidden">
+<div class="wrap">
+  <div class="head">
+    <div><h2>Dashboard</h2><div class="muted" id="accountEmail"></div></div>
+    <div class="headBtns">
+      <button class="btn white" onclick="openProfile()">Offer Your Skill</button>
+      <button class="btn" onclick="refreshApp()">Refresh</button>
     </div>
   </div>
 
   <div class="tabs">
-    <button id="tabSearch" class="tab active" onclick="openTab('search')">Find Skills</button>
-    <button id="tabSent" class="tab" onclick="openTab('sent')">Requests Sent</button>
-    <button id="tabReceived" class="tab" onclick="openTab('received')">Requests Received</button>
-    <button id="tabProfile" class="tab" onclick="openTab('profile')">My Profile</button>
+    <button class="tab active" id="tSearch" onclick="tab('search')">Find Skills</button>
+    <button class="tab" id="tSent" onclick="tab('sent')">Requests Sent</button>
+    <button class="tab" id="tReceived" onclick="tab('received')">Requests Received</button>
+    <button class="tab" id="tProfile" onclick="tab('profile')">My Profile</button>
   </div>
 
-  <div id="searchPanel">
-    <h3>Find a skill</h3><p class="subtitle">Search freelancers by skill.</p>
-    <div class="search"><input id="skillSearch" class="input" placeholder="Search skill e.g. video editing" onkeydown="if(event.key==='Enter')searchProfiles()"><button class="btn white" onclick="searchProfiles()">Search</button></div>
+  <div id="searchPage">
+    <h3>Find a skill</h3><div class="muted">Search freelancer profiles.</div>
+    <div class="search"><input id="q" class="input" placeholder="Search by skill" onkeydown="if(event.key==='Enter')loadProfiles()"><button class="btn white" onclick="loadProfiles()">Search</button></div>
     <div id="profiles" class="grid"></div>
   </div>
 
-  <div id="sentPanel" class="hidden">
-    <h3>Requests Sent</h3><p class="subtitle">Track the hire requests you sent.</p>
-    <div id="sentRequests" style="margin-top:22px"></div>
-  </div>
-
-  <div id="receivedPanel" class="hidden">
-    <h3>Requests Received</h3><p class="subtitle">Accept or decline hire requests.</p>
-    <div id="receivedRequests" style="margin-top:22px"></div>
-  </div>
-
-  <div id="profilePanel" class="hidden">
-    <h3>My Profile</h3><p class="subtitle">Your freelancer profile.</p>
-    <div id="myProfile" style="margin-top:22px"></div>
-  </div>
+  <div id="sentPage" class="hidden"><h3>Requests Sent</h3><div class="muted">Track requests you sent.</div><div id="sent" style="margin-top:20px"></div></div>
+  <div id="receivedPage" class="hidden"><h3>Requests Received</h3><div class="muted">Manage requests sent to you.</div><div id="received" style="margin-top:20px"></div></div>
+  <div id="profilePage" class="hidden"><h3>My Profile</h3><div class="muted">Your freelancer profile.</div><div id="mine" style="margin-top:20px"></div></div>
 </div>
 </section>
 
 <div id="profileModal" class="modal hidden">
-<div class="modal-box">
-  <div class="modal-head"><h3>Offer Your Skill</h3><button class="close" onclick="closeProfileModal()">×</button></div>
+<div class="modalBox">
+  <div class="modalHead"><h3>Offer Your Skill</h3><button class="close" onclick="closeModal('profileModal')">×</button></div>
   <div class="row">
-    <div class="form-group"><label>Name</label><input id="pName" class="input" placeholder="Your name"></div>
-    <div class="form-group"><label>Location</label><input id="pLocation" class="input" placeholder="Your location"></div>
+    <div class="field"><label>Name</label><input id="name" class="input"></div>
+    <div class="field"><label>Location</label><input id="location" class="input"></div>
   </div>
-  <div class="form-group"><label>Skill</label><input id="pSkill" class="input" placeholder="e.g. Video Editing"></div>
-  <div class="form-group"><label>About Your Skill</label><textarea id="pDescription" class="input" placeholder="Describe what you offer..."></textarea></div>
+  <div class="field"><label>Skill</label><input id="skill" class="input"></div>
+  <div class="field"><label>About Skill</label><textarea id="description" class="input"></textarea></div>
   <div class="row">
-    <div class="form-group"><label>Hourly Price</label><input id="pHourly" class="input" type="number" min="0" placeholder="500"></div>
-    <div class="form-group"><label>Project Price</label><input id="pProject" class="input" type="number" min="0" placeholder="2000"></div>
+    <div class="field"><label>Hourly Price</label><input id="hourly" class="input" type="number" min="0"></div>
+    <div class="field"><label>Project Price</label><input id="project" class="input" type="number" min="0"></div>
   </div>
   <button class="btn white" style="width:100%" onclick="saveProfile()">Save Profile</button>
 </div>
 </div>
 
 <div id="hireModal" class="modal hidden">
-<div class="modal-box">
-  <div class="modal-head"><h3>Send Hire Request</h3><button class="close" onclick="closeHireModal()">×</button></div>
-  <div id="hireTarget"></div>
-  <div class="form-group"><label>Message</label><textarea id="hireMessage" class="input" placeholder="Tell the freelancer what you need..."></textarea></div>
-  <button class="btn white" style="width:100%" onclick="sendHireRequest()">Send Hire Request</button>
+<div class="modalBox">
+  <div class="modalHead"><h3>Send Hire Request</h3><button class="close" onclick="closeModal('hireModal')">×</button></div>
+  <div id="target" style="margin:18px 0"></div>
+  <div class="field"><label>Message</label><textarea id="hireMessage" class="input" placeholder="Tell the freelancer what you need."></textarea></div>
+  <button class="btn white" style="width:100%" onclick="sendRequest()">Send Hire Request</button>
 </div>
 </div>
 
@@ -164,324 +110,279 @@ textarea.input{min-height:115px;resize:vertical}
 <script>
 const SUPABASE_URL="https://ffovbypaoltxuuycppgo.supabase.co";
 const SUPABASE_KEY="sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-let user=null, myProfile=null, authMode="signup", selectedProfile=null;
+let currentUser=null;
+let profile=null;
+let selected=null;
+let authMode="signup";
+let profileCache={};
 
-function $(id){return document.getElementById(id)}
-function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
-function toast(msg,type=""){ $("toast").textContent=msg;$("toast").className="toast "+type;$("toast").classList.remove("hidden");setTimeout(()=>$("toast").classList.add("hidden"),3500)}
-function dateText(v){return v?new Date(v).toLocaleString():""}
+const $=id=>document.getElementById(id);
 
-function updateNav(){
-  $("navActions").innerHTML=user
-    ? `<button class="btn" onclick="openTab('search')">Dashboard</button><button class="btn danger" onclick="logout()">Logout</button>`
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function notify(text,type=""){
+  $("toast").textContent=text;
+  $("toast").className="toast "+type;
+  $("toast").classList.remove("hidden");
+  setTimeout(()=>$("toast").classList.add("hidden"),3500);
+}
+function date(v){return v?new Date(v).toLocaleString():"";}
+function nav(){
+  $("navBtns").innerHTML=currentUser
+    ? `<button class="btn" onclick="tab('search')">Dashboard</button><button class="btn red" onclick="logout()">Logout</button>`
     : `<button class="btn" onclick="showLogin()">Login</button><button class="btn white" onclick="showSignup()">Sign Up</button>`;
 }
-function showOnly(id){["home","auth","dashboard"].forEach(x=>$(x).classList.toggle("hidden",x!==id));updateNav()}
-function showLogin(){authMode="login";showOnly("auth");updateAuth()}
-function showSignup(){authMode="signup";showOnly("auth");updateAuth()}
-function updateAuth(){
-  $("authTitle").textContent=authMode==="signup"?"Create account":"Welcome back";
-  $("authSubtitle").textContent=authMode==="signup"?"Create your GoSkill account.":"Login to your GoSkill account.";
-  $("authButton").textContent=authMode==="signup"?"Create account":"Login";
-  $("switchText").textContent=authMode==="signup"?"Already have an account?":"Don't have an account?";
-  $("switchButton").textContent=authMode==="signup"?"Login":"Sign Up";
+function page(id){
+  ["home","auth","app"].forEach(x=>$(x).classList.toggle("hidden",x!==id));
+  nav();
 }
-function toggleAuth(){authMode=authMode==="signup"?"login":"signup";updateAuth()}
-
-async function submitAuth(){
-  const email=$("authEmail").value.trim(),password=$("authPassword").value;
-  if(!email||!password)return toast("Enter email and password.","error");
-  $("authButton").disabled=true;
+function showLogin(){authMode="login";page("auth");updateAuth();}
+function showSignup(){authMode="signup";page("auth");updateAuth();}
+function toggleAuth(){authMode=authMode==="signup"?"login":"signup";updateAuth();}
+function updateAuth(){
+  $("authTitle").textContent=authMode==="signup"?"Create account":"Login";
+  $("authSub").textContent=authMode==="signup"?"Create your GoSkill account.":"Login to GoSkill.";
+  $("authBtn").textContent=authMode==="signup"?"Create account":"Login";
+  $("switchText").textContent=authMode==="signup"?"Already have an account?":"Don't have an account?";
+  $("switchBtn").textContent=authMode==="signup"?"Login":"Sign Up";
+}
+async function authSubmit(){
+  const email=$("email").value.trim(),password=$("password").value;
+  if(!email||!password)return notify("Enter email and password.","err");
+  $("authBtn").disabled=true;
   try{
     if(authMode==="signup"){
-      const {data,error}=await db.auth.signUp({email,password});if(error)throw error;
-      if(!data.session){toast("Check your email to confirm your account.","success");return}
-      user=data.user;
+      const {data,error}=await supabase.auth.signUp({email,password});
+      if(error)throw error;
+      if(!data.session){notify("Check your email to confirm your account.","ok");return;}
+      currentUser=data.user;
     }else{
-      const {data,error}=await db.auth.signInWithPassword({email,password});if(error)throw error;user=data.user;
+      const {data,error}=await supabase.auth.signInWithPassword({email,password});
+      if(error)throw error;
+      currentUser=data.user;
     }
-    await openDashboard();
-  }catch(e){console.error(e);toast(e.message||"Authentication failed.","error")}
-  finally{$("authButton").disabled=false}
+    await startApp();
+  }catch(e){notify(e.message||"Authentication failed.","err");}
+  finally{$("authBtn").disabled=false;}
 }
-async function logout(){await db.auth.signOut();user=null;myProfile=null;showOnly("home")}
+async function logout(){await supabase.auth.signOut();currentUser=null;profile=null;page("home");}
 
-async function openDashboard(){
-  if(!user)return;
-  showOnly("dashboard");$("userEmail").textContent=user.email||"";$("userUid").textContent="Account: "+(user.id||"");
-  await loadMyProfile();await searchProfiles();
+async function startApp(){
+  if(!currentUser)return;
+  page("app");
+  $("accountEmail").textContent=currentUser.email||"";
+  await loadMyProfile();
+  await loadProfiles();
+  tab("search");
 }
-async function refreshAll(){await loadMyProfile();await searchProfiles();await loadSent();await loadReceived();toast("Dashboard refreshed.","success")}
 
-function openTab(tab){
-  if(!user)return showLogin();
-  const panels={search:"searchPanel",sent:"sentPanel",received:"receivedPanel",profile:"profilePanel"};
-  Object.entries(panels).forEach(([k,id])=>$(id).classList.toggle("hidden",k!==tab));
-  ["Search","Sent","Received","Profile"].forEach(x=>$("tab"+x).classList.toggle("active",x.toLowerCase()===tab));
-  if(tab==="sent")loadSent();
-  if(tab==="received")loadReceived();
-  if(tab==="profile")renderMyProfile();
+function tab(which){
+  if(!currentUser)return showLogin();
+  const pages={search:"searchPage",sent:"sentPage",received:"receivedPage",profile:"profilePage"};
+  Object.entries(pages).forEach(([k,id])=>$(id).classList.toggle("hidden",k!==which));
+  ["Search","Sent","Received","Profile"].forEach(x=>$("t"+x).classList.toggle("active",x.toLowerCase()===which));
+  if(which==="sent")loadSent();
+  if(which==="received")loadReceived();
+  if(which==="profile")renderMine();
+}
+
+async function refreshApp(){
+  await loadMyProfile();
+  await loadProfiles();
+  await loadSent();
+  await loadReceived();
+  renderMine();
+  notify("Updated.","ok");
 }
 
 async function loadMyProfile(){
-  if(!user)return;
-  const {data,error}=await db.from("profiles").select("*").eq("user_id",user.id).maybeSingle();
-  if(error){console.error(error);myProfile=null;return}
-  myProfile=data||null;
+  const {data,error}=await supabase.from("profiles").select("*").eq("user_id",currentUser.id).maybeSingle();
+  if(error){console.error(error);profile=null;return;}
+  profile=data||null;
 }
-function openProfileModal(){
-  if(!user)return showLogin();
+function openProfile(){
+  $("name").value=profile?.name||"";
+  $("location").value=profile?.location||"";
+  $("skill").value=profile?.skill||"";
+  $("description").value=profile?.description||"";
+  $("hourly").value=profile?.hourly_price??"";
+  $("project").value=profile?.project_price??"";
   $("profileModal").classList.remove("hidden");
-  $("pName").value=myProfile?.name||"";
-  $("pLocation").value=myProfile?.location||"";
-  $("pSkill").value=myProfile?.skill||"";
-  $("pDescription").value=myProfile?.description||"";
-  $("pHourly").value=myProfile?.hourly_price??"";
-  $("pProject").value=myProfile?.project_price??"";
 }
-function closeProfileModal(){$("profileModal").classList.add("hidden")}
+function closeModal(id){$(id).classList.add("hidden");selected=null;}
 
 async function saveProfile(){
   const payload={
-    user_id:user.id,
-    name:$("pName").value.trim(),
-    location:$("pLocation").value.trim(),
-    skill:$("pSkill").value.trim(),
-    description:$("pDescription").value.trim(),
-    hourly_price:Number($("pHourly").value),
-    project_price:Number($("pProject").value)
+    user_id:currentUser.id,
+    name:$("name").value.trim(),
+    location:$("location").value.trim(),
+    skill:$("skill").value.trim(),
+    description:$("description").value.trim(),
+    hourly_price:Number($("hourly").value),
+    project_price:Number($("project").value)
   };
   if(!payload.name||!payload.location||!payload.skill||!payload.description||!Number.isFinite(payload.hourly_price)||!Number.isFinite(payload.project_price))
-    return toast("Complete every profile field.","error");
+    return notify("Complete all fields.","err");
+
   try{
-    let result;
-    if(myProfile) result=await db.from("profiles").update(payload).eq("user_id",user.id).select().single();
-    else result=await db.from("profiles").insert(payload).select().single();
+    const result=profile
+      ? await supabase.from("profiles").update(payload).eq("user_id",currentUser.id).select().single()
+      : await supabase.from("profiles").insert(payload).select().single();
     if(result.error)throw result.error;
-    myProfile=result.data;closeProfileModal();toast("Profile saved successfully.","success");renderMyProfile();searchProfiles();
-  }catch(e){console.error(e);toast(e.message||"Could not save profile.","error")}
+    profile=result.data;
+    closeModal("profileModal");
+    renderMine();
+    await loadProfiles();
+    notify("Profile saved.","ok");
+  }catch(e){notify(e.message||"Could not save profile.","err");}
 }
 
-function renderMyProfile(){
-  if(!myProfile){$("myProfile").innerHTML=`<div class="empty">No freelancer profile yet.<br><button class="btn white" style="margin-top:18px" onclick="openProfileModal()">Offer Your Skill</button></div>`;return}
-  $("myProfile").innerHTML=`<div class="card"><h3>${esc(myProfile.name)}</h3><div class="skill">${esc(myProfile.skill)}</div><div class="location">${esc(myProfile.location)}</div><p style="color:#bbb;line-height:1.5;margin-top:14px">${esc(myProfile.description)}</p><div class="prices"><span>₹${esc(myProfile.hourly_price)} / hour</span><span>₹${esc(myProfile.project_price)} / project</span></div><div class="card-actions"><button class="btn white" onclick="openProfileModal()">Edit Profile</button></div></div>`
+function renderMine(){
+  if(!profile){
+    $("mine").innerHTML=`<div class="empty">You don't have a freelancer profile yet.<br><button class="btn white" style="margin-top:15px" onclick="openProfile()">Offer Your Skill</button></div>`;
+    return;
+  }
+  $("mine").innerHTML=`
+  <div class="card">
+    <h3>${esc(profile.name)}</h3>
+    <div class="skill">${esc(profile.skill)}</div>
+    <div class="location">${esc(profile.location)}</div>
+    <div class="message">${esc(profile.description)}</div>
+    <div class="prices"><span>₹${esc(profile.hourly_price)} / hour</span><span>₹${esc(profile.project_price)} / project</span></div>
+    <div class="cardBtns"><button class="btn white" onclick="openProfile()">Edit Profile</button></div>
+  </div>`;
 }
 
-async function searchProfiles(){
-  $("profiles").innerHTML=`<div class="muted">Loading profiles...</div>`;
+async function loadProfiles(){
+  $("profiles").innerHTML=`<div class="muted">Loading...</div>`;
   try{
-    const q=$("skillSearch").value.trim();
-    let query=db.from("profiles").select("*").order("created_at",{ascending:false});
+    let query=supabase.from("profiles").select("*").order("created_at",{ascending:false});
+    const q=$("q").value.trim();
     if(q)query=query.ilike("skill",`%${q}%`);
-    const {data,error}=await query;if(error)throw error;
-    const rows=(data||[]).filter(x=>x.user_id!==user?.id);
-    if(!rows.length){$("profiles").innerHTML=`<div class="empty">No freelancer profiles found.</div>`;return}
+    const {data,error}=await query;
+    if(error)throw error;
+    const rows=(data||[]).filter(p=>p.user_id!==currentUser.id);
+    profileCache=Object.fromEntries(rows.map(p=>[p.user_id,p]));
+    if(!rows.length){$("profiles").innerHTML=`<div class="empty">No profiles found.</div>`;return;}
     $("profiles").innerHTML=rows.map(p=>`
-      <div class="card profile-card">
-        <h3>${esc(p.name)}</h3><div class="skill">${esc(p.skill)}</div><div class="location">${esc(p.location)}</div>
-        <div class="description">${esc(p.description)}</div>
+      <div class="card profileCard">
+        <h3>${esc(p.name)}</h3>
+        <div class="skill">${esc(p.skill)}</div>
+        <div class="location">${esc(p.location)}</div>
+        <div class="desc">${esc(p.description)}</div>
         <div class="prices"><span>₹${esc(p.hourly_price)} / hour</span><span>₹${esc(p.project_price)} / project</span></div>
-        <div class="card-actions"><button class="btn white" onclick="openHire('${p.user_id}')">Send Hire Request</button></div>
+        <div class="cardBtns"><button class="btn white" onclick="openHire('${esc(p.user_id)}')">Send Hire Request</button></div>
       </div>`).join("");
-    window.profileCache=Object.fromEntries(rows.map(p=>[p.user_id,p]));
-  }catch(e){console.error(e);$("profiles").innerHTML=`<div class="empty">Could not load profiles.</div>`}
+  }catch(e){console.error(e);$("profiles").innerHTML=`<div class="empty">Could not load profiles.</div>`;}
 }
-function openHire(id){
-  selectedProfile=window.profileCache?.[id];
-  if(!selectedProfile)return toast("Profile not found.","error");
-  $("hireTarget").innerHTML=`<div class="card" style="margin-bottom:18px"><h3>${esc(selectedProfile.name)}</h3><div class="skill">${esc(selectedProfile.skill)}</div><div class="location">${esc(selectedProfile.location)}</div></div>`;
-  $("hireMessage").value="";$("hireModal").classList.remove("hidden");
-}
-function closeHireModal(){$("hireModal").classList.add("hidden");selectedProfile=null}
 
-async function sendHireRequest(){
-  if(!selectedProfile)return;
-  const message=$("hireMessage").value.trim();if(!message)return toast("Write a message.","error");
+function openHire(id){
+  selected=profileCache[id];
+  if(!selected)return notify("Profile not found.","err");
+  $("target").innerHTML=`<div class="card"><h3>${esc(selected.name)}</h3><div class="skill">${esc(selected.skill)}</div><div class="location">${esc(selected.location)}</div></div>`;
+  $("hireMessage").value="";
+  $("hireModal").classList.remove("hidden");
+}
+
+async function sendRequest(){
+  if(!selected)return;
+  const message=$("hireMessage").value.trim();
+  if(!message)return notify("Write a message.","err");
+
   try{
-    const {data,error}=await db.from("hire_requests").insert({
-      freelancer_id:selectedProfile.user_id,
-      sender_name:myProfile?.name||user.email.split("@")[0],
-      sender_email:user.email,
+    const {error}=await supabase.from("hire_requests").insert({
+      freelancer_id:selected.user_id,
+      sender_name:profile?.name||currentUser.email.split("@")[0],
+      sender_email:currentUser.email,
       message,
       status:"pending"
-    }).select().single();
+    });
     if(error)throw error;
-    closeHireModal();toast("Hire request sent successfully.","success");
-  }catch(e){console.error(e);toast(e.message||"Could not send hire request.","error")}
+    closeModal("hireModal");
+    notify("Hire request sent successfully.","ok");
+    await loadSent();
+  }catch(e){console.error(e);notify(e.message||"Could not send request.","err");}
 }
 
 async function loadSent(){
-  $("sentRequests").innerHTML=`<div class="muted">Loading...</div>`;
+  $("sent").innerHTML=`<div class="muted">Loading...</div>`;
   try{
-    /*
-      IMPORTANT:
-      Sent requests belong ONLY to the currently logged-in employer.
-      We use the secure RPC and then enforce the email match again
-      in the browser as a second safeguard.
-    */
-    const {data,error}=await db.rpc("get_my_sent_requests");
+    const {data,error}=await supabase.rpc("get_my_sent_requests");
     if(error)throw error;
-
-    const rows=(data||[]).filter(r =>
-      String(r.sender_email||"").toLowerCase() ===
-      String(user.email||"").toLowerCase()
-    );
-
-    if(!rows.length){
-      $("sentRequests").innerHTML=`<div class="empty">You haven't sent any hire requests yet.</div>`;
-      return;
-    }
-
-    $("sentRequests").innerHTML=rows.map(r=>`
+    const rows=(data||[]).filter(r=>String(r.sender_email||"").toLowerCase()===String(currentUser.email||"").toLowerCase());
+    if(!rows.length){$("sent").innerHTML=`<div class="empty">No requests sent yet.</div>`;return;}
+    $("sent").innerHTML=rows.map(r=>`
       <div class="card request">
-        <div class="request-top">
-          <div>
-            <div class="request-name">Hire Request</div>
-            <div class="request-email">Request ID: ${esc(r.id)}</div>
-          </div>
+        <div class="requestTop">
+          <div><strong>Hire Request</strong><div class="requestEmail">Request ID: ${esc(r.id)}</div></div>
           <span class="status ${esc(r.status||"pending")}">${esc(r.status||"pending")}</span>
         </div>
+        <div class="message">${esc(r.message)}</div>
+        ${r.status==="accepted"?`<div id="mail-${esc(r.id)}" style="border:1px solid #39734a;color:#a9efbb;padding:12px;border-radius:8px">Loading freelancer email...</div>`:""}
+        <div class="date">${date(r.created_at)}</div>
+      </div>`).join("");
 
-        <div class="request-message">${esc(r.message)}</div>
+    for(const r of rows.filter(x=>x.status==="accepted"))loadAcceptedMail(r.id);
+  }catch(e){console.error(e);$("sent").innerHTML=`<div class="empty">Could not load sent requests.</div>`;}
+}
 
-        ${r.status==="accepted"
-          ? `<div id="email-${esc(r.id)}"
-              class="request-message"
-              style="border:1px solid #39734a;border-radius:8px;padding:12px;color:#a9efbb">
-              Loading freelancer email...
-             </div>`
-          : ""}
-
-        <div class="date">${dateText(r.created_at)}</div>
-      </div>
-    `).join("");
-
-    for(const r of rows.filter(x=>x.status==="accepted")){
-      await loadAcceptedEmail(r.id);
-    }
-
-  }catch(e){
-    console.error("Sent requests error:",e);
-    $("sentRequests").innerHTML=
-      `<div class="empty">Could not load sent requests.<br><small>${esc(e.message||"")}</small></div>`;
-  }
+async function loadAcceptedMail(requestId){
+  const el=$("mail-"+requestId);if(!el)return;
+  try{
+    const {data,error}=await supabase.rpc("get_accepted_freelancer_email",{request_id:requestId});
+    if(error)throw error;
+    el.innerHTML=data?`Freelancer email: <strong>${esc(data)}</strong>`:"Freelancer email unavailable.";
+  }catch(e){el.textContent="Freelancer email unavailable.";}
 }
 
 async function loadReceived(){
-  $("receivedRequests").innerHTML=`<div class="muted">Loading...</div>`;
-
+  $("received").innerHTML=`<div class="muted">Loading...</div>`;
   try{
-    /*
-      IMPORTANT:
-      Received requests belong ONLY to the currently logged-in
-      freelancer. We use the secure RPC and then explicitly check
-      freelancer_id against the current Supabase Auth UUID.
-    */
-    const {data,error}=await db.rpc("get_my_received_requests");
+    const {data,error}=await supabase.rpc("get_my_received_requests");
     if(error)throw error;
-
-    const rows=(data||[]).filter(r =>
-      String(r.freelancer_id||"") === String(user.id||"")
-    );
-
-    if(!rows.length){
-      $("receivedRequests").innerHTML=
-        `<div class="empty">You haven't received any hire requests yet.</div>`;
-      return;
-    }
-
-    $("receivedRequests").innerHTML=rows.map(r=>`
+    const rows=(data||[]).filter(r=>String(r.freelancer_id||"")===String(currentUser.id||""));
+    if(!rows.length){$("received").innerHTML=`<div class="empty">No requests received yet.</div>`;return;}
+    $("received").innerHTML=rows.map(r=>`
       <div class="card request">
-        <div class="request-top">
-          <div>
-            <div class="request-name">${esc(r.sender_name)}</div>
-            <div class="request-email">${esc(r.sender_email)}</div>
-          </div>
-
-          <span class="status ${esc(r.status||"pending")}">
-            ${esc(r.status||"pending")}
-          </span>
+        <div class="requestTop">
+          <div><strong>${esc(r.sender_name||"Employer")}</strong><div class="requestEmail">${esc(r.sender_email||"")}</div></div>
+          <span class="status ${esc(r.status||"pending")}">${esc(r.status||"pending")}</span>
         </div>
-
-        <div class="request-message">${esc(r.message)}</div>
-
-        ${r.status==="pending"
-          ? `<div class="card-actions">
-               <button class="btn success"
-                 onclick="changeRequest('${esc(r.id)}','accepted')">
-                 Accept
-               </button>
-               <button class="btn danger"
-                 onclick="changeRequest('${esc(r.id)}','declined')">
-                 Decline
-               </button>
-             </div>`
-          : ""}
-
-        <div class="date">${dateText(r.created_at)}</div>
-      </div>
-    `).join("");
-
-  }catch(e){
-    console.error("Received requests error:",e);
-    $("receivedRequests").innerHTML=
-      `<div class="empty">Could not load received requests.<br><small>${esc(e.message||"")}</small></div>`;
-  }
+        <div class="message">${esc(r.message)}</div>
+        ${r.status==="pending"?`<div class="cardBtns"><button class="btn green" onclick="respond('${esc(r.id)}','accepted')">Accept</button><button class="btn red" onclick="respond('${esc(r.id)}','declined')">Decline</button></div>`:""}
+        <div class="date">${date(r.created_at)}</div>
+      </div>`).join("");
+  }catch(e){console.error(e);$("received").innerHTML=`<div class="empty">Could not load received requests.</div>`;}
 }
 
-async function changeRequest(id,status){
+async function respond(id,status){
   try{
-    if(!user?.id)return toast("Please log in again.","error");
-
-    /*
-      The database function verifies that the logged-in user is the
-      freelancer who owns this request.
-    */
-    const {data,error}=await db.rpc("update_my_hire_request",{
-      request_id:id,
-      new_status:status
-    });
-
+    const {error}=await supabase.rpc("update_my_hire_request",{request_id:id,new_status:status});
     if(error)throw error;
-
-    toast(
-      status==="accepted"
-        ? "Hire request accepted."
-        : "Hire request declined.",
-      "success"
-    );
-
+    notify(status==="accepted"?"Hire request accepted.":"Hire request declined.","ok");
     await loadReceived();
     await loadSent();
+  }catch(e){console.error(e);notify(e.message||"Could not update request.","err");}
+}
 
-  }catch(e){
-    console.error("Update request error:",e);
-    toast(e.message||"Could not update request.","error");
+supabase.auth.onAuthStateChange(async(event,session)=>{
+  if(session?.user){
+    currentUser=session.user;
+    await startApp();
+  }else{
+    currentUser=null;profile=null;page("home");
   }
-}
-
-
-  try{
-    const patch={status};
-    if(status==="accepted")patch.accepted_at=new Date().toISOString();
-    if(status==="declined")patch.declined_at=new Date().toISOString();
-    const {error}=await db.from("hire_requests").update(patch).eq("id",id).eq("freelancer_id",user.id);
-    if(error)throw error;
-    toast(status==="accepted"?"Hire request accepted.":"Hire request declined.","success");
-    await loadReceived();await loadSent();
-  }catch(e){console.error(e);toast(e.message||"Could not update request.","error")}
-}
-
-db.auth.onAuthStateChange(async(_event,session)=>{
-  if(session?.user){user=session.user;await openDashboard()}
-  else{user=null;myProfile=null;showOnly("home")}
 });
 
 (async()=>{
-  const {data}=await db.auth.getSession();
-  if(data?.session?.user){user=data.session.user;await openDashboard()}else showOnly("home");
+  const {data}=await supabase.auth.getSession();
+  if(data.session?.user){
+    currentUser=data.session.user;
+    await startApp();
+  }else page("home");
 })();
 </script>
 </body>
