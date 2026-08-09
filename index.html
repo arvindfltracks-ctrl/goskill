@@ -1,2471 +1,1643 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GoSkill</title>
-
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f5f0;
-      color: #171717;
-      min-height: 100vh;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .page {
-      display: none;
-      min-height: 100vh;
-      padding: 24px;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: 1100px;
-      margin: 0 auto 50px;
-    }
-
-    .logo-small {
-      font-family: "DM Serif Display", serif;
-      font-size: 30px;
-    }
-
-    .auth-buttons,
-    .user-area {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .user-area {
-      display: none;
-    }
-
-    .user-email {
-      font-size: 14px;
-      margin-right: 8px;
-    }
-
-    .small-button {
-      border: 1px solid #171717;
-      background: transparent;
-      padding: 9px 17px;
-      border-radius: 7px;
-    }
-
-    .small-button.dark {
-      background: #171717;
-      color: white;
-    }
-
-    .search-container {
-      max-width: 800px;
-      margin: 0 auto 45px;
-      display: flex;
-      gap: 10px;
-    }
-
-    .search {
-      flex: 1;
-      padding: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: white;
-      outline: none;
-    }
-
-    .search-button {
-      padding: 16px 24px;
-      border: none;
-      border-radius: 8px;
-      background: #171717;
-      color: white;
-    }
-
-    h1,
-    h2 {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .skills {
-      max-width: 800px;
-      margin: 0 auto 30px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-
-    .skill {
-      padding: 12px 18px;
-      border: 1px solid #ccc;
-      background: white;
-      border-radius: 30px;
-    }
-
-    .description {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #555;
-    }
-
-    .primary-button {
-      display: block;
-      margin: 15px auto;
-      padding: 13px 22px;
-      border: none;
-      border-radius: 8px;
-      background: #171717;
-      color: white;
-      cursor: pointer;
-    }
-
-    .field {
-      display: block;
-      width: 100%;
-      max-width: 500px;
-      margin: 12px auto;
-      padding: 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: white;
-      outline: none;
-    }
-
-    textarea.field {
-      min-height: 130px;
-      resize: vertical;
-    }
-
-    .back {
-      display: block;
-      margin: 0 auto 25px;
-      border: none;
-      background: transparent;
-      font-size: 15px;
-    }
-
-    .message {
-      text-align: center;
-      min-height: 24px;
-      margin-top: 15px;
-    }
-
-    .auth-switch {
-      text-align: center;
-      margin-top: 25px;
-    }
-
-    .text-button {
-      border: none;
-      background: none;
-      text-decoration: underline;
-      cursor: pointer;
-    }
-
-    .avatar-upload {
-      text-align: center;
-      margin: 20px auto 30px;
-    }
-
-    .avatar-preview {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      margin: 0 auto 15px;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #e5e2dc;
-      font-size: 40px;
-      color: #777;
-    }
-
-    .upload-label {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 7px;
-      background: #171717;
-      color: white;
-      cursor: pointer;
-    }
-
-    #avatarInput {
-      display: none;
-    }
-
-    .upload-hint {
-      margin-top: 10px;
-      font-size: 12px;
-      color: #777;
-    }
-
-    #profilesList {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .profile-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 18px;
-    }
-
-    .profile-top {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-    }
-
-    .profile-avatar,
-    .detail-avatar {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background: #e5e2dc;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 25px;
-      flex-shrink: 0;
-    }
-
-    .profile-avatar img,
-    .detail-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .profile-name {
-      font-weight: bold;
-      font-size: 19px;
-    }
-
-    .profile-skill {
-      margin-top: 5px;
-      color: #666;
-    }
-
-    .profile-divider {
-      height: 1px;
-      background: #eee;
-      margin: 18px 0;
-    }
-
-    .profile-description {
-      color: #444;
-      line-height: 1.5;
-    }
-
-    .price-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
-    }
-
-    .price {
-      background: #f1efe9;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-
-    .verified-text {
-      font-size: 13px;
-      color: #777;
-    }
-
-    .view-profile-button {
-      width: 100%;
-      margin-top: 18px;
-      padding: 12px;
-      border: 1px solid #171717;
-      background: white;
-      border-radius: 7px;
-      cursor: pointer;
-    }
-
-    #profileDetail {
-      max-width: 650px;
-      margin: 0 auto;
-    }
-
-    .detail-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 30px;
-      text-align: center;
-    }
-
-    .detail-avatar {
-      width: 130px;
-      height: 130px;
-      margin: 0 auto 20px;
-      font-size: 45px;
-    }
-
-    .detail-name {
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .detail-skill {
-      margin-top: 7px;
-      color: #666;
-      font-size: 18px;
-    }
-
-    .detail-description {
-      margin-top: 22px;
-      line-height: 1.6;
-      color: #444;
-    }
-
-    .detail-prices {
-      margin-top: 22px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .detail-price {
-      padding: 12px 16px;
-      background: #f1efe9;
-      border-radius: 7px;
-    }
-
-    .detail-price-label {
-      display: block;
-      font-size: 12px;
-      color: #777;
-    }
-
-    .detail-price-value {
-      display: block;
-      margin-top: 4px;
-      font-weight: bold;
-    }
-
-    .contact-box {
-      margin-top: 25px;
-      padding: 15px;
-      background: #f7f5f0;
-      border-radius: 8px;
-      color: #555;
-      line-height: 1.5;
-    }
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 1000;
-    }
-
-    .modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      width: 100%;
-      max-width: 550px;
-      max-height: 90vh;
-      overflow-y: auto;
-      background: #f7f5f0;
-      border-radius: 12px;
-      padding: 25px;
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      right: 18px;
-      top: 12px;
-      border: none;
-      background: transparent;
-      font-size: 28px;
-      cursor: pointer;
-    }
-
-    .modal-subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .top-bar {
-        margin-bottom: 30px;
-      }
-
-      .user-email {
-        display: none;
-      }
-
-      .search-container {
-        flex-direction: column;
-      }
-
-      .page {
-        padding: 16px;
-      }
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- HOME -->
-
-  <section id="homePage" class="page active">
-
-    <div class="top-bar">
-
-      <div class="logo-small">
-        GoSkill
-      </div>
-
-      <div id="authButtons" class="auth-buttons">
-
-        <button id="loginButton" class="small-button" type="button">
-          Log In
-        </button>
-
-        <button id="signupButton" class="small-button dark" type="button">
-          Sign Up
-        </button>
-
-      </div>
-
-      <div id="userArea" class="user-area">
-
-        <span id="userEmail" class="user-email"></span>
-
-        <button id="logoutButton" class="small-button dark" type="button">
-          Log Out
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <div class="search-container">
-
-      <input
-        id="searchInput"
-        class="search"
-        type="text"
-        placeholder="Search for a skill or profession..."
-      >
-
-      <button id="searchButton" class="search-button" type="button">
-        Search
-      </button>
-
-    </div>
-
-
-    <h2>
-      Popular Skills
-    </h2>
-
-
-    <div class="skills">
-
-      <button class="skill" type="button" data-skill="Video Editor">
-        Video Editor
-      </button>
-
-      <button class="skill" type="button" data-skill="Graphic Designer">
-        Graphic Designer
-      </button>
-
-      <button class="skill" type="button" data-skill="Developer">
-        Developer
-      </button>
-
-      <button class="skill" type="button" data-skill="Photographer">
-        Photographer
-      </button>
-
-    </div>
-
-
-    <p class="description">
-      Find the right person for your project.
-    </p>
-
-
-    <button id="offerButton" class="primary-button" type="button">
-      Offer Your Skill
-    </button>
-
-  </section>
-
-
-  <!-- LOGIN -->
-
-  <section id="loginPage" class="page">
-
-    <button id="loginBackButton" class="back" type="button">
-      ← Back
-    </button>
-
-    <h2>
-      Log In
-    </h2>
-
-    <br>
-
-    <input
-      id="loginEmail"
-      class="field"
-      type="email"
-      placeholder="Email address"
-    >
-
-    <input
-      id="loginPassword"
-      class="field"
-      type="password"
-      placeholder="Password"
-    >
-
-    <button id="doLoginButton" class="primary-button" type="button">
-      Log In
-    </button>
-
-    <p id="loginMessage" class="message"></p>
-
-    <div class="auth-switch">
-
-      Don't have an account?
-
-      <button id="switchToSignup" class="text-button" type="button">
-        Sign Up
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- SIGN UP -->
-
-  <section id="signupPage" class="page">
-
-    <button id="signupBackButton" class="back" type="button">
-      ← Back
-    </button>
-
-    <h2>
-      Create Account
-    </h2>
-
-    <br>
-
-    <input
-      id="signupEmail"
-      class="field"
-      type="email"
-      placeholder="Email address"
-    >
-
-    <input
-      id="signupPassword"
-      class="field"
-      type="password"
-      placeholder="Password"
-    >
-
-    <input
-      id="signupPasswordConfirm"
-      class="field"
-      type="password"
-      placeholder="Confirm password"
-    >
-
-    <button id="doSignupButton" class="primary-button" type="button">
-      Sign Up
-    </button>
-
-    <p id="signupMessage" class="message"></p>
-
-    <div class="auth-switch">
-
-      Already have an account?
-
-      <button id="switchToLogin" class="text-button" type="button">
-        Log In
-      </button>
-
-    </div>
-
-  </section>
-
-
-  <!-- PROFILE -->
-
-  <section id="profilePage" class="page">
-
-    <button id="profileBackButton" class="back" type="button">
-      ← Back
-    </button>
-
-    <h2>
-      Create Your Profile
-    </h2>
-
-    <br>
-
-    <div class="avatar-upload">
-
-      <div class="avatar-preview avatar-placeholder" id="avatarPreview">
-        +
-      </div>
-
-      <label class="upload-label" for="avatarInput">
-        Choose Profile Photo
-      </label>
-
-      <input
-        id="avatarInput"
-        type="file"
-        accept="image/jpeg,image/png,image/webp"
-      >
-
-      <div class="upload-hint">
-        JPG, PNG or WebP · Maximum 5MB
-      </div>
-
-    </div>
-
-
-    <input
-      id="name"
-      class="field"
-      type="text"
-      placeholder="Enter your full name"
-    >
-
-    <input
-      id="skill"
-      class="field"
-      type="text"
-      placeholder="What is your skill or profession?"
-    >
-
-    <textarea
-      id="description"
-      class="field"
-      placeholder="Tell people about your skill"
-    ></textarea>
-
-    <input
-      id="hourlyPrice"
-      class="field"
-      type="number"
-      placeholder="Hourly price"
-    >
-
-    <input
-      id="projectPrice"
-      class="field"
-      type="number"
-      placeholder="Project price"
-    >
-
-    <button
-      id="createProfileButton"
-      class="primary-button"
-      type="button"
-    >
-      Create Profile
-    </button>
-
-    <p id="profileMessage" class="message"></p>
-
-  </section>
-
-
-  <!-- RESULTS -->
-
-  <section id="resultsPage" class="page">
-
-    <button id="resultsBackButton" class="back" type="button">
-      ← Back
-    </button>
-
-    <h2>
-      People on GoSkill
-    </h2>
-
-    <br>
-
-    <div id="profilesList"></div>
-
-  </section>
-
-
-  <!-- DETAIL -->
-
-  <section id="detailPage" class="page">
-
-    <button id="detailBackButton" class="back" type="button">
-      ← Back
-    </button>
-
-    <div id="profileDetail"></div>
-
-  </section>
-
-
-  <!-- CONTACT MODAL -->
-
-  <div id="contactModal" class="modal">
-
-    <div class="modal-content">
-
-      <button id="closeContactModal" class="modal-close" type="button">
-        ×
-      </button>
-
-      <h2>
-        Contact / Hire
-      </h2>
-
-      <p id="contactSubtitle" class="modal-subtitle">
-        Send a message about your project.
-      </p>
-
-      <input
-        id="contactName"
-        class="field"
-        type="text"
-        placeholder="Your name"
-      >
-
-      <input
-        id="contactEmail"
-        class="field"
-        type="email"
-        placeholder="Your email"
-      >
-
-      <textarea
-        id="contactMessage"
-        class="field"
-        placeholder="Tell them about your project..."
-      ></textarea>
-
-      <button
-        id="sendContactButton"
-        class="primary-button"
-        type="button"
-      >
-        Send Request
-      </button>
-
-      <p id="contactStatus" class="message"></p>
-
-    </div>
-
-  </div>
-
-
-  <script>
-
-    /* =========================
-       SUPABASE
-       ========================= */
-
-    const SUPABASE_URL =
-      "https://ffovbypaoltxuuycppgo.supabase.co";
-
-    const SUPABASE_KEY =
-      "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
-
-
-    /* =========================
-       STATE
-       ========================= */
-
-    let currentUser = null;
-    let accessToken = null;
-    let selectedAvatarFile = null;
-    let selectedProfile = null;
-
-
-    /* =========================
-       PAGE NAVIGATION
-       ========================= */
-
-    function showPage(pageId) {
-
-      document
-        .querySelectorAll(".page")
-        .forEach(function(page) {
-          page.classList.remove("active");
-        });
-
-      const page =
-        document.getElementById(pageId);
-
-      if (page) {
-        page.classList.add("active");
-      }
-
-      window.scrollTo(0, 0);
-    }
-
-
-    /* =========================
-       AUTH UI
-       ========================= */
-
-    function updateAuthUI() {
-
-      const authButtons =
-        document.getElementById("authButtons");
-
-      const userArea =
-        document.getElementById("userArea");
-
-      const userEmail =
-        document.getElementById("userEmail");
-
-
-      if (currentUser) {
-
-        authButtons.style.display = "none";
-        userArea.style.display = "flex";
-
-        userEmail.textContent =
-          currentUser.email || "";
-
-      } else {
-
-        authButtons.style.display = "flex";
-        userArea.style.display = "none";
-
-        userEmail.textContent = "";
-      }
-    }
-
-
-    /* =========================
-       SIGN UP
-       ========================= */
-
-    async function signUp() {
-
-      const email =
-        document
-          .getElementById("signupEmail")
-          .value
-          .trim();
-
-      const password =
-        document
-          .getElementById("signupPassword")
-          .value;
-
-      const confirmPassword =
-        document
-          .getElementById("signupPasswordConfirm")
-          .value;
-
-      const message =
-        document.getElementById("signupMessage");
-
-
-      if (!email || !password) {
-
-        message.textContent =
-          "Please enter your email and password.";
-
-        return;
-      }
-
-
-      if (password !== confirmPassword) {
-
-        message.textContent =
-          "Passwords do not match.";
-
-        return;
-      }
-
-
-      if (password.length < 6) {
-
-        message.textContent =
-          "Password must be at least 6 characters.";
-
-        return;
-      }
+<script>
 
+/* =========================
+   SUPABASE
+   ========================= */
+
+const SUPABASE_URL =
+  "https://ffovbypaoltxuuycppgo.supabase.co";
+
+const SUPABASE_KEY =
+  "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
+
+
+/* =========================
+   STATE
+   ========================= */
+
+let currentUser = null;
+let accessToken = null;
+let selectedAvatarFile = null;
+let selectedProfile = null;
+
+
+/* =========================
+   PAGE NAVIGATION
+   ========================= */
+
+function showPage(pageId) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(function(page) {
+      page.classList.remove("active");
+    });
+
+  const page =
+    document.getElementById(pageId);
+
+  if (page) {
+    page.classList.add("active");
+  }
+
+  window.scrollTo(0, 0);
+}
+
+
+/* =========================
+   AUTH UI
+   ========================= */
+
+function updateAuthUI() {
+
+  const authButtons =
+    document.getElementById("authButtons");
+
+  const userArea =
+    document.getElementById("userArea");
+
+  const userEmail =
+    document.getElementById("userEmail");
+
+
+  if (currentUser) {
+
+    authButtons.style.display = "none";
+    userArea.style.display = "flex";
+
+    userEmail.textContent =
+      currentUser.email || "";
+
+  } else {
+
+    authButtons.style.display = "flex";
+    userArea.style.display = "none";
+
+    userEmail.textContent = "";
+  }
+}
+
+
+/* =========================
+   SIGN UP
+   ========================= */
+
+async function signUp() {
+
+  const email =
+    document
+      .getElementById("signupEmail")
+      .value
+      .trim();
+
+  const password =
+    document
+      .getElementById("signupPassword")
+      .value;
+
+  const confirmPassword =
+    document
+      .getElementById("signupPasswordConfirm")
+      .value;
+
+  const message =
+    document.getElementById("signupMessage");
+
+
+  if (!email || !password) {
+
+    message.textContent =
+      "Please enter your email and password.";
+
+    return;
+  }
+
+
+  if (password !== confirmPassword) {
+
+    message.textContent =
+      "Passwords do not match.";
+
+    return;
+  }
+
+
+  if (password.length < 6) {
+
+    message.textContent =
+      "Password must be at least 6 characters.";
+
+    return;
+  }
+
+
+  message.textContent =
+    "Creating account...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL + "/auth/v1/signup",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
+          },
+
+          body: JSON.stringify({
+
+            email: email,
+
+            password: password,
+
+            options: {
+              emailRedirectTo:
+                "https://goskill-nine.vercel.app/"
+            }
+
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Signup error:",
+        data
+      );
 
       message.textContent =
-        "Creating account...";
+        data.message ||
+        data.error_description ||
+        data.msg ||
+        "Could not create account.";
 
-
-      try {
-
-        const response =
-          await fetch(
-            SUPABASE_URL + "/auth/v1/signup",
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type": "application/json",
-                "apikey": SUPABASE_KEY
-              },
-
-              body: JSON.stringify({
-
-                email: email,
-
-                password: password,
-
-                options: {
-                  emailRedirectTo:
-                    "https://goskill-nine.vercel.app/"
-                }
-
-              })
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          console.error(
-            "Signup error:",
-            data
-          );
-
-          message.textContent =
-            data.message ||
-            data.error_description ||
-            data.msg ||
-            "Could not create account.";
-
-          return;
-        }
-
-
-        if (data.access_token) {
-
-          accessToken =
-            data.access_token;
-
-          currentUser =
-            data.user;
-
-          updateAuthUI();
-
-          showPage("homePage");
-
-        } else {
-
-          message.textContent =
-            "Account created. Check your email to confirm your account.";
-        }
-
-
-      } catch (error) {
-
-        console.error(
-          "Signup connection error:",
-          error
-        );
-
-        message.textContent =
-          "Connection error. Please try again.";
-      }
+      return;
     }
 
 
-    /* =========================
-       LOGIN
-       ========================= */
+    if (data.access_token) {
 
-    async function login() {
+      accessToken =
+        data.access_token;
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
-
-      const password =
-        document
-          .getElementById("loginPassword")
-          .value;
-
-      const message =
-        document.getElementById("loginMessage");
-
-
-      if (!email || !password) {
-
-        message.textContent =
-          "Please enter your email and password.";
-
-        return;
-      }
-
-
-      message.textContent =
-        "Logging in...";
-
-
-      try {
-
-        const response =
-          await fetch(
-            SUPABASE_URL +
-            "/auth/v1/token?grant_type=password",
-            {
-              method: "POST",
-
-              headers: {
-                "Content-Type": "application/json",
-                "apikey": SUPABASE_KEY
-              },
-
-              body: JSON.stringify({
-                email: email,
-                password: password
-              })
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          console.error(
-            "Login error:",
-            data
-          );
-
-          message.textContent =
-            data.error_description ||
-            data.msg ||
-            "Invalid email or password.";
-
-          return;
-        }
-
-
-        accessToken =
-          data.access_token;
-
-        currentUser =
-          data.user;
-
-        updateAuthUI();
-
-        showPage("homePage");
-
-
-      } catch (error) {
-
-        console.error(
-          "Login connection error:",
-          error
-        );
-
-        message.textContent =
-          "Connection error. Please try again.";
-      }
-    }
-
-
-    /* =========================
-       LOGOUT
-       ========================= */
-
-    function logout() {
-
-      currentUser = null;
-      accessToken = null;
-      selectedAvatarFile = null;
+      currentUser =
+        data.user;
 
       updateAuthUI();
 
       showPage("homePage");
+
+    } else {
+
+      message.textContent =
+        "Account created. Check your email to confirm your account.";
     }
 
 
-    /* =========================
-       AVATAR PREVIEW
-       ========================= */
+  } catch (error) {
 
+    console.error(
+      "Signup connection error:",
+      error
+    );
+
+    message.textContent =
+      "Connection error. Please try again.";
+  }
+}
+
+
+/* =========================
+   LOGIN
+   ========================= */
+
+async function login() {
+
+  const email =
     document
-      .getElementById("avatarInput")
-      .addEventListener(
-        "change",
-        function(event) {
+      .getElementById("loginEmail")
+      .value
+      .trim();
 
-          const file =
-            event.target.files[0];
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
 
-          const preview =
-            document.getElementById(
-              "avatarPreview"
-            );
-
-
-          if (!file) {
-            return;
-          }
+  const message =
+    document.getElementById("loginMessage");
 
 
-          if (file.size > 5 * 1024 * 1024) {
+  if (!email || !password) {
 
-            alert(
-              "Please choose an image smaller than 5MB."
-            );
+    message.textContent =
+      "Please enter your email and password.";
 
-            event.target.value = "";
-            selectedAvatarFile = null;
-
-            return;
-          }
+    return;
+  }
 
 
-          if (
-            ![
-              "image/jpeg",
-              "image/png",
-              "image/webp"
-            ].includes(file.type)
-          ) {
-
-            alert(
-              "Please choose a JPG, PNG or WebP image."
-            );
-
-            event.target.value = "";
-            selectedAvatarFile = null;
-
-            return;
-          }
+  message.textContent =
+    "Logging in...";
 
 
-          selectedAvatarFile = file;
+  try {
 
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/auth/v1/token?grant_type=password",
+        {
+          method: "POST",
 
-          const reader =
-            new FileReader();
+          headers: {
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
+          },
 
-
-          reader.onload =
-            function(e) {
-
-              preview.className =
-                "avatar-preview";
-
-              preview.innerHTML =
-                "";
-
-              preview.style.backgroundImage =
-                "url('" +
-                e.target.result +
-                "')";
-
-              preview.style.backgroundSize =
-                "cover";
-
-              preview.style.backgroundPosition =
-                "center";
-            };
-
-
-          reader.readAsDataURL(file);
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
         }
       );
 
 
-    /* =========================
-       UPLOAD AVATAR
-       ========================= */
-
-    async function uploadAvatar() {
-
-      if (!selectedAvatarFile || !currentUser) {
-        return null;
-      }
+    const data =
+      await response.json();
 
 
-      const file =
-        selectedAvatarFile;
+    if (!response.ok) {
 
-
-      const extension =
-        file.name
-          .split(".")
-          .pop()
-          .toLowerCase();
-
-
-      const filePath =
-        currentUser.id +
-        "/" +
-        Date.now() +
-        "." +
-        extension;
-
-
-      const response =
-        await fetch(
-          SUPABASE_URL +
-          "/storage/v1/object/avatars/" +
-          filePath,
-          {
-            method: "POST",
-
-            headers: {
-
-              "Authorization":
-                "Bearer " +
-                accessToken,
-
-              "apikey":
-                SUPABASE_KEY,
-
-              "Content-Type":
-                file.type,
-
-              "x-upsert":
-                "true"
-            },
-
-            body: file
-          }
-        );
-
-
-      if (!response.ok) {
-
-        const error =
-          await response.text();
-
-        console.error(
-          "Avatar upload error:",
-          error
-        );
-
-        throw new Error(
-          "Could not upload profile photo."
-        );
-      }
-
-
-      return (
-        SUPABASE_URL +
-        "/storage/v1/object/public/avatars/" +
-        filePath
+      console.error(
+        "Login error:",
+        data
       );
+
+      message.textContent =
+        data.error_description ||
+        data.msg ||
+        "Invalid email or password.";
+
+      return;
     }
 
 
-    /* =========================
-       CREATE PROFILE
-       ========================= */
+    accessToken =
+      data.access_token;
 
-    async function createProfile() {
+    currentUser =
+      data.user;
 
-      if (!currentUser) {
+    updateAuthUI();
+
+    showPage("homePage");
+
+
+  } catch (error) {
+
+    console.error(
+      "Login connection error:",
+      error
+    );
+
+    message.textContent =
+      "Connection error. Please try again.";
+  }
+}
+
+
+/* =========================
+   LOGOUT
+   ========================= */
+
+function logout() {
+
+  currentUser = null;
+  accessToken = null;
+  selectedAvatarFile = null;
+
+  updateAuthUI();
+
+  showPage("homePage");
+}
+
+
+/* =========================
+   AVATAR PREVIEW
+   ========================= */
+
+document
+  .getElementById("avatarInput")
+  .addEventListener(
+    "change",
+    function(event) {
+
+      const file =
+        event.target.files[0];
+
+      const preview =
+        document.getElementById(
+          "avatarPreview"
+        );
+
+
+      if (!file) {
+        return;
+      }
+
+
+      if (file.size > 5 * 1024 * 1024) {
 
         alert(
-          "Please log in before creating a profile."
+          "Please choose an image smaller than 5MB."
         );
+
+        event.target.value = "";
+        selectedAvatarFile = null;
+
+        return;
+      }
+
+
+      if (
+        ![
+          "image/jpeg",
+          "image/png",
+          "image/webp"
+        ].includes(file.type)
+      ) {
+
+        alert(
+          "Please choose a JPG, PNG or WebP image."
+        );
+
+        event.target.value = "";
+        selectedAvatarFile = null;
+
+        return;
+      }
+
+
+      selectedAvatarFile = file;
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload =
+        function(e) {
+
+          preview.className =
+            "avatar-preview";
+
+          preview.innerHTML =
+            "";
+
+          preview.style.backgroundImage =
+            "url('" +
+            e.target.result +
+            "')";
+
+          preview.style.backgroundSize =
+            "cover";
+
+          preview.style.backgroundPosition =
+            "center";
+        };
+
+
+      reader.readAsDataURL(file);
+    }
+  );
+
+
+/* =========================
+   UPLOAD AVATAR
+   ========================= */
+
+async function uploadAvatar() {
+
+  if (!selectedAvatarFile || !currentUser) {
+    return null;
+  }
+
+
+  const file =
+    selectedAvatarFile;
+
+
+  const extension =
+    file.name
+      .split(".")
+      .pop()
+      .toLowerCase();
+
+
+  const filePath =
+    currentUser.id +
+    "/" +
+    Date.now() +
+    "." +
+    extension;
+
+
+  const response =
+    await fetch(
+      SUPABASE_URL +
+      "/storage/v1/object/avatars/" +
+      filePath,
+      {
+        method: "POST",
+
+        headers: {
+
+          "Authorization":
+            "Bearer " +
+            accessToken,
+
+          "apikey":
+            SUPABASE_KEY,
+
+          "Content-Type":
+            file.type,
+
+          "x-upsert":
+            "true"
+        },
+
+        body: file
+      }
+    );
+
+
+  if (!response.ok) {
+
+    const error =
+      await response.text();
+
+    console.error(
+      "Avatar upload error:",
+      error
+    );
+
+    throw new Error(
+      "Could not upload profile photo."
+    );
+  }
+
+
+  return (
+    SUPABASE_URL +
+    "/storage/v1/object/public/avatars/" +
+    filePath
+  );
+}
+
+
+/* =========================
+   CREATE PROFILE
+   ========================= */
+
+async function createProfile() {
+
+  if (!currentUser) {
+
+    alert(
+      "Please log in before creating a profile."
+    );
+
+    showPage("loginPage");
+
+    return;
+  }
+
+
+  const name =
+    document
+      .getElementById("name")
+      .value
+      .trim();
+
+  const skill =
+    document
+      .getElementById("skill")
+      .value
+      .trim();
+
+  const description =
+    document
+      .getElementById("description")
+      .value
+      .trim();
+
+  const hourlyPrice =
+    document
+      .getElementById("hourlyPrice")
+      .value;
+
+  const projectPrice =
+    document
+      .getElementById("projectPrice")
+      .value;
+
+  const message =
+    document.getElementById(
+      "profileMessage"
+    );
+
+
+  if (!name || !skill) {
+
+    message.textContent =
+      "Please enter your name and skill.";
+
+    return;
+  }
+
+
+  message.textContent =
+    "Saving profile...";
+
+
+  try {
+
+    let avatarUrl = null;
+
+
+    if (selectedAvatarFile) {
+
+      message.textContent =
+        "Uploading profile photo...";
+
+      avatarUrl =
+        await uploadAvatar();
+    }
+
+
+    message.textContent =
+      "Saving profile...";
+
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/rest/v1/profiles",
+        {
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              accessToken,
+
+            "Prefer":
+              "return=minimal"
+          },
+
+          body: JSON.stringify({
+
+            name: name,
+
+            skill: skill,
+
+            description: description,
+
+            hourly_price:
+              hourlyPrice
+                ? Number(hourlyPrice)
+                : null,
+
+            project_price:
+              projectPrice
+                ? Number(projectPrice)
+                : null,
+
+            user_id:
+              currentUser.id,
+
+            avatar_url:
+              avatarUrl,
+
+            created_at:
+              new Date().toISOString()
+
+          })
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const error =
+        await response.text();
+
+      console.error(
+        "Profile error:",
+        error
+      );
+
+      message.textContent =
+        "Could not save profile. Check your database policies.";
+
+      return;
+    }
+
+
+    message.textContent =
+      "Profile created successfully!";
+
+
+    document.getElementById("name").value = "";
+    document.getElementById("skill").value = "";
+    document.getElementById("description").value = "";
+    document.getElementById("hourlyPrice").value = "";
+    document.getElementById("projectPrice").value = "";
+    document.getElementById("avatarInput").value = "";
+
+    selectedAvatarFile = null;
+
+
+    const preview =
+      document.getElementById(
+        "avatarPreview"
+      );
+
+
+    preview.className =
+      "avatar-preview avatar-placeholder";
+
+    preview.style.backgroundImage =
+      "none";
+
+    preview.innerHTML =
+      "+";
+
+
+  } catch (error) {
+
+    console.error(
+      "Profile connection error:",
+      error
+    );
+
+    message.textContent =
+      error.message ||
+      "Connection error. Please try again.";
+  }
+}
+
+
+/* =========================
+   SEARCH
+   ========================= */
+
+async function searchSkill(skill) {
+
+  if (!skill) {
+    return;
+  }
+
+
+  showPage("resultsPage");
+
+
+  const list =
+    document.getElementById(
+      "profilesList"
+    );
+
+
+  list.innerHTML =
+    "<p>Searching...</p>";
+
+
+  try {
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/profiles?select=*&skill=ilike." +
+      encodeURIComponent("*" + skill + "*");
+
+
+    const response =
+      await fetch(
+        url,
+        {
+          method: "GET",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              SUPABASE_KEY
+          }
+        }
+      );
+
+
+    if (!response.ok) {
+
+      const error =
+        await response.text();
+
+      console.error(
+        "Search error:",
+        error
+      );
+
+      list.innerHTML =
+        "<p>Could not load profiles.</p>";
+
+      return;
+    }
+
+
+    const profiles =
+      await response.json();
+
+
+    displayProfiles(profiles);
+
+
+  } catch (error) {
+
+    console.error(
+      "Search connection error:",
+      error
+    );
+
+    list.innerHTML =
+      "<p>Could not load profiles.</p>";
+  }
+}
+
+
+/* =========================
+   DISPLAY PROFILES
+   ========================= */
+
+function displayProfiles(profiles) {
+
+  const list =
+    document.getElementById(
+      "profilesList"
+    );
+
+
+  if (
+    !profiles ||
+    profiles.length === 0
+  ) {
+
+    list.innerHTML =
+      "<p>No profiles found yet.</p>";
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  profiles.forEach(function(profile) {
+
+    const card =
+      document.createElement("div");
+
+    card.className =
+      "profile-card";
+
+
+    const top =
+      document.createElement("div");
+
+    top.className =
+      "profile-top";
+
+
+    const avatar =
+      document.createElement("div");
+
+    avatar.className =
+      "profile-avatar";
+
+
+    if (profile.avatar_url) {
+
+      const image =
+        document.createElement("img");
+
+      image.src =
+        profile.avatar_url;
+
+      image.alt =
+        profile.name ||
+        "Profile photo";
+
+      avatar.appendChild(image);
+
+    } else {
+
+      avatar.textContent =
+        profile.name
+          ? profile.name
+              .charAt(0)
+              .toUpperCase()
+          : "?";
+    }
+
+
+    const info =
+      document.createElement("div");
+
+
+    const name =
+      document.createElement("div");
+
+    name.className =
+      "profile-name";
+
+    name.textContent =
+      profile.name || "";
+
+
+    const skill =
+      document.createElement("div");
+
+    skill.className =
+      "profile-skill";
+
+    skill.textContent =
+      profile.skill || "";
+
+
+    info.appendChild(name);
+    info.appendChild(skill);
+
+    top.appendChild(avatar);
+    top.appendChild(info);
+
+
+    const divider =
+      document.createElement("div");
+
+    divider.className =
+      "profile-divider";
+
+
+    const description =
+      document.createElement("div");
+
+    description.className =
+      "profile-description";
+
+    description.textContent =
+      profile.description ||
+      "No description provided.";
+
+
+    const prices =
+      document.createElement("div");
+
+    prices.className =
+      "price-row";
+
+
+    if (
+      profile.hourly_price !== null &&
+      profile.hourly_price !== undefined
+    ) {
+
+      const hourly =
+        document.createElement("div");
+
+      hourly.className =
+        "price";
+
+      hourly.textContent =
+        "₹" +
+        profile.hourly_price +
+        "/hr";
+
+      prices.appendChild(hourly);
+    }
+
+
+    if (
+      profile.project_price !== null &&
+      profile.project_price !== undefined
+    ) {
+
+      const project =
+        document.createElement("div");
+
+      project.className =
+        "price";
+
+      project.textContent =
+        "₹" +
+        profile.project_price +
+        " project";
+
+      prices.appendChild(project);
+    }
+
+
+    const verified =
+      document.createElement("div");
+
+    verified.className =
+      "verified-text";
+
+    verified.style.marginTop =
+      "12px";
+
+    verified.textContent =
+      "GoSkill member";
+
+
+    const viewButton =
+      document.createElement("button");
+
+    viewButton.className =
+      "view-profile-button";
+
+    viewButton.type =
+      "button";
+
+    viewButton.textContent =
+      "View Profile";
+
+
+    viewButton.addEventListener(
+      "click",
+      function() {
+        openProfileDetail(profile);
+      }
+    );
+
+
+    card.appendChild(top);
+    card.appendChild(divider);
+    card.appendChild(description);
+    card.appendChild(prices);
+    card.appendChild(verified);
+    card.appendChild(viewButton);
+
+    list.appendChild(card);
+
+  });
+}
+
+
+/* =========================
+   PROFILE DETAIL
+   ========================= */
+
+function openProfileDetail(profile) {
+
+  selectedProfile =
+    profile;
+
+
+  const detail =
+    document.getElementById(
+      "profileDetail"
+    );
+
+
+  detail.innerHTML =
+    "";
+
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "detail-card";
+
+
+  const avatar =
+    document.createElement("div");
+
+  avatar.className =
+    "detail-avatar";
+
+
+  if (profile.avatar_url) {
+
+    const image =
+      document.createElement("img");
+
+    image.src =
+      profile.avatar_url;
+
+    image.alt =
+      profile.name ||
+      "Profile photo";
+
+    avatar.appendChild(image);
+
+  } else {
+
+    avatar.textContent =
+      profile.name
+        ? profile.name
+            .charAt(0)
+            .toUpperCase()
+        : "?";
+  }
+
+
+  const name =
+    document.createElement("div");
+
+  name.className =
+    "detail-name";
+
+  name.textContent =
+    profile.name ||
+    "GoSkill Member";
+
+
+  const skill =
+    document.createElement("div");
+
+  skill.className =
+    "detail-skill";
+
+  skill.textContent =
+    profile.skill ||
+    "Professional";
+
+
+  const description =
+    document.createElement("div");
+
+  description.className =
+    "detail-description";
+
+  description.textContent =
+    profile.description ||
+    "This member has not added a description yet.";
+
+
+  const prices =
+    document.createElement("div");
+
+  prices.className =
+    "detail-prices";
+
+
+  if (
+    profile.hourly_price !== null &&
+    profile.hourly_price !== undefined
+  ) {
+
+    const hourly =
+      document.createElement("div");
+
+    hourly.className =
+      "detail-price";
+
+    hourly.innerHTML =
+      '<span class="detail-price-label">Hourly</span>' +
+      '<span class="detail-price-value">₹' +
+      profile.hourly_price +
+      '/hr</span>';
+
+    prices.appendChild(hourly);
+  }
+
+
+  if (
+    profile.project_price !== null &&
+    profile.project_price !== undefined
+  ) {
+
+    const project =
+      document.createElement("div");
+
+    project.className =
+      "detail-price";
+
+    project.innerHTML =
+      '<span class="detail-price-label">Project</span>' +
+      '<span class="detail-price-value">₹' +
+      profile.project_price +
+      '</span>';
+
+    prices.appendChild(project);
+  }
+
+
+  const contactBox =
+    document.createElement("div");
+
+  contactBox.className =
+    "contact-box";
+
+  contactBox.textContent =
+    "Interested in working with this professional? Send a project request through GoSkill.";
+
+
+  const hireButton =
+    document.createElement("button");
+
+  hireButton.className =
+    "primary-button";
+
+  hireButton.type =
+    "button";
+
+  hireButton.style.marginTop =
+    "20px";
+
+  hireButton.textContent =
+    "Contact / Hire";
+
+
+  hireButton.addEventListener(
+    "click",
+    function() {
+      openContactModal(profile);
+    }
+  );
+
+
+  card.appendChild(avatar);
+  card.appendChild(name);
+  card.appendChild(skill);
+  card.appendChild(description);
+  card.appendChild(prices);
+  card.appendChild(contactBox);
+  card.appendChild(hireButton);
+
+
+  detail.appendChild(card);
+
+
+  showPage("detailPage");
+}
+
+
+/* =========================
+   CONTACT MODAL
+   ========================= */
+
+function openContactModal(profile) {
+
+  selectedProfile =
+    profile;
+
+
+  const modal =
+    document.getElementById(
+      "contactModal"
+    );
+
+
+  const subtitle =
+    document.getElementById(
+      "contactSubtitle"
+    );
+
+
+  subtitle.textContent =
+    "Send a project request regarding " +
+    (profile.name || "this professional") +
+    ".";
+
+
+  document.getElementById(
+    "contactStatus"
+  ).textContent =
+    "";
+
+
+  modal.classList.add("active");
+}
+
+
+function closeContactModal() {
+
+  document
+    .getElementById("contactModal")
+    .classList.remove("active");
+}
+
+
+/* =========================
+   SEND HIRE REQUEST
+   ========================= */
+
+async function sendContactRequest() {
+
+  const name =
+    document
+      .getElementById("contactName")
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById("contactEmail")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("contactMessage")
+      .value
+      .trim();
+
+  const status =
+    document.getElementById(
+      "contactStatus"
+    );
+
+
+  if (!name || !email || !message) {
+
+    status.textContent =
+      "Please fill in all fields.";
+
+    return;
+  }
+
+
+  if (!selectedProfile) {
+
+    status.textContent =
+      "Profile information is unavailable.";
+
+    return;
+  }
+
+
+  if (!selectedProfile.user_id) {
+
+    status.textContent =
+      "This freelancer profile is missing account information.";
+
+    return;
+  }
+
+
+  status.textContent =
+    "Sending request...";
+
+
+  try {
+
+    const response =
+      await fetch(
+        SUPABASE_URL +
+        "/functions/v1/super-action",
+        {
+          method: "POST",
+
+          headers: {
+
+            "Content-Type":
+              "application/json",
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              accessToken
+          },
+
+          body: JSON.stringify({
+
+            freelancerId:
+              selectedProfile.user_id,
+
+            clientName:
+              name,
+
+            clientEmail:
+              email,
+
+            message:
+              message
+
+          })
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if (!response.ok) {
+
+      console.error(
+        "Hire request error:",
+        data
+      );
+
+      status.textContent =
+        data.error ||
+        "Could not send the request.";
+
+      return;
+    }
+
+
+    status.textContent =
+      "Request sent successfully!";
+
+
+    document
+      .getElementById("contactName")
+      .value = "";
+
+    document
+      .getElementById("contactEmail")
+      .value = "";
+
+    document
+      .getElementById("contactMessage")
+      .value = "";
+
+
+  } catch (error) {
+
+    console.error(
+      "Hire request connection error:",
+      error
+    );
+
+    status.textContent =
+      "Could not send the request. Please try again.";
+  }
+}
+
+
+/* =========================
+   BUTTON EVENTS
+   ========================= */
+
+document
+  .getElementById("loginButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("loginPage");
+    }
+  );
+
+
+document
+  .getElementById("signupButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("signupPage");
+    }
+  );
+
+
+document
+  .getElementById("logoutButton")
+  .addEventListener(
+    "click",
+    logout
+  );
+
+
+document
+  .getElementById("doLoginButton")
+  .addEventListener(
+    "click",
+    login
+  );
+
+
+document
+  .getElementById("doSignupButton")
+  .addEventListener(
+    "click",
+    signUp
+  );
+
+
+document
+  .getElementById("switchToSignup")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("signupPage");
+    }
+  );
+
+
+document
+  .getElementById("switchToLogin")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("loginPage");
+    }
+  );
+
+
+document
+  .getElementById("loginBackButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("homePage");
+    }
+  );
+
+
+document
+  .getElementById("signupBackButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("homePage");
+    }
+  );
+
+
+document
+  .getElementById("offerButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!currentUser) {
 
         showPage("loginPage");
 
         return;
       }
 
-
-      const name =
-        document
-          .getElementById("name")
-          .value
-          .trim();
-
-      const skill =
-        document
-          .getElementById("skill")
-          .value
-          .trim();
-
-      const description =
-        document
-          .getElementById("description")
-          .value
-          .trim();
-
-      const hourlyPrice =
-        document
-          .getElementById("hourlyPrice")
-          .value;
-
-      const projectPrice =
-        document
-          .getElementById("projectPrice")
-          .value;
-
-      const message =
-        document.getElementById(
-          "profileMessage"
-        );
-
-
-      if (!name || !skill) {
-
-        message.textContent =
-          "Please enter your name and skill.";
-
-        return;
-      }
-
-
-      message.textContent =
-        "Saving profile...";
-
-
-      try {
-
-        let avatarUrl = null;
-
-
-        if (selectedAvatarFile) {
-
-          message.textContent =
-            "Uploading profile photo...";
-
-          avatarUrl =
-            await uploadAvatar();
-        }
-
-
-        message.textContent =
-          "Saving profile...";
-
-
-        const response =
-          await fetch(
-            SUPABASE_URL +
-            "/rest/v1/profiles",
-            {
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  accessToken,
-
-                "Prefer":
-                  "return=minimal"
-              },
-
-              body: JSON.stringify({
-
-                name: name,
-
-                skill: skill,
-
-                description: description,
-
-                hourly_price:
-                  hourlyPrice
-                    ? Number(hourlyPrice)
-                    : null,
-
-                project_price:
-                  projectPrice
-                    ? Number(projectPrice)
-                    : null,
-
-                user_id:
-                  currentUser.id,
-
-                avatar_url:
-                  avatarUrl,
-
-                created_at:
-                  new Date().toISOString()
-
-              })
-            }
-          );
-
-
-        if (!response.ok) {
-
-          const error =
-            await response.text();
-
-          console.error(
-            "Profile error:",
-            error
-          );
-
-          message.textContent =
-            "Could not save profile. Check your database policies.";
-
-          return;
-        }
-
-
-        message.textContent =
-          "Profile created successfully!";
-
-
-        document.getElementById("name").value = "";
-        document.getElementById("skill").value = "";
-        document.getElementById("description").value = "";
-        document.getElementById("hourlyPrice").value = "";
-        document.getElementById("projectPrice").value = "";
-        document.getElementById("avatarInput").value = "";
-
-
-        selectedAvatarFile = null;
-
-
-        const preview =
-          document.getElementById(
-            "avatarPreview"
-          );
-
-
-        preview.className =
-          "avatar-preview avatar-placeholder";
-
-        preview.style.backgroundImage =
-          "none";
-
-        preview.innerHTML =
-          "+";
-
-
-      } catch (error) {
-
-        console.error(
-          "Profile connection error:",
-          error
-        );
-
-        message.textContent =
-          error.message ||
-          "Connection error. Please try again.";
-      }
+      showPage("profilePage");
     }
+  );
 
 
-    /* =========================
-       SEARCH
-       ========================= */
+document
+  .getElementById("profileBackButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("homePage");
+    }
+  );
 
-    async function searchSkill(skill) {
 
-      if (!skill) {
-        return;
-      }
+document
+  .getElementById("resultsBackButton")
+  .addEventListener(
+    "click",
+    function() {
+      showPage("homePage");
+    }
+  );
 
 
+document
+  .getElementById("detailBackButton")
+  .addEventListener(
+    "click",
+    function() {
       showPage("resultsPage");
-
-
-      const list =
-        document.getElementById(
-          "profilesList"
-        );
-
-
-      list.innerHTML =
-        "<p>Searching...</p>";
-
-
-      try {
-
-        const url =
-          SUPABASE_URL +
-          "/rest/v1/profiles?select=*&skill=ilike." +
-          encodeURIComponent("*" + skill + "*");
-
-
-        const response =
-          await fetch(
-            url,
-            {
-              method: "GET",
-
-              headers: {
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  SUPABASE_KEY
-              }
-            }
-          );
-
-
-        if (!response.ok) {
-
-          const error =
-            await response.text();
-
-          console.error(
-            "Search error:",
-            error
-          );
-
-          list.innerHTML =
-            "<p>Could not load profiles.</p>";
-
-          return;
-        }
-
-
-        const profiles =
-          await response.json();
-
-
-        displayProfiles(profiles);
-
-
-      } catch (error) {
-
-        console.error(
-          "Search connection error:",
-          error
-        );
-
-        list.innerHTML =
-          "<p>Could not load profiles.</p>";
-      }
     }
+  );
 
 
-    /* =========================
-       DISPLAY PROFILES
-       ========================= */
+document
+  .getElementById("createProfileButton")
+  .addEventListener(
+    "click",
+    createProfile
+  );
 
-    function displayProfiles(profiles) {
 
-      const list =
-        document.getElementById(
-          "profilesList"
-        );
+document
+  .getElementById("searchButton")
+  .addEventListener(
+    "click",
+    function() {
 
-
-      if (
-        !profiles ||
-        profiles.length === 0
-      ) {
-
-        list.innerHTML =
-          "<p>No profiles found yet.</p>";
-
-        return;
-      }
-
-
-      list.innerHTML = "";
-
-
-      profiles.forEach(function(profile) {
-
-        const card =
-          document.createElement("div");
-
-        card.className =
-          "profile-card";
-
-
-        const top =
-          document.createElement("div");
-
-        top.className =
-          "profile-top";
-
-
-        const avatar =
-          document.createElement("div");
-
-        avatar.className =
-          "profile-avatar";
-
-
-        if (profile.avatar_url) {
-
-          const image =
-            document.createElement("img");
-
-          image.src =
-            profile.avatar_url;
-
-          image.alt =
-            profile.name ||
-            "Profile photo";
-
-          avatar.appendChild(image);
-
-        } else {
-
-          avatar.textContent =
-            profile.name
-              ? profile.name
-                  .charAt(0)
-                  .toUpperCase()
-              : "?";
-        }
-
-
-        const info =
-          document.createElement("div");
-
-
-        const name =
-          document.createElement("div");
-
-        name.className =
-          "profile-name";
-
-        name.textContent =
-          profile.name || "";
-
-
-        const skill =
-          document.createElement("div");
-
-        skill.className =
-          "profile-skill";
-
-        skill.textContent =
-          profile.skill || "";
-
-
-        info.appendChild(name);
-        info.appendChild(skill);
-
-        top.appendChild(avatar);
-        top.appendChild(info);
-
-
-        const divider =
-          document.createElement("div");
-
-        divider.className =
-          "profile-divider";
-
-
-        const description =
-          document.createElement("div");
-
-        description.className =
-          "profile-description";
-
-        description.textContent =
-          profile.description ||
-          "No description provided.";
-
-
-        const prices =
-          document.createElement("div");
-
-        prices.className =
-          "price-row";
-
-
-        if (
-          profile.hourly_price !== null &&
-          profile.hourly_price !== undefined
-        ) {
-
-          const hourly =
-            document.createElement("div");
-
-          hourly.className =
-            "price";
-
-          hourly.textContent =
-            "₹" +
-            profile.hourly_price +
-            "/hr";
-
-          prices.appendChild(hourly);
-        }
-
-
-        if (
-          profile.project_price !== null &&
-          profile.project_price !== undefined
-        ) {
-
-          const project =
-            document.createElement("div");
-
-          project.className =
-            "price";
-
-          project.textContent =
-            "₹" +
-            profile.project_price +
-            " project";
-
-          prices.appendChild(project);
-        }
-
-
-        const verified =
-          document.createElement("div");
-
-        verified.className =
-          "verified-text";
-
-        verified.style.marginTop =
-          "12px";
-
-        verified.textContent =
-          "GoSkill member";
-
-
-        const viewButton =
-          document.createElement("button");
-
-        viewButton.className =
-          "view-profile-button";
-
-        viewButton.type =
-          "button";
-
-        viewButton.textContent =
-          "View Profile";
-
-
-        viewButton.addEventListener(
-          "click",
-          function() {
-            openProfileDetail(profile);
-          }
-        );
-
-
-        card.appendChild(top);
-        card.appendChild(divider);
-        card.appendChild(description);
-        card.appendChild(prices);
-        card.appendChild(verified);
-        card.appendChild(viewButton);
-
-        list.appendChild(card);
-
-      });
-    }
-
-
-    /* =========================
-       PROFILE DETAIL
-       ========================= */
-
-    function openProfileDetail(profile) {
-
-      selectedProfile =
-        profile;
-
-
-      const detail =
-        document.getElementById(
-          "profileDetail"
-        );
-
-
-      detail.innerHTML =
-        "";
-
-
-      const card =
-        document.createElement("div");
-
-      card.className =
-        "detail-card";
-
-
-      const avatar =
-        document.createElement("div");
-
-      avatar.className =
-        "detail-avatar";
-
-
-      if (profile.avatar_url) {
-
-        const image =
-          document.createElement("img");
-
-        image.src =
-          profile.avatar_url;
-
-        image.alt =
-          profile.name ||
-          "Profile photo";
-
-        avatar.appendChild(image);
-
-      } else {
-
-        avatar.textContent =
-          profile.name
-            ? profile.name
-                .charAt(0)
-                .toUpperCase()
-            : "?";
-      }
-
-
-      const name =
-        document.createElement("div");
-
-      name.className =
-        "detail-name";
-
-      name.textContent =
-        profile.name ||
-        "GoSkill Member";
-
-
-      const skill =
-        document.createElement("div");
-
-      skill.className =
-        "detail-skill";
-
-      skill.textContent =
-        profile.skill ||
-        "Professional";
-
-
-      const description =
-        document.createElement("div");
-
-      description.className =
-        "detail-description";
-
-      description.textContent =
-        profile.description ||
-        "This member has not added a description yet.";
-
-
-      const prices =
-        document.createElement("div");
-
-      prices.className =
-        "detail-prices";
-
-
-      if (
-        profile.hourly_price !== null &&
-        profile.hourly_price !== undefined
-      ) {
-
-        const hourly =
-          document.createElement("div");
-
-        hourly.className =
-          "detail-price";
-
-        hourly.innerHTML =
-          '<span class="detail-price-label">Hourly</span>' +
-          '<span class="detail-price-value">₹' +
-          profile.hourly_price +
-          '/hr</span>';
-
-        prices.appendChild(hourly);
-      }
-
-
-      if (
-        profile.project_price !== null &&
-        profile.project_price !== undefined
-      ) {
-
-        const project =
-          document.createElement("div");
-
-        project.className =
-          "detail-price";
-
-        project.innerHTML =
-          '<span class="detail-price-label">Project</span>' +
-          '<span class="detail-price-value">₹' +
-          profile.project_price +
-          '</span>';
-
-        prices.appendChild(project);
-      }
-
-
-      const contactBox =
-        document.createElement("div");
-
-      contactBox.className =
-        "contact-box";
-
-      contactBox.textContent =
-        "Interested in working with this professional? Send a project request through GoSkill.";
-
-
-      const hireButton =
-        document.createElement("button");
-
-      hireButton.className =
-        "primary-button";
-
-      hireButton.type =
-        "button";
-
-      hireButton.style.marginTop =
-        "20px";
-
-      hireButton.textContent =
-        "Contact / Hire";
-
-
-      hireButton.addEventListener(
-        "click",
-        function() {
-          openContactModal(profile);
-        }
-      );
-
-
-      card.appendChild(avatar);
-      card.appendChild(name);
-      card.appendChild(skill);
-      card.appendChild(description);
-      card.appendChild(prices);
-      card.appendChild(contactBox);
-      card.appendChild(hireButton);
-
-
-      detail.appendChild(card);
-
-
-      showPage("detailPage");
-    }
-
-
-    /* =========================
-       CONTACT MODAL
-       ========================= */
-
-    function openContactModal(profile) {
-
-      selectedProfile =
-        profile;
-
-
-      const modal =
-        document.getElementById(
-          "contactModal"
-        );
-
-
-      const subtitle =
-        document.getElementById(
-          "contactSubtitle"
-        );
-
-
-      subtitle.textContent =
-        "Send a project request regarding " +
-        (profile.name || "this professional") +
-        ".";
-
-
-      document.getElementById(
-        "contactStatus"
-      ).textContent =
-        "";
-
-
-      modal.classList.add("active");
-    }
-
-
-    function closeContactModal() {
-
-      document
-        .getElementById("contactModal")
-        .classList.remove("active");
-    }
-
-
-    /* =========================
-       SEND HIRE REQUEST
-       ========================= */
-
-    async function sendContactRequest() {
-
-      const name =
+      const value =
         document
-          .getElementById("contactName")
+          .getElementById("searchInput")
           .value
           .trim();
 
-      const email =
-        document
-          .getElementById("contactEmail")
-          .value
-          .trim();
+      searchSkill(value);
+    }
+  );
 
-      const message =
-        document
-          .getElementById("contactMessage")
-          .value
-          .trim();
 
-      const status =
-        document.getElementById(
-          "contactStatus"
+document
+  .getElementById("searchInput")
+  .addEventListener(
+    "keydown",
+    function(event) {
+
+      if (event.key === "Enter") {
+
+        event.preventDefault();
+
+        searchSkill(
+          event.target.value.trim()
         );
-
-
-      if (!name || !email || !message) {
-
-        status.textContent =
-          "Please fill in all fields.";
-
-        return;
-      }
-
-
-      if (!selectedProfile) {
-
-        status.textContent =
-          "Profile information is unavailable.";
-
-        return;
-      }
-
-
-      if (!selectedProfile.id) {
-
-        status.textContent =
-          "This profile cannot receive requests yet.";
-
-        return;
-      }
-
-
-      status.textContent =
-        "Sending request...";
-
-
-      try {
-
-        const response =
-          await fetch(
-            SUPABASE_URL +
-            "/functions/v1/super-action",
-            {
-              method: "POST",
-
-              headers: {
-
-                "Content-Type":
-                  "application/json",
-
-                "apikey":
-                  SUPABASE_KEY,
-
-                "Authorization":
-                  "Bearer " +
-                  SUPABASE_KEY
-              },
-
-              body: JSON.stringify({
-
-                profile_id:
-                  selectedProfile.id,
-
-                name:
-                  name,
-
-                email:
-                  email,
-
-                message:
-                  message
-
-              })
-            }
-          );
-
-
-        const data =
-          await response.json();
-
-
-        if (!response.ok) {
-
-          console.error(
-            "Hire request error:",
-            data
-          );
-
-          status.textContent =
-            data.error ||
-            "Could not send your request. Please try again.";
-
-          return;
-        }
-
-
-        status.textContent =
-          "Request sent successfully!";
-
-
-        document.getElementById(
-          "contactName"
-        ).value = "";
-
-        document.getElementById(
-          "contactEmail"
-        ).value = "";
-
-        document.getElementById(
-          "contactMessage"
-        ).value = "";
-
-
-        setTimeout(
-          function() {
-            closeContactModal();
-          },
-          1800
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          "Hire request connection error:",
-          error
-        );
-
-        status.textContent =
-          "Could not connect to GoSkill. Please try again.";
       }
     }
+  );
 
 
-    /* =========================
-       BUTTON EVENTS
-       ========================= */
+document
+  .querySelectorAll(".skill")
+  .forEach(
+    function(button) {
 
-    document
-      .getElementById("loginButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("loginPage");
-        }
-      );
-
-
-    document
-      .getElementById("signupButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("signupPage");
-        }
-      );
-
-
-    document
-      .getElementById("logoutButton")
-      .addEventListener(
-        "click",
-        logout
-      );
-
-
-    document
-      .getElementById("doLoginButton")
-      .addEventListener(
-        "click",
-        login
-      );
-
-
-    document
-      .getElementById("doSignupButton")
-      .addEventListener(
-        "click",
-        signUp
-      );
-
-
-    document
-      .getElementById("switchToSignup")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("signupPage");
-        }
-      );
-
-
-    document
-      .getElementById("switchToLogin")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("loginPage");
-        }
-      );
-
-
-    document
-      .getElementById("loginBackButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("homePage");
-        }
-      );
-
-
-    document
-      .getElementById("signupBackButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("homePage");
-        }
-      );
-
-
-    document
-      .getElementById("offerButton")
-      .addEventListener(
+      button.addEventListener(
         "click",
         function() {
 
-          if (!currentUser) {
-
-            showPage("loginPage");
-
-            return;
-          }
-
-          showPage("profilePage");
-        }
-      );
-
-
-    document
-      .getElementById("profileBackButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("homePage");
-        }
-      );
-
-
-    document
-      .getElementById("resultsBackButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("homePage");
-        }
-      );
-
-
-    document
-      .getElementById("detailBackButton")
-      .addEventListener(
-        "click",
-        function() {
-          showPage("resultsPage");
-        }
-      );
-
-
-    document
-      .getElementById("createProfileButton")
-      .addEventListener(
-        "click",
-        createProfile
-      );
-
-
-    document
-      .getElementById("searchButton")
-      .addEventListener(
-        "click",
-        function() {
-
-          const value =
-            document
-              .getElementById("searchInput")
-              .value
-              .trim();
-
-          searchSkill(value);
-        }
-      );
-
-
-    document
-      .getElementById("searchInput")
-      .addEventListener(
-        "keydown",
-        function(event) {
-
-          if (event.key === "Enter") {
-
-            event.preventDefault();
-
-            searchSkill(
-              event.target.value.trim()
-            );
-          }
-        }
-      );
-
-
-    document
-      .querySelectorAll(".skill")
-      .forEach(
-        function(button) {
-
-          button.addEventListener(
-            "click",
-            function() {
-
-              searchSkill(
-                button.dataset.skill
-              );
-            }
+          searchSkill(
+            button.dataset.skill
           );
         }
       );
+    }
+  );
 
 
-    document
-      .getElementById("closeContactModal")
-      .addEventListener(
-        "click",
-        closeContactModal
-      );
+document
+  .getElementById("closeContactModal")
+  .addEventListener(
+    "click",
+    closeContactModal
+  );
 
 
-    document
-      .getElementById("sendContactButton")
-      .addEventListener(
-        "click",
-        sendContactRequest
-      );
+document
+  .getElementById("sendContactButton")
+  .addEventListener(
+    "click",
+    sendContactRequest
+  );
 
 
-    document
-      .getElementById("contactModal")
-      .addEventListener(
-        "click",
-        function(event) {
+document
+  .getElementById("contactModal")
+  .addEventListener(
+    "click",
+    function(event) {
 
-          if (
-            event.target ===
-            document.getElementById("contactModal")
-          ) {
+      if (
+        event.target ===
+        document.getElementById("contactModal")
+      ) {
 
-            closeContactModal();
-          }
-        }
-      );
+        closeContactModal();
+      }
+    }
+  );
 
 
-    /* =========================
-       START
-       ========================= */
+/* =========================
+   START
+   ========================= */
 
-    updateAuthUI();
+updateAuthUI();
 
-    console.log(
-      "GoSkill loaded successfully."
-    );
+console.log(
+  "GoSkill loaded successfully."
+);
 
-  </script>
-
-</body>
-</html>
+</script>
