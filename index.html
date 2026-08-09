@@ -16,330 +16,207 @@
     }
 
     body {
-      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
-      background: #ffffff;
-      color: #111111;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 480px;
+      font-family: Arial, sans-serif;
+      background: #f7f5f0;
+      color: #171717;
       min-height: 100vh;
-      margin: auto;
-      padding: 24px 18px 40px;
-      background: #ffffff;
     }
 
-    /* =========================
-       BRAND
-       ========================= */
-
-    .logo-small {
-      font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
-      font-size: 34px;
-      font-weight: 400;
-      letter-spacing: -0.8px;
-      color: #111111;
-      line-height: 1;
+    button,
+    input,
+    textarea {
+      font: inherit;
     }
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
-    .auth-buttons {
-      display: flex;
-      gap: 8px;
-    }
-
-    .small-button {
-      padding: 9px 12px;
-      border: 1px solid #cccccc;
-      border-radius: 9px;
-      background: #ffffff;
-      color: #111111;
+    button {
       cursor: pointer;
-      font-family: inherit;
-      transition: 0.2s ease;
     }
-
-    .small-button:hover {
-      background: #eeeeee;
-    }
-
-    .small-button.dark {
-      background: #111111;
-      color: #ffffff;
-      border-color: #111111;
-    }
-
-    .small-button.dark:hover {
-      background: #333333;
-    }
-
-    .user-area {
-      display: none;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .user-email {
-      font-size: 13px;
-      color: #555555;
-      max-width: 150px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    /* =========================
-       SEARCH
-       ========================= */
-
-    .search-container {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 32px;
-    }
-
-    .search {
-      flex: 1;
-      min-width: 0;
-      padding: 15px;
-      border: 1px solid #bbbbbb;
-      border-radius: 12px;
-      background: #f5f5f5;
-      color: #111111;
-      font-size: 16px;
-      outline: none;
-      font-family: inherit;
-    }
-
-    .search:focus {
-      background: #ffffff;
-      border-color: #111111;
-    }
-
-    .search-button {
-      padding: 0 18px;
-      border: 0;
-      border-radius: 12px;
-      background: #111111;
-      color: #ffffff;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .search-button:hover {
-      background: #333333;
-    }
-
-    /* =========================
-       GENERAL
-       ========================= */
-
-    h2 {
-      font-size: 21px;
-      margin-bottom: 16px;
-    }
-
-    .description {
-      margin-bottom: 20px;
-      color: #555555;
-      line-height: 1.5;
-    }
-
-    .primary-button {
-      width: 100%;
-      padding: 16px;
-      border: 0;
-      border-radius: 12px;
-      background: #111111;
-      color: #ffffff;
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .primary-button:hover {
-      background: #333333;
-    }
-
-    .secondary-button {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #cccccc;
-      border-radius: 12px;
-      background: #ffffff;
-      color: #111111;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      margin-top: 10px;
-    }
-
-    .secondary-button:hover {
-      background: #f2f2f2;
-    }
-
-    /* =========================
-       SKILLS
-       ========================= */
-
-    .skills {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-
-    .skill {
-      padding: 16px 10px;
-      border: 1px solid #d0d0d0;
-      border-radius: 12px;
-      background: #f2f2f2;
-      color: #111111;
-      cursor: pointer;
-      font-size: 15px;
-      font-family: inherit;
-      transition: 0.2s ease;
-    }
-
-    .skill:hover {
-      background: #111111;
-      color: #ffffff;
-      border-color: #111111;
-    }
-
-    /* =========================
-       PAGES
-       ========================= */
 
     .page {
       display: none;
+      min-height: 100vh;
+      padding: 24px;
     }
 
     .page.active {
       display: block;
     }
 
-    .back {
-      border: 0;
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1100px;
+      margin: 0 auto 50px;
+    }
+
+    .logo-small {
+      font-family: "DM Serif Display", serif;
+      font-size: 30px;
+    }
+
+    .auth-buttons,
+    .user-area {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .user-area {
+      display: none;
+    }
+
+    .user-email {
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .small-button {
+      border: 1px solid #171717;
       background: transparent;
-      color: #555555;
+      padding: 9px 17px;
+      border-radius: 7px;
+    }
+
+    .small-button.dark {
+      background: #171717;
+      color: white;
+    }
+
+    .search-container {
+      max-width: 800px;
+      margin: 0 auto 45px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .search {
+      flex: 1;
+      padding: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
+      outline: none;
+    }
+
+    .search-button {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 8px;
+      background: #171717;
+      color: white;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    .skills {
+      max-width: 800px;
+      margin: 0 auto 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .skill {
+      padding: 12px 18px;
+      border: 1px solid #ccc;
+      background: white;
+      border-radius: 30px;
+    }
+
+    .description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .primary-button {
+      display: block;
+      margin: 15px auto;
+      padding: 13px 22px;
+      border: none;
+      border-radius: 8px;
+      background: #171717;
+      color: white;
       cursor: pointer;
-      margin-bottom: 20px;
-      font-size: 15px;
-      font-family: inherit;
     }
-
-    .back:hover {
-      color: #111111;
-    }
-
-    /* =========================
-       INPUTS
-       ========================= */
 
     .field {
+      display: block;
       width: 100%;
+      max-width: 500px;
+      margin: 12px auto;
       padding: 14px;
-      margin-bottom: 14px;
-      border: 1px solid #cccccc;
-      border-radius: 10px;
-      background: #f7f7f7;
-      color: #111111;
-      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: white;
       outline: none;
-      font-family: inherit;
-    }
-
-    .field:focus {
-      background: #ffffff;
-      border-color: #111111;
     }
 
     textarea.field {
-      min-height: 120px;
+      min-height: 130px;
       resize: vertical;
     }
 
+    .back {
+      display: block;
+      margin: 0 auto 25px;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+    }
+
     .message {
-      margin-top: 14px;
-      font-size: 14px;
-      color: #555555;
-      line-height: 1.5;
+      text-align: center;
+      min-height: 24px;
+      margin-top: 15px;
     }
 
     .auth-switch {
-      margin-top: 18px;
       text-align: center;
-      font-size: 14px;
-      color: #555555;
+      margin-top: 25px;
     }
 
     .text-button {
-      border: 0;
-      background: transparent;
-      color: #111111;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .text-button:hover {
+      border: none;
+      background: none;
       text-decoration: underline;
+      cursor: pointer;
     }
-
-    /* =========================
-       AVATAR UPLOAD
-       ========================= */
 
     .avatar-upload {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 24px;
+      text-align: center;
+      margin: 20px auto 30px;
     }
 
     .avatar-preview {
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #dddddd;
-      background: #eeeeee;
-      margin-bottom: 12px;
-    }
-
-    .avatar-placeholder {
+      margin: 0 auto 15px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #777777;
-      font-size: 36px;
-      font-weight: 600;
+      background-color: #e5e2dc;
+      font-size: 40px;
+      color: #777;
     }
 
     .upload-label {
       display: inline-block;
-      padding: 9px 14px;
-      border: 1px solid #cccccc;
-      border-radius: 9px;
-      background: #ffffff;
-      color: #111111;
-      font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 7px;
+      background: #171717;
+      color: white;
       cursor: pointer;
-    }
-
-    .upload-label:hover {
-      background: #eeeeee;
     }
 
     #avatarInput {
@@ -347,263 +224,236 @@
     }
 
     .upload-hint {
-      margin-top: 7px;
-      color: #777777;
+      margin-top: 10px;
       font-size: 12px;
-      text-align: center;
+      color: #777;
     }
 
-    /* =========================
-       PROFILE CARDS
-       ========================= */
+    #profilesList {
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
     .profile-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
       padding: 20px;
-      margin-bottom: 16px;
-      border: 1px solid #dddddd;
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      margin-bottom: 18px;
     }
 
     .profile-top {
       display: flex;
       align-items: center;
-      gap: 13px;
-      margin-bottom: 15px;
+      gap: 15px;
     }
 
-    .profile-avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #111111;
-      color: #ffffff;
-      font-weight: 700;
-      font-size: 21px;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .profile-avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .profile-name {
-      font-size: 18px;
-      font-weight: 700;
-    }
-
-    .profile-skill {
-      margin-top: 4px;
-      color: #666666;
-      font-size: 14px;
-    }
-
-    .profile-description {
-      margin-bottom: 15px;
-      color: #444444;
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .price-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .price {
-      padding: 7px 10px;
-      border-radius: 8px;
-      background: #eeeeee;
-      color: #222222;
-      font-size: 13px;
-      font-weight: 600;
-    }
-
-    .profile-divider {
-      height: 1px;
-      background: #eeeeee;
-      margin: 15px 0;
-    }
-
-    .verified-text {
-      color: #666666;
-      font-size: 12px;
-    }
-
-    .view-profile-button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 12px;
-      border: 1px solid #cccccc;
-      border-radius: 10px;
-      background: #ffffff;
-      color: #111111;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .view-profile-button:hover {
-      background: #111111;
-      color: #ffffff;
-      border-color: #111111;
-    }
-
-    /* =========================
-       PROFILE DETAIL
-       ========================= */
-
-    .detail-card {
-      padding: 24px;
-      border: 1px solid #dddddd;
-      border-radius: 18px;
-      background: #ffffff;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
-    }
-
+    .profile-avatar,
     .detail-avatar {
-      width: 125px;
-      height: 125px;
-      margin: 0 auto 18px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
+      background: #e5e2dc;
       overflow: hidden;
-      background: #111111;
-      color: #ffffff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 42px;
-      font-weight: 700;
+      font-size: 25px;
+      flex-shrink: 0;
     }
 
+    .profile-avatar img,
     .detail-avatar img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .detail-name {
+    .profile-name {
+      font-weight: bold;
+      font-size: 19px;
+    }
+
+    .profile-skill {
+      margin-top: 5px;
+      color: #666;
+    }
+
+    .profile-divider {
+      height: 1px;
+      background: #eee;
+      margin: 18px 0;
+    }
+
+    .profile-description {
+      color: #444;
+      line-height: 1.5;
+    }
+
+    .price-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .price {
+      background: #f1efe9;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .verified-text {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .view-profile-button {
+      width: 100%;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid #171717;
+      background: white;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    #profileDetail {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .detail-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 30px;
       text-align: center;
-      font-size: 27px;
-      font-weight: 700;
+    }
+
+    .detail-avatar {
+      width: 130px;
+      height: 130px;
+      margin: 0 auto 20px;
+      font-size: 45px;
+    }
+
+    .detail-name {
+      font-size: 28px;
+      font-weight: bold;
     }
 
     .detail-skill {
-      text-align: center;
-      color: #666666;
-      margin-top: 5px;
-      font-size: 15px;
+      margin-top: 7px;
+      color: #666;
+      font-size: 18px;
     }
 
     .detail-description {
       margin-top: 22px;
-      color: #444444;
-      line-height: 1.65;
-      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
     }
 
     .detail-prices {
+      margin-top: 22px;
       display: flex;
-      gap: 10px;
+      justify-content: center;
       flex-wrap: wrap;
-      margin-top: 20px;
+      gap: 12px;
     }
 
     .detail-price {
-      flex: 1;
-      min-width: 120px;
-      padding: 14px;
-      border-radius: 12px;
-      background: #f2f2f2;
-      text-align: center;
+      padding: 12px 16px;
+      background: #f1efe9;
+      border-radius: 7px;
     }
 
     .detail-price-label {
       display: block;
-      color: #666666;
       font-size: 12px;
-      margin-bottom: 4px;
+      color: #777;
     }
 
     .detail-price-value {
-      font-size: 17px;
-      font-weight: 700;
+      display: block;
+      margin-top: 4px;
+      font-weight: bold;
     }
 
     .contact-box {
-      margin-top: 20px;
+      margin-top: 25px;
       padding: 15px;
-      border-radius: 12px;
-      background: #f7f7f7;
-      color: #555555;
-      font-size: 13px;
+      background: #f7f5f0;
+      border-radius: 8px;
+      color: #555;
       line-height: 1.5;
-    }
-
-    /* =========================
-       MODAL
-       ========================= */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      background: rgba(0, 0, 0, 0.45);
-      z-index: 1000;
-    }
-
-    .modal-overlay.active {
-      display: flex;
     }
 
     .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
       width: 100%;
-      max-width: 440px;
-      padding: 24px;
-      border-radius: 18px;
-      background: #ffffff;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal h2 {
-      margin-bottom: 8px;
-    }
-
-    .modal-subtitle {
-      color: #666666;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 18px;
+      max-width: 550px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #f7f5f0;
+      border-radius: 12px;
+      padding: 25px;
+      position: relative;
     }
 
     .modal-close {
-      float: right;
-      border: 0;
+      position: absolute;
+      right: 18px;
+      top: 12px;
+      border: none;
       background: transparent;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
-      color: #555555;
     }
 
+    .modal-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .top-bar {
+        margin-bottom: 30px;
+      }
+
+      .user-email {
+        display: none;
+      }
+
+      .search-container {
+        flex-direction: column;
+      }
+
+      .page {
+        padding: 16px;
+      }
+    }
   </style>
 </head>
 
-
 <body>
-
-<div class="app">
 
   <!-- HOME -->
 
@@ -795,7 +645,7 @@
   </section>
 
 
-  <!-- CREATE PROFILE -->
+  <!-- PROFILE -->
 
   <section id="profilePage" class="page">
 
@@ -898,7 +748,7 @@
   </section>
 
 
-  <!-- PROFILE DETAIL -->
+  <!-- DETAIL -->
 
   <section id="detailPage" class="page">
 
@@ -910,1627 +760,1712 @@
 
   </section>
 
-</div>
 
+  <!-- CONTACT MODAL -->
 
-<!-- CONTACT MODAL -->
+  <div id="contactModal" class="modal">
 
-<div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
 
-  <div class="modal">
+      <button id="closeContactModal" class="modal-close" type="button">
+        ×
+      </button>
 
-    <button id="closeContactModal" class="modal-close" type="button">
-      ×
-    </button>
+      <h2>
+        Contact / Hire
+      </h2>
 
-    <h2>
-      Contact / Hire
-    </h2>
+      <p id="contactSubtitle" class="modal-subtitle">
+        Send a message about your project.
+      </p>
 
-    <p id="contactSubtitle" class="modal-subtitle">
-      Send a message about your project.
-    </p>
+      <input
+        id="contactName"
+        class="field"
+        type="text"
+        placeholder="Your name"
+      >
 
-    <input
-      id="contactName"
-      class="field"
-      type="text"
-      placeholder="Your name"
-    >
+      <input
+        id="contactEmail"
+        class="field"
+        type="email"
+        placeholder="Your email"
+      >
 
-    <input
-      id="contactEmail"
-      class="field"
-      type="email"
-      placeholder="Your email"
-    >
+      <textarea
+        id="contactMessage"
+        class="field"
+        placeholder="Tell them about your project..."
+      ></textarea>
 
-    <textarea
-      id="contactMessage"
-      class="field"
-      placeholder="Tell them about your project..."
-    ></textarea>
+      <button
+        id="sendContactButton"
+        class="primary-button"
+        type="button"
+      >
+        Send Request
+      </button>
 
-    <button
-      id="sendContactButton"
-      class="primary-button"
-      type="button"
-    >
-      Send Request
-    </button>
+      <p id="contactStatus" class="message"></p>
 
-    <p id="contactStatus" class="message"></p>
+    </div>
 
   </div>
 
-</div>
 
+  <script>
 
-<script>
+    /* =========================
+       SUPABASE
+       ========================= */
 
-/* =========================
-   SUPABASE
-   ========================= */
+    const SUPABASE_URL =
+      "https://ffovbypaoltxuuycppgo.supabase.co";
 
-const SUPABASE_URL =
-  "https://ffovbypaoltxuuycppgo.supabase.co";
+    const SUPABASE_KEY =
+      "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
 
-const SUPABASE_KEY =
-  "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
 
+    /* =========================
+       STATE
+       ========================= */
 
-/* =========================
-   STATE
-   ========================= */
+    let currentUser = null;
+    let accessToken = null;
+    let selectedAvatarFile = null;
+    let selectedProfile = null;
 
-let currentUser = null;
-let accessToken = null;
-let selectedAvatarFile = null;
-let selectedProfile = null;
 
+    /* =========================
+       PAGE NAVIGATION
+       ========================= */
 
-/* =========================
-   PAGE NAVIGATION
-   ========================= */
+    function showPage(pageId) {
 
-function showPage(pageId) {
+      document
+        .querySelectorAll(".page")
+        .forEach(function(page) {
+          page.classList.remove("active");
+        });
 
-  document
-    .querySelectorAll(".page")
-    .forEach(function(page) {
-      page.classList.remove("active");
-    });
+      const page =
+        document.getElementById(pageId);
 
-  const page =
-    document.getElementById(pageId);
+      if (page) {
+        page.classList.add("active");
+      }
 
-  if (page) {
-    page.classList.add("active");
-  }
-
-  window.scrollTo(0, 0);
-}
-
-
-/* =========================
-   AUTH UI
-   ========================= */
-
-function updateAuthUI() {
-
-  const authButtons =
-    document.getElementById("authButtons");
-
-  const userArea =
-    document.getElementById("userArea");
-
-  const userEmail =
-    document.getElementById("userEmail");
-
-
-  if (currentUser) {
-
-    authButtons.style.display = "none";
-    userArea.style.display = "flex";
-
-    userEmail.textContent =
-      currentUser.email || "";
-
-  } else {
-
-    authButtons.style.display = "flex";
-    userArea.style.display = "none";
-
-    userEmail.textContent = "";
-  }
-}
-
-
-/* =========================
-   SIGN UP
-   ========================= */
-
-async function signUp() {
-
-  const email =
-    document
-      .getElementById("signupEmail")
-      .value
-      .trim();
-
-  const password =
-    document
-      .getElementById("signupPassword")
-      .value;
-
-  const confirmPassword =
-    document
-      .getElementById("signupPasswordConfirm")
-      .value;
-
-  const message =
-    document.getElementById("signupMessage");
-
-
-  if (!email || !password) {
-
-    message.textContent =
-      "Please enter your email and password.";
-
-    return;
-  }
-
-
-  if (password !== confirmPassword) {
-
-    message.textContent =
-      "Passwords do not match.";
-
-    return;
-  }
-
-
-  if (password.length < 6) {
-
-    message.textContent =
-      "Password must be at least 6 characters.";
-
-    return;
-  }
-
-
-  message.textContent =
-    "Creating account...";
-
-
-  try {
-
-    const response =
-      await fetch(
-        SUPABASE_URL + "/auth/v1/signup",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY
-          },
-
-          body: JSON.stringify({
-
-            email: email,
-
-            password: password,
-
-            options: {
-              emailRedirectTo:
-                "https://goskill-nine.vercel.app/"
-            }
-
-          })
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (!response.ok) {
-
-      console.error(
-        "Signup error:",
-        data
-      );
-
-      message.textContent =
-        data.message ||
-        data.error_description ||
-        data.msg ||
-        "Could not create account.";
-
-      return;
+      window.scrollTo(0, 0);
     }
 
 
-    if (data.access_token) {
+    /* =========================
+       AUTH UI
+       ========================= */
 
-      accessToken =
-        data.access_token;
+    function updateAuthUI() {
 
-      currentUser =
-        data.user;
+      const authButtons =
+        document.getElementById("authButtons");
+
+      const userArea =
+        document.getElementById("userArea");
+
+      const userEmail =
+        document.getElementById("userEmail");
+
+
+      if (currentUser) {
+
+        authButtons.style.display = "none";
+        userArea.style.display = "flex";
+
+        userEmail.textContent =
+          currentUser.email || "";
+
+      } else {
+
+        authButtons.style.display = "flex";
+        userArea.style.display = "none";
+
+        userEmail.textContent = "";
+      }
+    }
+
+
+    /* =========================
+       SIGN UP
+       ========================= */
+
+    async function signUp() {
+
+      const email =
+        document
+          .getElementById("signupEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("signupPassword")
+          .value;
+
+      const confirmPassword =
+        document
+          .getElementById("signupPasswordConfirm")
+          .value;
+
+      const message =
+        document.getElementById("signupMessage");
+
+
+      if (!email || !password) {
+
+        message.textContent =
+          "Please enter your email and password.";
+
+        return;
+      }
+
+
+      if (password !== confirmPassword) {
+
+        message.textContent =
+          "Passwords do not match.";
+
+        return;
+      }
+
+
+      if (password.length < 6) {
+
+        message.textContent =
+          "Password must be at least 6 characters.";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Creating account...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            SUPABASE_URL + "/auth/v1/signup",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY
+              },
+
+              body: JSON.stringify({
+
+                email: email,
+
+                password: password,
+
+                options: {
+                  emailRedirectTo:
+                    "https://goskill-nine.vercel.app/"
+                }
+
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Signup error:",
+            data
+          );
+
+          message.textContent =
+            data.message ||
+            data.error_description ||
+            data.msg ||
+            "Could not create account.";
+
+          return;
+        }
+
+
+        if (data.access_token) {
+
+          accessToken =
+            data.access_token;
+
+          currentUser =
+            data.user;
+
+          updateAuthUI();
+
+          showPage("homePage");
+
+        } else {
+
+          message.textContent =
+            "Account created. Check your email to confirm your account.";
+        }
+
+
+      } catch (error) {
+
+        console.error(
+          "Signup connection error:",
+          error
+        );
+
+        message.textContent =
+          "Connection error. Please try again.";
+      }
+    }
+
+
+    /* =========================
+       LOGIN
+       ========================= */
+
+    async function login() {
+
+      const email =
+        document
+          .getElementById("loginEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value;
+
+      const message =
+        document.getElementById("loginMessage");
+
+
+      if (!email || !password) {
+
+        message.textContent =
+          "Please enter your email and password.";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Logging in...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            SUPABASE_URL +
+            "/auth/v1/token?grant_type=password",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_KEY
+              },
+
+              body: JSON.stringify({
+                email: email,
+                password: password
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Login error:",
+            data
+          );
+
+          message.textContent =
+            data.error_description ||
+            data.msg ||
+            "Invalid email or password.";
+
+          return;
+        }
+
+
+        accessToken =
+          data.access_token;
+
+        currentUser =
+          data.user;
+
+        updateAuthUI();
+
+        showPage("homePage");
+
+
+      } catch (error) {
+
+        console.error(
+          "Login connection error:",
+          error
+        );
+
+        message.textContent =
+          "Connection error. Please try again.";
+      }
+    }
+
+
+    /* =========================
+       LOGOUT
+       ========================= */
+
+    function logout() {
+
+      currentUser = null;
+      accessToken = null;
+      selectedAvatarFile = null;
 
       updateAuthUI();
 
       showPage("homePage");
-
-    } else {
-
-      message.textContent =
-        "Account created. Check your email to confirm your account.";
     }
 
 
-  } catch (error) {
+    /* =========================
+       AVATAR PREVIEW
+       ========================= */
 
-    console.error(
-      "Signup connection error:",
-      error
-    );
-
-    message.textContent =
-      "Connection error. Please try again.";
-  }
-}
-
-
-/* =========================
-   LOGIN
-   ========================= */
-
-async function login() {
-
-  const email =
     document
-      .getElementById("loginEmail")
-      .value
-      .trim();
+      .getElementById("avatarInput")
+      .addEventListener(
+        "change",
+        function(event) {
 
-  const password =
-    document
-      .getElementById("loginPassword")
-      .value;
+          const file =
+            event.target.files[0];
 
-  const message =
-    document.getElementById("loginMessage");
-
-
-  if (!email || !password) {
-
-    message.textContent =
-      "Please enter your email and password.";
-
-    return;
-  }
+          const preview =
+            document.getElementById(
+              "avatarPreview"
+            );
 
 
-  message.textContent =
-    "Logging in...";
+          if (!file) {
+            return;
+          }
 
 
-  try {
+          if (file.size > 5 * 1024 * 1024) {
 
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/auth/v1/token?grant_type=password",
-        {
-          method: "POST",
+            alert(
+              "Please choose an image smaller than 5MB."
+            );
 
-          headers: {
-            "Content-Type": "application/json",
-            "apikey": SUPABASE_KEY
-          },
+            event.target.value = "";
+            selectedAvatarFile = null;
 
-          body: JSON.stringify({
-            email: email,
-            password: password
-          })
+            return;
+          }
+
+
+          if (
+            ![
+              "image/jpeg",
+              "image/png",
+              "image/webp"
+            ].includes(file.type)
+          ) {
+
+            alert(
+              "Please choose a JPG, PNG or WebP image."
+            );
+
+            event.target.value = "";
+            selectedAvatarFile = null;
+
+            return;
+          }
+
+
+          selectedAvatarFile = file;
+
+
+          const reader =
+            new FileReader();
+
+
+          reader.onload =
+            function(e) {
+
+              preview.className =
+                "avatar-preview";
+
+              preview.innerHTML =
+                "";
+
+              preview.style.backgroundImage =
+                "url('" +
+                e.target.result +
+                "')";
+
+              preview.style.backgroundSize =
+                "cover";
+
+              preview.style.backgroundPosition =
+                "center";
+            };
+
+
+          reader.readAsDataURL(file);
         }
       );
 
 
-    const data =
-      await response.json();
+    /* =========================
+       UPLOAD AVATAR
+       ========================= */
 
+    async function uploadAvatar() {
 
-    if (!response.ok) {
+      if (!selectedAvatarFile || !currentUser) {
+        return null;
+      }
 
-      console.error(
-        "Login error:",
-        data
-      );
-
-      message.textContent =
-        data.error_description ||
-        data.msg ||
-        "Invalid email or password.";
-
-      return;
-    }
-
-
-    accessToken =
-      data.access_token;
-
-    currentUser =
-      data.user;
-
-    updateAuthUI();
-
-    showPage("homePage");
-
-
-  } catch (error) {
-
-    console.error(
-      "Login connection error:",
-      error
-    );
-
-    message.textContent =
-      "Connection error. Please try again.";
-  }
-}
-
-
-/* =========================
-   LOGOUT
-   ========================= */
-
-function logout() {
-
-  currentUser = null;
-  accessToken = null;
-  selectedAvatarFile = null;
-
-  updateAuthUI();
-
-  showPage("homePage");
-}
-
-
-/* =========================
-   AVATAR PREVIEW
-   ========================= */
-
-document
-  .getElementById("avatarInput")
-  .addEventListener(
-    "change",
-    function(event) {
 
       const file =
-        event.target.files[0];
+        selectedAvatarFile;
 
-      const preview =
-        document.getElementById(
-          "avatarPreview"
-        );
 
+      const extension =
+        file.name
+          .split(".")
+          .pop()
+          .toLowerCase();
 
-      if (!file) {
-        return;
-      }
 
+      const filePath =
+        currentUser.id +
+        "/" +
+        Date.now() +
+        "." +
+        extension;
 
-      if (file.size > 5 * 1024 * 1024) {
 
-        alert(
-          "Please choose an image smaller than 5MB."
-        );
+      const response =
+        await fetch(
+          SUPABASE_URL +
+          "/storage/v1/object/avatars/" +
+          filePath,
+          {
+            method: "POST",
 
-        event.target.value = "";
-        selectedAvatarFile = null;
+            headers: {
 
-        return;
-      }
+              "Authorization":
+                "Bearer " +
+                accessToken,
 
+              "apikey":
+                SUPABASE_KEY,
 
-      if (
-        ![
-          "image/jpeg",
-          "image/png",
-          "image/webp"
-        ].includes(file.type)
-      ) {
+              "Content-Type":
+                file.type,
 
-        alert(
-          "Please choose a JPG, PNG or WebP image."
-        );
+              "x-upsert":
+                "true"
+            },
 
-        event.target.value = "";
-        selectedAvatarFile = null;
-
-        return;
-      }
-
-
-      selectedAvatarFile = file;
-
-
-      const reader =
-        new FileReader();
-
-
-      reader.onload =
-        function(e) {
-
-          preview.className =
-            "avatar-preview";
-
-          preview.innerHTML =
-            "";
-
-          preview.style.backgroundImage =
-            "url('" +
-            e.target.result +
-            "')";
-
-          preview.style.backgroundSize =
-            "cover";
-
-          preview.style.backgroundPosition =
-            "center";
-        };
-
-
-      reader.readAsDataURL(file);
-    }
-  );
-
-
-/* =========================
-   UPLOAD AVATAR
-   ========================= */
-
-async function uploadAvatar() {
-
-  if (!selectedAvatarFile || !currentUser) {
-    return null;
-  }
-
-
-  const file =
-    selectedAvatarFile;
-
-
-  const extension =
-    file.name
-      .split(".")
-      .pop()
-      .toLowerCase();
-
-
-  const filePath =
-    currentUser.id +
-    "/" +
-    Date.now() +
-    "." +
-    extension;
-
-
-  const response =
-    await fetch(
-      SUPABASE_URL +
-      "/storage/v1/object/avatars/" +
-      filePath,
-      {
-        method: "POST",
-
-        headers: {
-
-          "Authorization":
-            "Bearer " +
-            accessToken,
-
-          "apikey":
-            SUPABASE_KEY,
-
-          "Content-Type":
-            file.type,
-
-          "x-upsert":
-            "true"
-        },
-
-        body: file
-      }
-    );
-
-
-  if (!response.ok) {
-
-    const error =
-      await response.text();
-
-    console.error(
-      "Avatar upload error:",
-      error
-    );
-
-    throw new Error(
-      "Could not upload profile photo."
-    );
-  }
-
-
-  return (
-    SUPABASE_URL +
-    "/storage/v1/object/public/avatars/" +
-    filePath
-  );
-}
-
-
-/* =========================
-   CREATE PROFILE
-   ========================= */
-
-async function createProfile() {
-
-  if (!currentUser) {
-
-    alert(
-      "Please log in before creating a profile."
-    );
-
-    showPage("loginPage");
-
-    return;
-  }
-
-
-  const name =
-    document
-      .getElementById("name")
-      .value
-      .trim();
-
-  const skill =
-    document
-      .getElementById("skill")
-      .value
-      .trim();
-
-  const description =
-    document
-      .getElementById("description")
-      .value
-      .trim();
-
-  const hourlyPrice =
-    document
-      .getElementById("hourlyPrice")
-      .value;
-
-  const projectPrice =
-    document
-      .getElementById("projectPrice")
-      .value;
-
-  const message =
-    document.getElementById(
-      "profileMessage"
-    );
-
-
-  if (!name || !skill) {
-
-    message.textContent =
-      "Please enter your name and skill.";
-
-    return;
-  }
-
-
-  message.textContent =
-    "Saving profile...";
-
-
-  try {
-
-    let avatarUrl = null;
-
-
-    if (selectedAvatarFile) {
-
-      message.textContent =
-        "Uploading profile photo...";
-
-      avatarUrl =
-        await uploadAvatar();
-    }
-
-
-    message.textContent =
-      "Saving profile...";
-
-
-    const response =
-      await fetch(
-        SUPABASE_URL +
-        "/rest/v1/profiles",
-        {
-          method: "POST",
-
-          headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              accessToken,
-
-            "Prefer":
-              "return=minimal"
-          },
-
-          body: JSON.stringify({
-
-            name: name,
-
-            skill: skill,
-
-            description: description,
-
-            hourly_price:
-              hourlyPrice
-                ? Number(hourlyPrice)
-                : null,
-
-            project_price:
-              projectPrice
-                ? Number(projectPrice)
-                : null,
-
-            user_id:
-              currentUser.id,
-
-            avatar_url:
-              avatarUrl,
-
-            created_at:
-              new Date().toISOString()
-
-          })
-        }
-      );
-
-
-    if (!response.ok) {
-
-      const error =
-        await response.text();
-
-      console.error(
-        "Profile error:",
-        error
-      );
-
-      message.textContent =
-        "Could not save profile. Check your database policies.";
-
-      return;
-    }
-
-
-    message.textContent =
-      "Profile created successfully!";
-
-
-    document.getElementById("name").value = "";
-    document.getElementById("skill").value = "";
-    document.getElementById("description").value = "";
-    document.getElementById("hourlyPrice").value = "";
-    document.getElementById("projectPrice").value = "";
-    document.getElementById("avatarInput").value = "";
-
-
-    selectedAvatarFile = null;
-
-
-    const preview =
-      document.getElementById(
-        "avatarPreview"
-      );
-
-
-    preview.className =
-      "avatar-preview avatar-placeholder";
-
-    preview.style.backgroundImage =
-      "none";
-
-    preview.innerHTML =
-      "+";
-
-
-  } catch (error) {
-
-    console.error(
-      "Profile connection error:",
-      error
-    );
-
-    message.textContent =
-      error.message ||
-      "Connection error. Please try again.";
-  }
-}
-
-
-/* =========================
-   SEARCH
-   ========================= */
-
-async function searchSkill(skill) {
-
-  if (!skill) {
-    return;
-  }
-
-
-  showPage("resultsPage");
-
-
-  const list =
-    document.getElementById(
-      "profilesList"
-    );
-
-
-  list.innerHTML =
-    "<p>Searching...</p>";
-
-
-  try {
-
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/profiles?select=*&skill=ilike." +
-      encodeURIComponent("*" + skill + "*");
-
-
-    const response =
-      await fetch(
-        url,
-        {
-          method: "GET",
-
-          headers: {
-
-            "apikey":
-              SUPABASE_KEY,
-
-            "Authorization":
-              "Bearer " +
-              SUPABASE_KEY
+            body: file
           }
-        }
-      );
+        );
 
 
-    if (!response.ok) {
+      if (!response.ok) {
 
-      const error =
-        await response.text();
+        const error =
+          await response.text();
 
-      console.error(
-        "Search error:",
-        error
-      );
+        console.error(
+          "Avatar upload error:",
+          error
+        );
 
-      list.innerHTML =
-        "<p>Could not load profiles.</p>";
-
-      return;
-    }
-
-
-    const profiles =
-      await response.json();
-
-
-    displayProfiles(profiles);
-
-
-  } catch (error) {
-
-    console.error(
-      "Search connection error:",
-      error
-    );
-
-    list.innerHTML =
-      "<p>Could not load profiles.</p>";
-  }
-}
-
-
-/* =========================
-   DISPLAY PROFILES
-   ========================= */
-
-function displayProfiles(profiles) {
-
-  const list =
-    document.getElementById(
-      "profilesList"
-    );
-
-
-  if (
-    !profiles ||
-    profiles.length === 0
-  ) {
-
-    list.innerHTML =
-      "<p>No profiles found yet.</p>";
-
-    return;
-  }
-
-
-  list.innerHTML = "";
-
-
-  profiles.forEach(function(profile) {
-
-    const card =
-      document.createElement("div");
-
-    card.className =
-      "profile-card";
-
-
-    const top =
-      document.createElement("div");
-
-    top.className =
-      "profile-top";
-
-
-    const avatar =
-      document.createElement("div");
-
-    avatar.className =
-      "profile-avatar";
-
-
-    if (profile.avatar_url) {
-
-      const image =
-        document.createElement("img");
-
-      image.src =
-        profile.avatar_url;
-
-      image.alt =
-        profile.name ||
-        "Profile photo";
-
-      avatar.appendChild(image);
-
-    } else {
-
-      avatar.textContent =
-        profile.name
-          ? profile.name
-              .charAt(0)
-              .toUpperCase()
-          : "?";
-    }
-
-
-    const info =
-      document.createElement("div");
-
-
-    const name =
-      document.createElement("div");
-
-    name.className =
-      "profile-name";
-
-    name.textContent =
-      profile.name || "";
-
-
-    const skill =
-      document.createElement("div");
-
-    skill.className =
-      "profile-skill";
-
-    skill.textContent =
-      profile.skill || "";
-
-
-    info.appendChild(name);
-    info.appendChild(skill);
-
-    top.appendChild(avatar);
-    top.appendChild(info);
-
-
-    const divider =
-      document.createElement("div");
-
-    divider.className =
-      "profile-divider";
-
-
-    const description =
-      document.createElement("div");
-
-    description.className =
-      "profile-description";
-
-    description.textContent =
-      profile.description ||
-      "No description provided.";
-
-
-    const prices =
-      document.createElement("div");
-
-    prices.className =
-      "price-row";
-
-
-    if (
-      profile.hourly_price !== null &&
-      profile.hourly_price !== undefined
-    ) {
-
-      const hourly =
-        document.createElement("div");
-
-      hourly.className =
-        "price";
-
-      hourly.textContent =
-        "₹" +
-        profile.hourly_price +
-        "/hr";
-
-      prices.appendChild(hourly);
-    }
-
-
-    if (
-      profile.project_price !== null &&
-      profile.project_price !== undefined
-    ) {
-
-      const project =
-        document.createElement("div");
-
-      project.className =
-        "price";
-
-      project.textContent =
-        "₹" +
-        profile.project_price +
-        " project";
-
-      prices.appendChild(project);
-    }
-
-
-    const verified =
-      document.createElement("div");
-
-    verified.className =
-      "verified-text";
-
-    verified.style.marginTop =
-      "12px";
-
-    verified.textContent =
-      "GoSkill member";
-
-
-    const viewButton =
-      document.createElement("button");
-
-    viewButton.className =
-      "view-profile-button";
-
-    viewButton.type =
-      "button";
-
-    viewButton.textContent =
-      "View Profile";
-
-
-    viewButton.addEventListener(
-      "click",
-      function() {
-        openProfileDetail(profile);
+        throw new Error(
+          "Could not upload profile photo."
+        );
       }
-    );
 
 
-    card.appendChild(top);
-    card.appendChild(divider);
-    card.appendChild(description);
-    card.appendChild(prices);
-    card.appendChild(verified);
-    card.appendChild(viewButton);
-
-    list.appendChild(card);
-
-  });
-}
-
-
-/* =========================
-   PROFILE DETAIL
-   ========================= */
-
-function openProfileDetail(profile) {
-
-  selectedProfile =
-    profile;
-
-
-  const detail =
-    document.getElementById(
-      "profileDetail"
-    );
-
-
-  detail.innerHTML =
-    "";
-
-
-  const card =
-    document.createElement("div");
-
-  card.className =
-    "detail-card";
-
-
-  const avatar =
-    document.createElement("div");
-
-  avatar.className =
-    "detail-avatar";
-
-
-  if (profile.avatar_url) {
-
-    const image =
-      document.createElement("img");
-
-    image.src =
-      profile.avatar_url;
-
-    image.alt =
-      profile.name ||
-      "Profile photo";
-
-    avatar.appendChild(image);
-
-  } else {
-
-    avatar.textContent =
-      profile.name
-        ? profile.name
-            .charAt(0)
-            .toUpperCase()
-        : "?";
-  }
-
-
-  const name =
-    document.createElement("div");
-
-  name.className =
-    "detail-name";
-
-  name.textContent =
-    profile.name ||
-    "GoSkill Member";
-
-
-  const skill =
-    document.createElement("div");
-
-  skill.className =
-    "detail-skill";
-
-  skill.textContent =
-    profile.skill ||
-    "Professional";
-
-
-  const description =
-    document.createElement("div");
-
-  description.className =
-    "detail-description";
-
-  description.textContent =
-    profile.description ||
-    "This member has not added a description yet.";
-
-
-  const prices =
-    document.createElement("div");
-
-  prices.className =
-    "detail-prices";
-
-
-  if (
-    profile.hourly_price !== null &&
-    profile.hourly_price !== undefined
-  ) {
-
-    const hourly =
-      document.createElement("div");
-
-    hourly.className =
-      "detail-price";
-
-    hourly.innerHTML =
-      '<span class="detail-price-label">Hourly</span>' +
-      '<span class="detail-price-value">₹' +
-      profile.hourly_price +
-      '/hr</span>';
-
-    prices.appendChild(hourly);
-  }
-
-
-  if (
-    profile.project_price !== null &&
-    profile.project_price !== undefined
-  ) {
-
-    const project =
-      document.createElement("div");
-
-    project.className =
-      "detail-price";
-
-    project.innerHTML =
-      '<span class="detail-price-label">Project</span>' +
-      '<span class="detail-price-value">₹' +
-      profile.project_price +
-      '</span>';
-
-    prices.appendChild(project);
-  }
-
-
-  const contactBox =
-    document.createElement("div");
-
-  contactBox.className =
-    "contact-box";
-
-  contactBox.textContent =
-    "Interested in working with this professional? Send a project request through GoSkill.";
-
-
-  const hireButton =
-    document.createElement("button");
-
-  hireButton.className =
-    "primary-button";
-
-  hireButton.type =
-    "button";
-
-  hireButton.style.marginTop =
-    "20px";
-
-  hireButton.textContent =
-    "Contact / Hire";
-
-
-  hireButton.addEventListener(
-    "click",
-    function() {
-      openContactModal(profile);
+      return (
+        SUPABASE_URL +
+        "/storage/v1/object/public/avatars/" +
+        filePath
+      );
     }
-  );
 
 
-  card.appendChild(avatar);
-  card.appendChild(name);
-  card.appendChild(skill);
-  card.appendChild(description);
-  card.appendChild(prices);
-  card.appendChild(contactBox);
-  card.appendChild(hireButton);
+    /* =========================
+       CREATE PROFILE
+       ========================= */
 
-
-  detail.appendChild(card);
-
-
-  showPage("detailPage");
-}
-
-
-/* =========================
-   CONTACT MODAL
-   ========================= */
-
-function openContactModal(profile) {
-
-  selectedProfile =
-    profile;
-
-
-  const modal =
-    document.getElementById(
-      "contactModal"
-    );
-
-
-  const subtitle =
-    document.getElementById(
-      "contactSubtitle"
-    );
-
-
-  subtitle.textContent =
-    "Send a project request regarding " +
-    (profile.name || "this professional") +
-    ".";
-
-
-  document.getElementById(
-    "contactStatus"
-  ).textContent =
-    "";
-
-
-  modal.classList.add("active");
-}
-
-
-function closeContactModal() {
-
-  document
-    .getElementById("contactModal")
-    .classList.remove("active");
-}
-
-
-function sendContactRequest() {
-
-  const name =
-    document
-      .getElementById("contactName")
-      .value
-      .trim();
-
-  const email =
-    document
-      .getElementById("contactEmail")
-      .value
-      .trim();
-
-  const message =
-    document
-      .getElementById("contactMessage")
-      .value
-      .trim();
-
-  const status =
-    document.getElementById(
-      "contactStatus"
-    );
-
-
-  if (!name || !email || !message) {
-
-    status.textContent =
-      "Please fill in all fields.";
-
-    return;
-  }
-
-
-  if (!selectedProfile) {
-
-    status.textContent =
-      "Profile information is unavailable.";
-
-    return;
-  }
-
-
-  status.textContent =
-    "Your request is ready to send.";
-
-
-  /*
-    At this stage the form validates the
-    project request locally.
-
-    The next marketplace step will connect
-    this form to a real GoSkill messaging
-    system in Supabase.
-  */
-
-
-  setTimeout(
-    function() {
-
-      status.textContent =
-        "Request prepared successfully.";
-
-    },
-    500
-  );
-}
-
-
-/* =========================
-   BUTTON EVENTS
-   ========================= */
-
-document
-  .getElementById("loginButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("loginPage");
-    }
-  );
-
-
-document
-  .getElementById("signupButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("signupPage");
-    }
-  );
-
-
-document
-  .getElementById("logoutButton")
-  .addEventListener(
-    "click",
-    logout
-  );
-
-
-document
-  .getElementById("doLoginButton")
-  .addEventListener(
-    "click",
-    login
-  );
-
-
-document
-  .getElementById("doSignupButton")
-  .addEventListener(
-    "click",
-    signUp
-  );
-
-
-document
-  .getElementById("switchToSignup")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("signupPage");
-    }
-  );
-
-
-document
-  .getElementById("switchToLogin")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("loginPage");
-    }
-  );
-
-
-document
-  .getElementById("loginBackButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("homePage");
-    }
-  );
-
-
-document
-  .getElementById("signupBackButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("homePage");
-    }
-  );
-
-
-document
-  .getElementById("offerButton")
-  .addEventListener(
-    "click",
-    function() {
+    async function createProfile() {
 
       if (!currentUser) {
+
+        alert(
+          "Please log in before creating a profile."
+        );
 
         showPage("loginPage");
 
         return;
       }
 
-      showPage("profilePage");
-    }
-  );
 
-
-document
-  .getElementById("profileBackButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("homePage");
-    }
-  );
-
-
-document
-  .getElementById("resultsBackButton")
-  .addEventListener(
-    "click",
-    function() {
-      showPage("homePage");
-    }
-  );
-
-
-document
-  .getElementById("detailBackButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      showPage("resultsPage");
-
-    }
-  );
-
-
-document
-  .getElementById("createProfileButton")
-  .addEventListener(
-    "click",
-    createProfile
-  );
-
-
-document
-  .getElementById("searchButton")
-  .addEventListener(
-    "click",
-    function() {
-
-      const value =
+      const name =
         document
-          .getElementById("searchInput")
+          .getElementById("name")
           .value
           .trim();
 
-      searchSkill(value);
-    }
-  );
+      const skill =
+        document
+          .getElementById("skill")
+          .value
+          .trim();
 
+      const description =
+        document
+          .getElementById("description")
+          .value
+          .trim();
 
-document
-  .getElementById("searchInput")
-  .addEventListener(
-    "keydown",
-    function(event) {
+      const hourlyPrice =
+        document
+          .getElementById("hourlyPrice")
+          .value;
 
-      if (event.key === "Enter") {
+      const projectPrice =
+        document
+          .getElementById("projectPrice")
+          .value;
 
-        event.preventDefault();
-
-        searchSkill(
-          event.target.value.trim()
+      const message =
+        document.getElementById(
+          "profileMessage"
         );
+
+
+      if (!name || !skill) {
+
+        message.textContent =
+          "Please enter your name and skill.";
+
+        return;
+      }
+
+
+      message.textContent =
+        "Saving profile...";
+
+
+      try {
+
+        let avatarUrl = null;
+
+
+        if (selectedAvatarFile) {
+
+          message.textContent =
+            "Uploading profile photo...";
+
+          avatarUrl =
+            await uploadAvatar();
+        }
+
+
+        message.textContent =
+          "Saving profile...";
+
+
+        const response =
+          await fetch(
+            SUPABASE_URL +
+            "/rest/v1/profiles",
+            {
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  accessToken,
+
+                "Prefer":
+                  "return=minimal"
+              },
+
+              body: JSON.stringify({
+
+                name: name,
+
+                skill: skill,
+
+                description: description,
+
+                hourly_price:
+                  hourlyPrice
+                    ? Number(hourlyPrice)
+                    : null,
+
+                project_price:
+                  projectPrice
+                    ? Number(projectPrice)
+                    : null,
+
+                user_id:
+                  currentUser.id,
+
+                avatar_url:
+                  avatarUrl,
+
+                created_at:
+                  new Date().toISOString()
+
+              })
+            }
+          );
+
+
+        if (!response.ok) {
+
+          const error =
+            await response.text();
+
+          console.error(
+            "Profile error:",
+            error
+          );
+
+          message.textContent =
+            "Could not save profile. Check your database policies.";
+
+          return;
+        }
+
+
+        message.textContent =
+          "Profile created successfully!";
+
+
+        document.getElementById("name").value = "";
+        document.getElementById("skill").value = "";
+        document.getElementById("description").value = "";
+        document.getElementById("hourlyPrice").value = "";
+        document.getElementById("projectPrice").value = "";
+        document.getElementById("avatarInput").value = "";
+
+
+        selectedAvatarFile = null;
+
+
+        const preview =
+          document.getElementById(
+            "avatarPreview"
+          );
+
+
+        preview.className =
+          "avatar-preview avatar-placeholder";
+
+        preview.style.backgroundImage =
+          "none";
+
+        preview.innerHTML =
+          "+";
+
+
+      } catch (error) {
+
+        console.error(
+          "Profile connection error:",
+          error
+        );
+
+        message.textContent =
+          error.message ||
+          "Connection error. Please try again.";
       }
     }
-  );
 
 
-document
-  .querySelectorAll(".skill")
-  .forEach(
-    function(button) {
+    /* =========================
+       SEARCH
+       ========================= */
 
-      button.addEventListener(
+    async function searchSkill(skill) {
+
+      if (!skill) {
+        return;
+      }
+
+
+      showPage("resultsPage");
+
+
+      const list =
+        document.getElementById(
+          "profilesList"
+        );
+
+
+      list.innerHTML =
+        "<p>Searching...</p>";
+
+
+      try {
+
+        const url =
+          SUPABASE_URL +
+          "/rest/v1/profiles?select=*&skill=ilike." +
+          encodeURIComponent("*" + skill + "*");
+
+
+        const response =
+          await fetch(
+            url,
+            {
+              method: "GET",
+
+              headers: {
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_KEY
+              }
+            }
+          );
+
+
+        if (!response.ok) {
+
+          const error =
+            await response.text();
+
+          console.error(
+            "Search error:",
+            error
+          );
+
+          list.innerHTML =
+            "<p>Could not load profiles.</p>";
+
+          return;
+        }
+
+
+        const profiles =
+          await response.json();
+
+
+        displayProfiles(profiles);
+
+
+      } catch (error) {
+
+        console.error(
+          "Search connection error:",
+          error
+        );
+
+        list.innerHTML =
+          "<p>Could not load profiles.</p>";
+      }
+    }
+
+
+    /* =========================
+       DISPLAY PROFILES
+       ========================= */
+
+    function displayProfiles(profiles) {
+
+      const list =
+        document.getElementById(
+          "profilesList"
+        );
+
+
+      if (
+        !profiles ||
+        profiles.length === 0
+      ) {
+
+        list.innerHTML =
+          "<p>No profiles found yet.</p>";
+
+        return;
+      }
+
+
+      list.innerHTML = "";
+
+
+      profiles.forEach(function(profile) {
+
+        const card =
+          document.createElement("div");
+
+        card.className =
+          "profile-card";
+
+
+        const top =
+          document.createElement("div");
+
+        top.className =
+          "profile-top";
+
+
+        const avatar =
+          document.createElement("div");
+
+        avatar.className =
+          "profile-avatar";
+
+
+        if (profile.avatar_url) {
+
+          const image =
+            document.createElement("img");
+
+          image.src =
+            profile.avatar_url;
+
+          image.alt =
+            profile.name ||
+            "Profile photo";
+
+          avatar.appendChild(image);
+
+        } else {
+
+          avatar.textContent =
+            profile.name
+              ? profile.name
+                  .charAt(0)
+                  .toUpperCase()
+              : "?";
+        }
+
+
+        const info =
+          document.createElement("div");
+
+
+        const name =
+          document.createElement("div");
+
+        name.className =
+          "profile-name";
+
+        name.textContent =
+          profile.name || "";
+
+
+        const skill =
+          document.createElement("div");
+
+        skill.className =
+          "profile-skill";
+
+        skill.textContent =
+          profile.skill || "";
+
+
+        info.appendChild(name);
+        info.appendChild(skill);
+
+        top.appendChild(avatar);
+        top.appendChild(info);
+
+
+        const divider =
+          document.createElement("div");
+
+        divider.className =
+          "profile-divider";
+
+
+        const description =
+          document.createElement("div");
+
+        description.className =
+          "profile-description";
+
+        description.textContent =
+          profile.description ||
+          "No description provided.";
+
+
+        const prices =
+          document.createElement("div");
+
+        prices.className =
+          "price-row";
+
+
+        if (
+          profile.hourly_price !== null &&
+          profile.hourly_price !== undefined
+        ) {
+
+          const hourly =
+            document.createElement("div");
+
+          hourly.className =
+            "price";
+
+          hourly.textContent =
+            "₹" +
+            profile.hourly_price +
+            "/hr";
+
+          prices.appendChild(hourly);
+        }
+
+
+        if (
+          profile.project_price !== null &&
+          profile.project_price !== undefined
+        ) {
+
+          const project =
+            document.createElement("div");
+
+          project.className =
+            "price";
+
+          project.textContent =
+            "₹" +
+            profile.project_price +
+            " project";
+
+          prices.appendChild(project);
+        }
+
+
+        const verified =
+          document.createElement("div");
+
+        verified.className =
+          "verified-text";
+
+        verified.style.marginTop =
+          "12px";
+
+        verified.textContent =
+          "GoSkill member";
+
+
+        const viewButton =
+          document.createElement("button");
+
+        viewButton.className =
+          "view-profile-button";
+
+        viewButton.type =
+          "button";
+
+        viewButton.textContent =
+          "View Profile";
+
+
+        viewButton.addEventListener(
+          "click",
+          function() {
+            openProfileDetail(profile);
+          }
+        );
+
+
+        card.appendChild(top);
+        card.appendChild(divider);
+        card.appendChild(description);
+        card.appendChild(prices);
+        card.appendChild(verified);
+        card.appendChild(viewButton);
+
+        list.appendChild(card);
+
+      });
+    }
+
+
+    /* =========================
+       PROFILE DETAIL
+       ========================= */
+
+    function openProfileDetail(profile) {
+
+      selectedProfile =
+        profile;
+
+
+      const detail =
+        document.getElementById(
+          "profileDetail"
+        );
+
+
+      detail.innerHTML =
+        "";
+
+
+      const card =
+        document.createElement("div");
+
+      card.className =
+        "detail-card";
+
+
+      const avatar =
+        document.createElement("div");
+
+      avatar.className =
+        "detail-avatar";
+
+
+      if (profile.avatar_url) {
+
+        const image =
+          document.createElement("img");
+
+        image.src =
+          profile.avatar_url;
+
+        image.alt =
+          profile.name ||
+          "Profile photo";
+
+        avatar.appendChild(image);
+
+      } else {
+
+        avatar.textContent =
+          profile.name
+            ? profile.name
+                .charAt(0)
+                .toUpperCase()
+            : "?";
+      }
+
+
+      const name =
+        document.createElement("div");
+
+      name.className =
+        "detail-name";
+
+      name.textContent =
+        profile.name ||
+        "GoSkill Member";
+
+
+      const skill =
+        document.createElement("div");
+
+      skill.className =
+        "detail-skill";
+
+      skill.textContent =
+        profile.skill ||
+        "Professional";
+
+
+      const description =
+        document.createElement("div");
+
+      description.className =
+        "detail-description";
+
+      description.textContent =
+        profile.description ||
+        "This member has not added a description yet.";
+
+
+      const prices =
+        document.createElement("div");
+
+      prices.className =
+        "detail-prices";
+
+
+      if (
+        profile.hourly_price !== null &&
+        profile.hourly_price !== undefined
+      ) {
+
+        const hourly =
+          document.createElement("div");
+
+        hourly.className =
+          "detail-price";
+
+        hourly.innerHTML =
+          '<span class="detail-price-label">Hourly</span>' +
+          '<span class="detail-price-value">₹' +
+          profile.hourly_price +
+          '/hr</span>';
+
+        prices.appendChild(hourly);
+      }
+
+
+      if (
+        profile.project_price !== null &&
+        profile.project_price !== undefined
+      ) {
+
+        const project =
+          document.createElement("div");
+
+        project.className =
+          "detail-price";
+
+        project.innerHTML =
+          '<span class="detail-price-label">Project</span>' +
+          '<span class="detail-price-value">₹' +
+          profile.project_price +
+          '</span>';
+
+        prices.appendChild(project);
+      }
+
+
+      const contactBox =
+        document.createElement("div");
+
+      contactBox.className =
+        "contact-box";
+
+      contactBox.textContent =
+        "Interested in working with this professional? Send a project request through GoSkill.";
+
+
+      const hireButton =
+        document.createElement("button");
+
+      hireButton.className =
+        "primary-button";
+
+      hireButton.type =
+        "button";
+
+      hireButton.style.marginTop =
+        "20px";
+
+      hireButton.textContent =
+        "Contact / Hire";
+
+
+      hireButton.addEventListener(
+        "click",
+        function() {
+          openContactModal(profile);
+        }
+      );
+
+
+      card.appendChild(avatar);
+      card.appendChild(name);
+      card.appendChild(skill);
+      card.appendChild(description);
+      card.appendChild(prices);
+      card.appendChild(contactBox);
+      card.appendChild(hireButton);
+
+
+      detail.appendChild(card);
+
+
+      showPage("detailPage");
+    }
+
+
+    /* =========================
+       CONTACT MODAL
+       ========================= */
+
+    function openContactModal(profile) {
+
+      selectedProfile =
+        profile;
+
+
+      const modal =
+        document.getElementById(
+          "contactModal"
+        );
+
+
+      const subtitle =
+        document.getElementById(
+          "contactSubtitle"
+        );
+
+
+      subtitle.textContent =
+        "Send a project request regarding " +
+        (profile.name || "this professional") +
+        ".";
+
+
+      document.getElementById(
+        "contactStatus"
+      ).textContent =
+        "";
+
+
+      modal.classList.add("active");
+    }
+
+
+    function closeContactModal() {
+
+      document
+        .getElementById("contactModal")
+        .classList.remove("active");
+    }
+
+
+    /* =========================
+       SEND HIRE REQUEST
+       ========================= */
+
+    async function sendContactRequest() {
+
+      const name =
+        document
+          .getElementById("contactName")
+          .value
+          .trim();
+
+      const email =
+        document
+          .getElementById("contactEmail")
+          .value
+          .trim();
+
+      const message =
+        document
+          .getElementById("contactMessage")
+          .value
+          .trim();
+
+      const status =
+        document.getElementById(
+          "contactStatus"
+        );
+
+
+      if (!name || !email || !message) {
+
+        status.textContent =
+          "Please fill in all fields.";
+
+        return;
+      }
+
+
+      if (!selectedProfile) {
+
+        status.textContent =
+          "Profile information is unavailable.";
+
+        return;
+      }
+
+
+      if (!selectedProfile.id) {
+
+        status.textContent =
+          "This profile cannot receive requests yet.";
+
+        return;
+      }
+
+
+      status.textContent =
+        "Sending request...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            SUPABASE_URL +
+            "/functions/v1/super-action",
+            {
+              method: "POST",
+
+              headers: {
+
+                "Content-Type":
+                  "application/json",
+
+                "apikey":
+                  SUPABASE_KEY,
+
+                "Authorization":
+                  "Bearer " +
+                  SUPABASE_KEY
+              },
+
+              body: JSON.stringify({
+
+                profile_id:
+                  selectedProfile.id,
+
+                name:
+                  name,
+
+                email:
+                  email,
+
+                message:
+                  message
+
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Hire request error:",
+            data
+          );
+
+          status.textContent =
+            data.error ||
+            "Could not send your request. Please try again.";
+
+          return;
+        }
+
+
+        status.textContent =
+          "Request sent successfully!";
+
+
+        document.getElementById(
+          "contactName"
+        ).value = "";
+
+        document.getElementById(
+          "contactEmail"
+        ).value = "";
+
+        document.getElementById(
+          "contactMessage"
+        ).value = "";
+
+
+        setTimeout(
+          function() {
+            closeContactModal();
+          },
+          1800
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Hire request connection error:",
+          error
+        );
+
+        status.textContent =
+          "Could not connect to GoSkill. Please try again.";
+      }
+    }
+
+
+    /* =========================
+       BUTTON EVENTS
+       ========================= */
+
+    document
+      .getElementById("loginButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("loginPage");
+        }
+      );
+
+
+    document
+      .getElementById("signupButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("signupPage");
+        }
+      );
+
+
+    document
+      .getElementById("logoutButton")
+      .addEventListener(
+        "click",
+        logout
+      );
+
+
+    document
+      .getElementById("doLoginButton")
+      .addEventListener(
+        "click",
+        login
+      );
+
+
+    document
+      .getElementById("doSignupButton")
+      .addEventListener(
+        "click",
+        signUp
+      );
+
+
+    document
+      .getElementById("switchToSignup")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("signupPage");
+        }
+      );
+
+
+    document
+      .getElementById("switchToLogin")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("loginPage");
+        }
+      );
+
+
+    document
+      .getElementById("loginBackButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("homePage");
+        }
+      );
+
+
+    document
+      .getElementById("signupBackButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("homePage");
+        }
+      );
+
+
+    document
+      .getElementById("offerButton")
+      .addEventListener(
         "click",
         function() {
 
-          searchSkill(
-            button.dataset.skill
+          if (!currentUser) {
+
+            showPage("loginPage");
+
+            return;
+          }
+
+          showPage("profilePage");
+        }
+      );
+
+
+    document
+      .getElementById("profileBackButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("homePage");
+        }
+      );
+
+
+    document
+      .getElementById("resultsBackButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("homePage");
+        }
+      );
+
+
+    document
+      .getElementById("detailBackButton")
+      .addEventListener(
+        "click",
+        function() {
+          showPage("resultsPage");
+        }
+      );
+
+
+    document
+      .getElementById("createProfileButton")
+      .addEventListener(
+        "click",
+        createProfile
+      );
+
+
+    document
+      .getElementById("searchButton")
+      .addEventListener(
+        "click",
+        function() {
+
+          const value =
+            document
+              .getElementById("searchInput")
+              .value
+              .trim();
+
+          searchSkill(value);
+        }
+      );
+
+
+    document
+      .getElementById("searchInput")
+      .addEventListener(
+        "keydown",
+        function(event) {
+
+          if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            searchSkill(
+              event.target.value.trim()
+            );
+          }
+        }
+      );
+
+
+    document
+      .querySelectorAll(".skill")
+      .forEach(
+        function(button) {
+
+          button.addEventListener(
+            "click",
+            function() {
+
+              searchSkill(
+                button.dataset.skill
+              );
+            }
           );
         }
       );
-    }
-  );
 
 
-document
-  .getElementById("closeContactModal")
-  .addEventListener(
-    "click",
-    closeContactModal
-  );
+    document
+      .getElementById("closeContactModal")
+      .addEventListener(
+        "click",
+        closeContactModal
+      );
 
 
-document
-  .getElementById("sendContactButton")
-  .addEventListener(
-    "click",
-    sendContactRequest
-  );
+    document
+      .getElementById("sendContactButton")
+      .addEventListener(
+        "click",
+        sendContactRequest
+      );
 
 
-document
-  .getElementById("contactModal")
-  .addEventListener(
-    "click",
-    function(event) {
+    document
+      .getElementById("contactModal")
+      .addEventListener(
+        "click",
+        function(event) {
 
-      if (
-        event.target ===
-        document.getElementById("contactModal")
-      ) {
+          if (
+            event.target ===
+            document.getElementById("contactModal")
+          ) {
 
-        closeContactModal();
-      }
-    }
-  );
+            closeContactModal();
+          }
+        }
+      );
 
 
-/* =========================
-   START
-   ========================= */
+    /* =========================
+       START
+       ========================= */
 
-updateAuthUI();
+    updateAuthUI();
 
-console.log(
-  "GoSkill loaded successfully."
-);
+    console.log(
+      "GoSkill loaded successfully."
+    );
 
-</script>
+  </script>
 
 </body>
 </html>
