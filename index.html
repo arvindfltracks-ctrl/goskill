@@ -648,6 +648,43 @@ showToast(error.message||"Could not send hire request.","error");
 }
 }
 
+async function getAcceptedFreelancerEmail(requestId, freelancerId){
+/*
+  The frontend cannot query auth.users directly with the publishable key.
+  First try a public profiles.email column if the project has one.
+  If that column is absent, fall back to the existing accepted-email RPC
+  that was part of the earlier GoSkill database setup.
+*/
+try{
+const profileResult=await client
+.from("profiles")
+.select("email,name")
+.eq("user_id",freelancerId)
+.maybeSingle();
+
+if(!profileResult.error && profileResult.data && profileResult.data.email){
+return {
+email:profileResult.data.email,
+name:profileResult.data.name||"Freelancer"
+};
+}
+
+if(typeof client.rpc==="function"){
+const rpcResult=await client.rpc("get_accepted_freelancer_email",{request_id:requestId});
+if(!rpcResult.error && rpcResult.data){
+return {
+email:typeof rpcResult.data==="string"?rpcResult.data:(rpcResult.data.email||""),
+name:"Freelancer"
+};
+}
+}
+}catch(error){
+console.warn("Accepted freelancer email lookup:",error);
+}
+
+return null;
+}
+
 async function loadSentRequests(){
 const box=$("sentList");
 box.innerHTML='<div class="muted">Loading sent requests...</div>';
@@ -686,15 +723,40 @@ return '<div class="card request-card">'+
 '</div>'+
 '<div class="request-message">'+escapeHtml(r.message)+'</div>'+
 (status==="accepted"?
-'<div style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">This freelancer accepted your request. Continue through email.</div>':
+'<div id="accepted-contact-'+escapeHtml(r.id)+'" style="border:1px solid #39734a;color:#a8efb8;padding:12px;border-radius:8px">Loading freelancer contact...</div>':
 "")+
 '<div class="date">'+formatDate(r.created_at)+'</div>'+
 '</div>';
 }).join("");
 
+rows.filter(function(r){return r.status==="accepted"}).forEach(function(r){
+loadAcceptedContact(r.id,r.freelancer_id);
+});
+
 }catch(error){
 console.error("Sent requests:",error);
 box.innerHTML='<div class="empty">Could not load sent requests.<br><small>'+escapeHtml(error.message||"Database error")+'</small></div>';
+}
+}
+
+async function loadAcceptedContact(requestId,freelancerId){
+const element=$("accepted-contact-"+requestId);
+if(!element)return;
+
+const contact=await getAcceptedFreelancerEmail(requestId,freelancerId);
+
+if(contact && contact.email){
+element.innerHTML=
+'✓ Request accepted<br>'+
+'<span style="display:block;margin-top:8px;color:#ddd">Freelancer: <strong>'+
+escapeHtml(contact.name)+'</strong></span>'+
+'<span style="display:block;margin-top:5px;color:#ddd">Email: <strong>'+
+escapeHtml(contact.email)+'</strong></span>'+
+'<span style="display:block;margin-top:8px;color:#aaa">Continue the conversation through email.</span>';
+}else{
+element.innerHTML=
+'✓ Request accepted.<br>'+
+'<span style="display:block;margin-top:8px;color:#aaa">The freelancer accepted your request. Continue the conversation through email.</span>';
 }
 }
 
