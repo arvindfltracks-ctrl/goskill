@@ -4,18 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GoSkill</title>
+<title>GoSkill — Find Skilled Professionals</title>
 
 <style>
-
 /* =========================================================
-   RESET
-========================================================= */
+   GOSKILL COMPLETE WEBSITE
+   ========================================================= */
+
+:root {
+  --bg: #f6f7fb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #111827;
+  --primary-hover: #000000;
+  --soft: #f3f4f6;
+  --success: #15803d;
+  --danger: #dc2626;
+  --radius: 18px;
+  --shadow: 0 8px 30px rgba(0,0,0,.06);
+}
 
 * {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 html {
@@ -23,6 +35,9 @@ html {
 }
 
 body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
   font-family:
     Inter,
     -apple-system,
@@ -31,20 +46,12 @@ body {
     Roboto,
     Arial,
     sans-serif;
-
-  background: #f6f7fb;
-  color: #111827;
-  min-height: 100vh;
 }
-
-
-/* =========================================================
-   GLOBAL
-========================================================= */
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
@@ -52,52 +59,62 @@ button {
   cursor: pointer;
 }
 
-.hidden {
-  display: none !important;
+a {
+  color: inherit;
+  text-decoration: none;
 }
-
 
 /* =========================================================
    HEADER
-========================================================= */
+   ========================================================= */
 
-header {
-  width: 100%;
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
+.header {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1000;
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
 }
 
 .header-inner {
-  max-width: 1180px;
+  width: min(1180px, calc(100% - 32px));
+  min-height: 72px;
   margin: auto;
-  min-height: 70px;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding: 0 24px;
+  gap: 20px;
 }
 
 .logo {
   font-size: 25px;
   font-weight: 800;
-  color: #111827;
-  letter-spacing: -0.8px;
-  cursor: pointer;
+  letter-spacing: -1px;
 }
 
 .logo span {
-  color: #2563eb;
+  color: #666;
 }
 
-.header-right {
+.nav {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.nav button {
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  padding: 10px 13px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.nav button:hover {
+  background: var(--soft);
 }
 
 .auth-buttons {
@@ -112,708 +129,589 @@ header {
 }
 
 .user-email {
-  font-size: 14px;
-  color: #4b5563;
-  max-width: 220px;
+  max-width: 190px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: var(--muted);
+  font-size: 14px;
 }
 
-.header-button {
-  border: none;
-  border-radius: 9px;
-  padding: 10px 16px;
-  font-weight: 600;
+.mobile-menu-button {
+  display: none;
+  border: 0;
+  background: var(--soft);
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  font-size: 20px;
 }
 
-.login-header {
-  background: transparent;
-  color: #374151;
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 700;
+  transition: .2s ease;
 }
 
-.signup-header {
-  background: #2563eb;
+.primary-button {
+  background: var(--primary);
   color: white;
 }
 
-.logout-header {
-  background: #f3f4f6;
-  color: #374151;
+.primary-button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-1px);
 }
 
+.secondary-button {
+  background: var(--soft);
+  color: var(--text);
+}
+
+.secondary-button:hover {
+  background: #e5e7eb;
+}
+
+.danger-button {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.small-button {
+  padding: 9px 13px;
+  font-size: 13px;
+}
 
 /* =========================================================
-   PAGES
-========================================================= */
+   PAGE SYSTEM
+   ========================================================= */
 
 .page {
   display: none;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 72px);
 }
 
 .page.active {
   display: block;
 }
 
+.container {
+  width: min(1180px, calc(100% - 32px));
+  margin: auto;
+}
 
 /* =========================================================
    HOME
-========================================================= */
-
-.home {
-  max-width: 1180px;
-  margin: auto;
-  padding: 70px 24px;
-}
+   ========================================================= */
 
 .hero {
-  text-align: center;
-  max-width: 820px;
-  margin: 0 auto;
+  padding: 85px 0 60px;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.15fr .85fr;
+  gap: 60px;
+  align-items: center;
 }
 
 .hero h1 {
-  font-size: clamp(40px, 7vw, 72px);
-  line-height: 1.02;
+  margin: 0;
+  font-size: clamp(42px, 6vw, 72px);
+  line-height: .98;
   letter-spacing: -3px;
-  font-weight: 850;
 }
 
 .hero h1 span {
-  color: #2563eb;
+  color: #777;
 }
 
 .hero p {
   max-width: 650px;
-  margin: 22px auto 0;
-  font-size: 18px;
+  margin: 25px 0;
+  color: var(--muted);
+  font-size: 19px;
   line-height: 1.7;
-  color: #6b7280;
 }
 
-
-/* =========================================================
-   SEARCH
-========================================================= */
-
-.search-box {
-  max-width: 720px;
-  margin: 38px auto 0;
-
+.hero-search {
   display: flex;
+  max-width: 650px;
   background: white;
-  border: 1px solid #dfe3ea;
-  border-radius: 14px;
-  padding: 6px;
-
-  box-shadow:
-    0 10px 35px rgba(15, 23, 42, 0.06);
+  border: 1px solid var(--border);
+  padding: 7px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
 }
 
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  padding: 13px 15px;
+.hero-search input {
   min-width: 0;
-  font-size: 16px;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding: 14px;
+  background: transparent;
 }
 
-.search-button {
-  border: none;
-  background: #2563eb;
+.hero-search button {
+  white-space: nowrap;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.hero-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+}
+
+.hero-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.hero-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: #111;
   color: white;
-  padding: 0 22px;
-  border-radius: 10px;
-  font-weight: 700;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 21px;
 }
 
+.hero-card h3 {
+  margin: 0 0 5px;
+}
+
+.hero-card p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.fake-price {
+  margin-top: 25px;
+  padding: 18px;
+  background: var(--soft);
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.section {
+  padding: 60px 0;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.section-title h2 {
+  font-size: 36px;
+  margin: 0 0 10px;
+  letter-spacing: -1px;
+}
+
+.section-title p {
+  color: var(--muted);
+}
 
 /* =========================================================
    SKILLS
-========================================================= */
+   ========================================================= */
 
-.skills-section {
-  max-width: 950px;
-  margin: 65px auto 0;
-}
-
-.skills-section h2 {
-  text-align: center;
-  font-size: 24px;
-}
-
-.skill-grid {
-  margin-top: 22px;
-
+.skills-grid {
   display: grid;
-  grid-template-columns:
-    repeat(4, minmax(0, 1fr));
-
-  gap: 12px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
 }
 
 .skill {
+  border: 1px solid var(--border);
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 16px;
-
-  text-align: center;
-  font-weight: 600;
-  color: #374151;
-
-  transition: 0.2s;
+  padding: 20px;
+  border-radius: 15px;
+  font-weight: 700;
+  text-align: left;
+  transition: .2s;
 }
 
 .skill:hover {
-  border-color: #2563eb;
-  color: #2563eb;
   transform: translateY(-2px);
+  box-shadow: var(--shadow);
 }
-
-
-/* =========================================================
-   CTA
-========================================================= */
-
-.offer-section {
-  margin: 70px auto 0;
-  max-width: 760px;
-
-  background: #111827;
-  color: white;
-
-  border-radius: 22px;
-  padding: 42px 30px;
-  text-align: center;
-}
-
-.offer-section h2 {
-  font-size: 30px;
-}
-
-.offer-section p {
-  margin-top: 12px;
-  color: #cbd5e1;
-  line-height: 1.6;
-}
-
-.primary-button {
-  margin-top: 22px;
-  background: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 13px 22px;
-  font-weight: 700;
-}
-
-.primary-button:hover {
-  background: #1d4ed8;
-}
-
 
 /* =========================================================
    AUTH
-========================================================= */
+   ========================================================= */
 
-.auth-container {
-  width: min(450px, calc(100% - 32px));
-  margin: 60px auto;
+.auth-wrapper {
+  min-height: calc(100vh - 72px);
+  display: grid;
+  place-items: center;
+  padding: 40px 16px;
 }
 
 .auth-card {
+  width: min(450px, 100%);
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  padding: 30px;
-
-  box-shadow:
-    0 15px 40px rgba(15, 23, 42, 0.06);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: var(--shadow);
 }
 
-.auth-card h2 {
-  font-size: 28px;
-}
-
-.auth-card p {
-  margin-top: 8px;
-  color: #6b7280;
+.auth-card h1 {
+  margin-top: 0;
+  font-size: 30px;
 }
 
 .form-group {
-  margin-top: 18px;
+  margin-bottom: 17px;
 }
 
 .form-group label {
   display: block;
   font-size: 14px;
-  font-weight: 650;
+  font-weight: 700;
   margin-bottom: 7px;
 }
 
 .form-group input,
 .form-group textarea,
-.form-input {
+.form-group select {
   width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  padding: 12px 13px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 14px;
   outline: none;
   background: white;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #2563eb;
-}
-
 .form-group textarea {
-  min-height: 120px;
+  min-height: 130px;
   resize: vertical;
 }
 
-.full-button {
-  width: 100%;
-  margin-top: 22px;
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #999;
 }
 
-.auth-switch {
-  margin-top: 18px !important;
+.form-message {
+  min-height: 22px;
+  margin: 12px 0;
+  color: var(--danger);
+  font-size: 14px;
+}
+
+.form-footer {
+  margin-top: 18px;
   text-align: center;
+  color: var(--muted);
   font-size: 14px;
 }
 
-.link-button {
-  background: none;
-  border: none;
-  color: #2563eb;
+.form-footer button {
+  border: 0;
+  background: transparent;
   font-weight: 700;
+  text-decoration: underline;
 }
-
-.back-button {
-  margin-top: 15px;
-  width: 100%;
-  background: #f3f4f6;
-  color: #374151;
-  border: none;
-  border-radius: 10px;
-  padding: 12px;
-  font-weight: 650;
-}
-
-.status-message {
-  margin-top: 15px;
-  font-size: 14px;
-  color: #2563eb;
-  line-height: 1.5;
-}
-
 
 /* =========================================================
-   PROFILE FORM
-========================================================= */
+   PROFILE CREATION
+   ========================================================= */
 
-.form-container {
-  max-width: 650px;
-  margin: 50px auto;
-  padding: 0 20px;
+.form-page {
+  padding: 55px 0;
 }
 
 .form-card {
+  width: min(700px, 100%);
+  margin: auto;
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
+  border: 1px solid var(--border);
+  border-radius: 22px;
   padding: 30px;
+  box-shadow: var(--shadow);
 }
 
-.form-card h2 {
-  font-size: 30px;
+.form-card h1 {
+  margin-top: 0;
 }
-
-.form-card > p {
-  color: #6b7280;
-  margin-top: 8px;
-}
-
-
-/* =========================================================
-   AVATAR
-========================================================= */
 
 .avatar-upload {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  margin: 25px 0;
+  gap: 18px;
+  margin-bottom: 25px;
 }
 
 .avatar-preview {
-  width: 105px;
-  height: 105px;
-  border-radius: 50%;
-
-  background: #eef2ff;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 35px;
-  color: #2563eb;
-
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
+  background: var(--soft);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 32px;
+  font-weight: 800;
   overflow: hidden;
-
-  border: 3px solid white;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-.avatar-file {
-  margin-top: 12px;
-  font-size: 13px;
+.avatar-placeholder {
+  background: #f3f4f6;
 }
-
 
 /* =========================================================
    RESULTS
-========================================================= */
+   ========================================================= */
 
-.results-container {
-  max-width: 1050px;
-  margin: 40px auto;
-  padding: 0 20px;
+.results-page {
+  padding: 45px 0 70px;
 }
 
 .results-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   gap: 15px;
   margin-bottom: 25px;
 }
 
-.results-header h2 {
-  font-size: 30px;
+.results-header h1 {
+  margin: 0;
 }
 
-.results-back {
-  border: none;
-  background: #f3f4f6;
-  padding: 10px 15px;
-  border-radius: 9px;
-  font-weight: 600;
-}
-
-.profiles-list {
+.profiles-grid {
   display: grid;
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
 .profile-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 17px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
   padding: 22px;
-
-  box-shadow:
-    0 8px 25px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 20px rgba(0,0,0,.03);
 }
 
 .profile-top {
   display: flex;
+  gap: 14px;
   align-items: center;
-  gap: 13px;
 }
 
 .profile-avatar {
   width: 58px;
   height: 58px;
-  min-width: 58px;
-
-  border-radius: 50%;
-  background: #eef2ff;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #2563eb;
-  font-weight: 800;
-  font-size: 22px;
-
-  overflow: hidden;
-}
-
-.profile-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile-name {
-  font-weight: 750;
-  font-size: 18px;
-}
-
-.profile-skill {
-  margin-top: 4px;
-  color: #2563eb;
-  font-size: 14px;
-  font-weight: 650;
-}
-
-.profile-divider {
-  height: 1px;
-  background: #edf0f4;
-  margin: 17px 0;
-}
-
-.profile-description {
-  color: #4b5563;
-  line-height: 1.55;
-  font-size: 14px;
-}
-
-.price-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 17px;
-}
-
-.price {
-  background: #f3f4f6;
-  border-radius: 8px;
-  padding: 7px 10px;
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.verified-text {
-  color: #16a34a;
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.view-profile-button {
-  width: 100%;
-  margin-top: 16px;
-
-  background: #111827;
+  border-radius: 17px;
+  background: #111;
   color: white;
-
-  border: none;
-  border-radius: 9px;
-
-  padding: 11px;
-  font-weight: 700;
-}
-
-
-/* =========================================================
-   DETAIL
-========================================================= */
-
-.detail-container {
-  max-width: 650px;
-  margin: 45px auto;
-  padding: 0 20px;
-}
-
-.detail-card {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  padding: 32px;
-
-  text-align: center;
-}
-
-.detail-avatar {
-  width: 115px;
-  height: 115px;
-
-  margin: 0 auto 18px;
-
-  border-radius: 50%;
-  overflow: hidden;
-
-  background: #eef2ff;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: #2563eb;
-  font-size: 40px;
+  display: grid;
+  place-items: center;
   font-weight: 800;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
+.profile-avatar img,
 .detail-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+.profile-name {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.profile-skill {
+  color: var(--muted);
+  margin-top: 3px;
+  font-size: 14px;
+}
+
+.profile-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 18px 0;
+}
+
+.profile-description {
+  color: var(--muted);
+  line-height: 1.55;
+  min-height: 68px;
+}
+
+.price-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.price {
+  padding: 8px 11px;
+  background: var(--soft);
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.verified-text {
+  color: var(--success);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.view-profile-button {
+  width: 100%;
+  margin-top: 17px;
+  padding: 11px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: white;
+  font-weight: 700;
+}
+
+.view-profile-button:hover {
+  background: var(--soft);
+}
+
+/* =========================================================
+   DETAIL
+   ========================================================= */
+
+.detail-page {
+  padding: 45px 0;
+}
+
+.detail-card {
+  width: min(650px, 100%);
+  margin: auto;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.detail-avatar {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 20px;
+  border-radius: 35px;
+  background: #111;
+  color: white;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  font-size: 45px;
+  font-weight: 800;
+}
+
 .detail-name {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
 }
 
 .detail-skill {
+  color: var(--muted);
   margin-top: 5px;
-  color: #2563eb;
-  font-weight: 700;
 }
 
 .detail-description {
-  margin-top: 22px;
-  color: #4b5563;
+  color: var(--muted);
   line-height: 1.7;
+  margin: 25px 0;
 }
 
 .detail-prices {
-  margin-top: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
+  display: grid;
+  gap: 10px;
+  text-align: left;
 }
 
 .detail-price {
   display: flex;
   justify-content: space-between;
-
-  background: #f8fafc;
-  border-radius: 10px;
-
-  padding: 13px 15px;
+  padding: 16px;
+  background: var(--soft);
+  border-radius: 13px;
 }
 
 .detail-price-label {
-  color: #6b7280;
+  color: var(--muted);
 }
 
 .detail-price-value {
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .contact-box {
-  margin-top: 20px;
-  background: #eff6ff;
-  color: #1e40af;
-
-  border-radius: 10px;
-  padding: 15px;
-
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.detail-card .primary-button {
-  width: 100%;
-}
-
-
-/* =========================================================
-   MODAL
-========================================================= */
-
-.modal {
-  display: none;
-
-  position: fixed;
-  inset: 0;
-
-  background: rgba(15, 23, 42, 0.55);
-
-  z-index: 500;
-
-  padding: 20px;
-
-  align-items: center;
-  justify-content: center;
-}
-
-.modal.active {
-  display: flex;
-}
-
-.modal-card {
-  width: min(500px, 100%);
-  max-height: 90vh;
-  overflow-y: auto;
-
-  background: white;
-  border-radius: 18px;
-  padding: 25px;
-
-  box-shadow:
-    0 25px 70px rgba(0,0,0,0.2);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-}
-
-.modal-header h3 {
-  font-size: 23px;
-}
-
-.close-modal {
-  border: none;
-  background: #f3f4f6;
-
-  width: 35px;
-  height: 35px;
-
-  border-radius: 50%;
-
-  font-size: 20px;
-}
-
-.modal-subtitle {
-  color: #6b7280;
-  margin-top: 7px;
+  margin-top: 18px;
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  color: var(--muted);
   line-height: 1.5;
 }
-
 
 /* =========================================================
    REQUESTS
-========================================================= */
+   ========================================================= */
 
-.requests-container {
-  max-width: 900px;
-  margin: 45px auto;
-  padding: 0 20px;
+.requests-page {
+  padding: 45px 0 70px;
 }
 
 .requests-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
-.requests-header h2 {
-  font-size: 30px;
+.requests-header h1 {
+  margin: 0;
+}
+
+.requests-list {
+  display: grid;
+  gap: 15px;
 }
 
 .request-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 15px;
-
-  padding: 20px;
-  margin-top: 15px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
 }
 
 .request-top {
@@ -823,87 +721,171 @@ header {
 }
 
 .request-name {
-  font-weight: 750;
-  font-size: 17px;
+  font-weight: 800;
+  font-size: 18px;
 }
 
 .request-email {
-  color: #2563eb;
+  color: var(--muted);
   font-size: 14px;
   margin-top: 4px;
 }
 
 .request-status {
-  font-size: 12px;
+  padding: 7px 10px;
+  border-radius: 9px;
   background: #dcfce7;
   color: #166534;
-
-  padding: 6px 9px;
-  border-radius: 20px;
-
+  font-size: 12px;
+  font-weight: 800;
   height: fit-content;
-  white-space: nowrap;
 }
 
 .request-message {
-  margin-top: 15px;
-  background: #f8fafc;
-  border-radius: 10px;
-  padding: 14px;
-
-  color: #374151;
+  margin-top: 17px;
+  padding: 15px;
+  background: var(--soft);
+  border-radius: 12px;
   line-height: 1.6;
 }
 
 .request-date {
   margin-top: 12px;
+  color: var(--muted);
   font-size: 12px;
-  color: #9ca3af;
 }
 
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0,0,0,.55);
+  padding: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-card {
+  width: min(520px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 22px;
+  padding: 27px;
+  box-shadow: 0 25px 80px rgba(0,0,0,.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.modal-header h2 {
+  margin: 0;
+}
+
+.close-button {
+  border: 0;
+  background: var(--soft);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 18px;
+}
 
 /* =========================================================
    FOOTER
-========================================================= */
+   ========================================================= */
 
-footer {
-  text-align: center;
-  padding: 35px 20px;
-  color: #9ca3af;
-  font-size: 13px;
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 35px 0;
+  margin-top: 40px;
+  background: white;
 }
 
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--muted);
+  font-size: 14px;
+}
 
 /* =========================================================
    MOBILE
-========================================================= */
+   ========================================================= */
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
+
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-card {
+    max-width: 600px;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
 
   .header-inner {
-    min-height: 62px;
-    padding: 0 15px;
+    min-height: 64px;
+    width: min(100% - 22px, 1180px);
   }
 
   .logo {
     font-size: 22px;
   }
 
-  .header-right {
-    gap: 4px;
+  .mobile-menu-button {
+    display: block;
   }
 
-  .header-button {
-    padding: 8px 10px;
-    font-size: 13px;
-  }
-
-  .user-email {
+  .nav {
     display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 12px;
+    flex-direction: column;
+    align-items: stretch;
   }
 
-  .home {
-    padding: 45px 16px;
+  .nav.open {
+    display: flex;
+  }
+
+  .auth-buttons,
+  .user-area {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 55px 0 35px;
   }
 
   .hero h1 {
@@ -915,107 +897,103 @@ footer {
     font-size: 16px;
   }
 
-  .search-box {
-    margin-top: 28px;
+  .hero-search {
+    flex-direction: column;
+    background: white;
   }
 
-  .search-button {
-    padding: 0 15px;
+  .hero-search button {
+    width: 100%;
   }
 
-  .skill-grid {
-    grid-template-columns:
-      repeat(2, minmax(0, 1fr));
+  .hero-actions {
+    flex-direction: column;
   }
 
-  .profiles-list {
+  .hero-actions button {
+    width: 100%;
+  }
+
+  .skills-grid {
     grid-template-columns: 1fr;
   }
 
-  .results-header h2,
-  .requests-header h2 {
-    font-size: 24px;
+  .profiles-grid {
+    grid-template-columns: 1fr;
   }
 
-  .auth-container {
-    margin: 35px auto;
+  .container {
+    width: min(100% - 22px, 1180px);
   }
 
-  .auth-card,
   .form-card,
+  .auth-card,
   .detail-card {
     padding: 22px;
+    border-radius: 18px;
   }
 
-  .offer-section {
-    padding: 32px 20px;
-  }
-
-  .request-top {
+  .results-header,
+  .requests-header {
+    align-items: flex-start;
     flex-direction: column;
   }
 
-  .request-status {
-    align-self: flex-start;
-  }
-}
-
-
-@media (max-width: 420px) {
-
-  .auth-buttons .login-header {
-    display: none;
-  }
-
-  .hero h1 {
-    font-size: 39px;
-  }
-
-  .search-box {
+  .footer-inner {
     flex-direction: column;
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    gap: 8px;
-    padding: 0;
   }
 
-  .search-box input {
-    background: white;
-    border: 1px solid #dfe3ea;
-    border-radius: 10px;
+  .user-email {
+    max-width: 150px;
   }
-
-  .search-button {
-    height: 46px;
-  }
-
 }
-
 </style>
 </head>
 
-
 <body>
-
 
 <!-- =======================================================
      HEADER
 ======================================================= -->
 
-<header>
+<header class="header">
 
   <div class="header-inner">
 
-    <div
-      class="logo"
-      id="logoButton"
-    >
+    <div class="logo">
       Go<span>Skill</span>
     </div>
 
+    <button
+      class="mobile-menu-button"
+      id="mobileMenuButton"
+      type="button"
+    >
+      ☰
+    </button>
 
-    <div class="header-right">
+    <nav class="nav" id="mainNav">
+
+      <button
+        type="button"
+        id="homeNavButton"
+      >
+        Home
+      </button>
+
+      <button
+        type="button"
+        id="requestsNavButton"
+      >
+        Requests
+      </button>
+
+      <button
+        type="button"
+        id="offerNavButton"
+      >
+        Offer a Skill
+      </button>
 
       <div
         class="auth-buttons"
@@ -1023,21 +1001,22 @@ footer {
       >
 
         <button
-          class="header-button login-header"
+          class="secondary-button small-button"
           id="loginButton"
+          type="button"
         >
           Login
         </button>
 
         <button
-          class="header-button signup-header"
+          class="primary-button small-button"
           id="signupButton"
+          type="button"
         >
           Sign Up
         </button>
 
       </div>
-
 
       <div
         class="user-area"
@@ -1050,22 +1029,24 @@ footer {
         ></span>
 
         <button
-          class="header-button logout-header"
-          id="requestsButton"
+          class="secondary-button small-button"
+          id="requestsUserButton"
+          type="button"
         >
           Requests
         </button>
 
         <button
-          class="header-button logout-header"
+          class="danger-button small-button"
           id="logoutButton"
+          type="button"
         >
           Logout
         </button>
 
       </div>
 
-    </div>
+    </nav>
 
   </div>
 
@@ -1081,65 +1062,148 @@ footer {
   id="homePage"
 >
 
-  <main class="home">
+  <div class="container">
 
     <div class="hero">
 
-      <h1>
-        Find the right
-        <span>skill.</span>
-      </h1>
+      <div class="hero-grid">
 
-      <p>
-        Discover talented people, offer your skills,
-        and connect directly through GoSkill.
-      </p>
+        <div>
+
+          <h1>
+            Find skills.<br>
+            <span>Get things done.</span>
+          </h1>
+
+          <p>
+            GoSkill connects people who need work done
+            with skilled professionals ready to help.
+          </p>
+
+          <div class="hero-search">
+
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="What skill are you looking for?"
+              autocomplete="off"
+            >
+
+            <button
+              class="primary-button"
+              id="searchButton"
+              type="button"
+            >
+              Search
+            </button>
+
+          </div>
+
+          <div class="hero-actions">
+
+            <button
+              class="primary-button"
+              id="heroOfferButton"
+              type="button"
+            >
+              Offer Your Skill
+            </button>
+
+            <button
+              class="secondary-button"
+              id="heroBrowseButton"
+              type="button"
+            >
+              Browse Skills
+            </button>
+
+          </div>
+
+        </div>
 
 
-      <div class="search-box">
+        <div class="hero-card">
 
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search a skill..."
-          autocomplete="off"
-        >
+          <div class="hero-card-top">
 
-        <button
-          class="search-button"
-          id="searchButton"
-        >
-          Search
-        </button>
+            <div class="hero-avatar">
+              G
+            </div>
+
+            <div>
+
+              <h3>
+                GoSkill Professional
+              </h3>
+
+              <p>
+                Ready to work with you
+              </p>
+
+            </div>
+
+          </div>
+
+          <div class="fake-price">
+
+            <span>
+              Skilled professionals
+            </span>
+
+            <strong>
+              ₹
+            </strong>
+
+          </div>
+
+          <p>
+            Search for developers, designers,
+            editors, musicians, tutors and more.
+          </p>
+
+        </div>
 
       </div>
 
     </div>
 
 
-    <section class="skills-section">
+    <div class="section">
 
-      <h2>Popular skills</h2>
+      <div class="section-title">
 
-      <div class="skill-grid">
+        <h2>
+          Popular skills
+        </h2>
 
-        <button
-          class="skill"
-          data-skill="Graphic Design"
-        >
-          Graphic Design
-        </button>
+        <p>
+          Find someone who can help.
+        </p>
+
+      </div>
+
+      <div class="skills-grid">
 
         <button
           class="skill"
           data-skill="Web Development"
+          type="button"
         >
           Web Development
         </button>
 
         <button
           class="skill"
+          data-skill="Graphic Design"
+          type="button"
+        >
+          Graphic Design
+        </button>
+
+        <button
+          class="skill"
           data-skill="Video Editing"
+          type="button"
         >
           Video Editing
         </button>
@@ -1147,6 +1211,7 @@ footer {
         <button
           class="skill"
           data-skill="Music Production"
+          type="button"
         >
           Music Production
         </button>
@@ -1154,61 +1219,56 @@ footer {
         <button
           class="skill"
           data-skill="Photography"
+          type="button"
         >
           Photography
         </button>
 
         <button
           class="skill"
-          data-skill="Writing"
+          data-skill="Content Writing"
+          type="button"
         >
-          Writing
+          Content Writing
+        </button>
+
+        <button
+          class="skill"
+          data-skill="Tutoring"
+          type="button"
+        >
+          Tutoring
         </button>
 
         <button
           class="skill"
           data-skill="Digital Marketing"
+          type="button"
         >
           Digital Marketing
         </button>
 
-        <button
-          class="skill"
-          data-skill="Programming"
-        >
-          Programming
-        </button>
-
       </div>
 
-    </section>
+    </div>
+
+  </div>
 
 
-    <section class="offer-section">
+  <footer class="footer">
 
-      <h2>
-        Have a skill?
-      </h2>
+    <div class="container footer-inner">
 
-      <p>
-        Create your GoSkill profile and let people
-        discover what you can do.
-      </p>
+      <div>
+        © 2026 GoSkill
+      </div>
 
-      <button
-        class="primary-button"
-        id="offerButton"
-      >
-        Offer Your Skill
-      </button>
+      <div>
+        Find skills. Offer skills. Grow together.
+      </div>
 
-    </section>
+    </div>
 
-  </main>
-
-
-  <footer>
-    © 2026 GoSkill
   </footer>
 
 </section>
@@ -1223,20 +1283,23 @@ footer {
   id="loginPage"
 >
 
-  <div class="auth-container">
+  <div class="auth-wrapper">
 
     <div class="auth-card">
 
-      <h2>Welcome back</h2>
+      <h1>
+        Welcome back
+      </h1>
 
-      <p>
-        Login to your GoSkill account.
+      <p style="color:var(--muted);">
+        Log in to your GoSkill account.
       </p>
-
 
       <div class="form-group">
 
-        <label>Email</label>
+        <label>
+          Email
+        </label>
 
         <input
           id="loginEmail"
@@ -1246,10 +1309,11 @@ footer {
 
       </div>
 
-
       <div class="form-group">
 
-        <label>Password</label>
+        <label>
+          Password
+        </label>
 
         <input
           id="loginPassword"
@@ -1259,38 +1323,38 @@ footer {
 
       </div>
 
+      <div
+        class="form-message"
+        id="loginMessage"
+      ></div>
 
       <button
-        class="primary-button full-button"
+        class="primary-button"
         id="doLoginButton"
+        type="button"
+        style="width:100%;"
       >
         Login
       </button>
 
-
-      <div
-        class="status-message"
-        id="loginMessage"
-      ></div>
-
-
-      <p class="auth-switch">
+      <div class="form-footer">
 
         Don't have an account?
 
         <button
-          class="link-button"
           id="switchToSignup"
+          type="button"
         >
           Sign up
         </button>
 
-      </p>
-
+      </div>
 
       <button
-        class="back-button"
+        class="secondary-button"
         id="loginBackButton"
+        type="button"
+        style="width:100%;margin-top:18px;"
       >
         Back
       </button>
@@ -1311,20 +1375,23 @@ footer {
   id="signupPage"
 >
 
-  <div class="auth-container">
+  <div class="auth-wrapper">
 
     <div class="auth-card">
 
-      <h2>Create account</h2>
+      <h1>
+        Create account
+      </h1>
 
-      <p>
-        Join GoSkill and connect with people.
+      <p style="color:var(--muted);">
+        Join GoSkill.
       </p>
-
 
       <div class="form-group">
 
-        <label>Email</label>
+        <label>
+          Email
+        </label>
 
         <input
           id="signupEmail"
@@ -1334,10 +1401,11 @@ footer {
 
       </div>
 
-
       <div class="form-group">
 
-        <label>Password</label>
+        <label>
+          Password
+        </label>
 
         <input
           id="signupPassword"
@@ -1347,10 +1415,11 @@ footer {
 
       </div>
 
-
       <div class="form-group">
 
-        <label>Confirm password</label>
+        <label>
+          Confirm password
+        </label>
 
         <input
           id="signupPasswordConfirm"
@@ -1360,38 +1429,38 @@ footer {
 
       </div>
 
+      <div
+        class="form-message"
+        id="signupMessage"
+      ></div>
 
       <button
-        class="primary-button full-button"
+        class="primary-button"
         id="doSignupButton"
+        type="button"
+        style="width:100%;"
       >
         Create Account
       </button>
 
-
-      <div
-        class="status-message"
-        id="signupMessage"
-      ></div>
-
-
-      <p class="auth-switch">
+      <div class="form-footer">
 
         Already have an account?
 
         <button
-          class="link-button"
           id="switchToLogin"
+          type="button"
         >
           Login
         </button>
 
-      </p>
-
+      </div>
 
       <button
-        class="back-button"
+        class="secondary-button"
         id="signupBackButton"
+        type="button"
+        style="width:100%;margin-top:18px;"
       >
         Back
       </button>
@@ -1412,39 +1481,55 @@ footer {
   id="profilePage"
 >
 
-  <div class="form-container">
+  <div class="container form-page">
 
     <div class="form-card">
 
-      <h2>Offer your skill</h2>
+      <h1>
+        Offer your skill
+      </h1>
 
-      <p>
-        Create your public GoSkill profile.
+      <p style="color:var(--muted);">
+        Create your GoSkill professional profile.
       </p>
-
 
       <div class="avatar-upload">
 
         <div
-          class="avatar-preview"
+          class="avatar-preview avatar-placeholder"
           id="avatarPreview"
         >
           +
         </div>
 
-        <input
-          class="avatar-file"
-          type="file"
-          id="avatarInput"
-          accept="image/jpeg,image/png,image/webp"
-        >
+        <div>
+
+          <input
+            id="avatarInput"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+          >
+
+          <p
+            style="
+              color:var(--muted);
+              font-size:13px;
+              margin-bottom:0;
+            "
+          >
+            JPG, PNG or WebP. Maximum 5MB.
+          </p>
+
+        </div>
 
       </div>
 
 
       <div class="form-group">
 
-        <label>Your name</label>
+        <label>
+          Name
+        </label>
 
         <input
           id="name"
@@ -1457,12 +1542,14 @@ footer {
 
       <div class="form-group">
 
-        <label>Skill</label>
+        <label>
+          Skill
+        </label>
 
         <input
           id="skill"
           type="text"
-          placeholder="Example: Video Editing"
+          placeholder="Example: Web Development"
         >
 
       </div>
@@ -1470,7 +1557,9 @@ footer {
 
       <div class="form-group">
 
-        <label>Description</label>
+        <label>
+          Description
+        </label>
 
         <textarea
           id="description"
@@ -1482,7 +1571,9 @@ footer {
 
       <div class="form-group">
 
-        <label>Hourly price ₹</label>
+        <label>
+          Hourly price (₹)
+        </label>
 
         <input
           id="hourlyPrice"
@@ -1496,35 +1587,41 @@ footer {
 
       <div class="form-group">
 
-        <label>Project price ₹</label>
+        <label>
+          Project price (₹)
+        </label>
 
         <input
           id="projectPrice"
           type="number"
           min="0"
-          placeholder="Example: 3000"
+          placeholder="Example: 5000"
         >
 
       </div>
 
 
-      <button
-        class="primary-button full-button"
-        id="createProfileButton"
-      >
-        Create Profile
-      </button>
-
-
       <div
-        class="status-message"
+        class="form-message"
         id="profileMessage"
       ></div>
 
 
       <button
-        class="back-button"
+        class="primary-button"
+        id="createProfileButton"
+        type="button"
+        style="width:100%;"
+      >
+        Create Profile
+      </button>
+
+
+      <button
+        class="secondary-button"
         id="profileBackButton"
+        type="button"
+        style="width:100%;margin-top:12px;"
       >
         Back
       </button>
@@ -1545,15 +1642,29 @@ footer {
   id="resultsPage"
 >
 
-  <div class="results-container">
+  <div class="container results-page">
 
     <div class="results-header">
 
-      <h2>People you can hire</h2>
+      <div>
+
+        <h1>
+          Professionals
+        </h1>
+
+        <p
+          id="resultsSubtitle"
+          style="color:var(--muted);margin-bottom:0;"
+        >
+          Find the right person.
+        </p>
+
+      </div>
 
       <button
-        class="results-back"
+        class="secondary-button"
         id="resultsBackButton"
+        type="button"
       >
         Back
       </button>
@@ -1562,9 +1673,10 @@ footer {
 
 
     <div
-      class="profiles-list"
+      class="profiles-grid"
       id="profilesList"
-    ></div>
+    >
+    </div>
 
   </div>
 
@@ -1572,7 +1684,7 @@ footer {
 
 
 <!-- =======================================================
-     PROFILE DETAIL PAGE
+     DETAIL PAGE
 ======================================================= -->
 
 <section
@@ -1580,19 +1692,18 @@ footer {
   id="detailPage"
 >
 
-  <div class="detail-container">
-
-    <div
-      id="profileDetail"
-    ></div>
-
+  <div class="container detail-page">
 
     <button
-      class="back-button"
+      class="secondary-button"
       id="detailBackButton"
+      type="button"
+      style="margin-bottom:18px;"
     >
-      Back to results
+      ← Back to results
     </button>
+
+    <div id="profileDetail"></div>
 
   </div>
 
@@ -1608,25 +1719,41 @@ footer {
   id="requestsPage"
 >
 
-  <div class="requests-container">
+  <div class="container requests-page">
 
     <div class="requests-header">
 
-      <h2>Hire Requests</h2>
+      <div>
+
+        <h1>
+          Requests
+        </h1>
+
+        <p style="color:var(--muted);">
+          Project requests sent to you.
+        </p>
+
+      </div>
 
       <button
-        class="results-back"
+        class="secondary-button"
         id="requestsBackButton"
+        type="button"
       >
-        Back
+        Home
       </button>
 
     </div>
 
 
     <div
+      class="requests-list"
       id="requestsList"
-    ></div>
+    >
+      <p style="color:var(--muted);">
+        Loading requests...
+      </p>
+    </div>
 
   </div>
 
@@ -1634,7 +1761,7 @@ footer {
 
 
 <!-- =======================================================
-     CONTACT MODAL
+     CONTACT / HIRE MODAL
 ======================================================= -->
 
 <div
@@ -1646,11 +1773,23 @@ footer {
 
     <div class="modal-header">
 
-      <h3>Contact / Hire</h3>
+      <div>
+
+        <h2>
+          Send project request
+        </h2>
+
+        <p
+          id="contactSubtitle"
+          style="color:var(--muted);"
+        ></p>
+
+      </div>
 
       <button
-        class="close-modal"
+        class="close-button"
         id="closeContactModal"
+        type="button"
       >
         ×
       </button>
@@ -1658,15 +1797,11 @@ footer {
     </div>
 
 
-    <p
-      class="modal-subtitle"
-      id="contactSubtitle"
-    ></p>
-
-
     <div class="form-group">
 
-      <label>Your name</label>
+      <label>
+        Your name
+      </label>
 
       <input
         id="contactName"
@@ -1679,7 +1814,9 @@ footer {
 
     <div class="form-group">
 
-      <label>Your email</label>
+      <label>
+        Your email
+      </label>
 
       <input
         id="contactEmail"
@@ -1692,28 +1829,32 @@ footer {
 
     <div class="form-group">
 
-      <label>Project request</label>
+      <label>
+        Project details
+      </label>
 
       <textarea
         id="contactMessage"
-        placeholder="Describe what you need..."
+        placeholder="Tell the professional what you need..."
       ></textarea>
 
     </div>
 
 
+    <div
+      class="form-message"
+      id="contactStatus"
+    ></div>
+
+
     <button
-      class="primary-button full-button"
+      class="primary-button"
       id="sendContactButton"
+      type="button"
+      style="width:100%;"
     >
       Send Request
     </button>
-
-
-    <div
-      class="status-message"
-      id="contactStatus"
-    ></div>
 
   </div>
 
@@ -1723,7 +1864,7 @@ footer {
 <script>
 
 /* =========================================================
-   SUPABASE
+   SUPABASE CONFIGURATION
 ========================================================= */
 
 const SUPABASE_URL =
@@ -1743,7 +1884,6 @@ const HIRE_FUNCTION_URL =
 
 let currentUser = null;
 let accessToken = null;
-
 let selectedAvatarFile = null;
 let selectedProfile = null;
 
@@ -1762,19 +1902,21 @@ function showPage(pageId) {
 
     });
 
-
   const page =
     document.getElementById(pageId);
 
-
   if (page) {
-
     page.classList.add("active");
-
   }
 
+  document
+    .getElementById("mainNav")
+    .classList.remove("open");
 
-  window.scrollTo(0, 0);
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
 }
 
 
@@ -1793,7 +1935,6 @@ function updateAuthUI() {
   const userEmail =
     document.getElementById("userEmail");
 
-
   if (currentUser) {
 
     authButtons.style.display = "none";
@@ -1803,18 +1944,14 @@ function updateAuthUI() {
     userEmail.textContent =
       currentUser.email || "";
 
-  }
-
-  else {
+  } else {
 
     authButtons.style.display = "flex";
 
     userArea.style.display = "none";
 
     userEmail.textContent = "";
-
   }
-
 }
 
 
@@ -1830,18 +1967,15 @@ async function signUp() {
       .value
       .trim();
 
-
   const password =
     document
       .getElementById("signupPassword")
       .value;
 
-
   const confirmPassword =
     document
       .getElementById("signupPasswordConfirm")
       .value;
-
 
   const message =
     document.getElementById("signupMessage");
@@ -1885,35 +2019,27 @@ async function signUp() {
         SUPABASE_URL +
         "/auth/v1/signup",
         {
-
           method: "POST",
 
           headers: {
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
           },
 
           body: JSON.stringify({
 
-            email:
-              email,
+            email: email,
 
-            password:
-              password,
+            password: password,
 
             options: {
 
               emailRedirectTo:
-                window.location.origin +
-                "/"
+                "https://goskill-nine.vercel.app/"
 
             }
 
           })
-
         }
       );
 
@@ -1942,35 +2068,24 @@ async function signUp() {
       currentUser =
         data.user;
 
-      saveSession();
-
       updateAuthUI();
 
       showPage("homePage");
 
-    }
-
-    else {
+    } else {
 
       message.textContent =
         "Account created. Check your email to confirm your account.";
-
     }
 
-  }
 
-  catch (error) {
+  } catch (error) {
 
-    console.error(
-      "Signup error:",
-      error
-    );
+    console.error(error);
 
     message.textContent =
       "Connection error. Please try again.";
-
   }
-
 }
 
 
@@ -1986,12 +2101,10 @@ async function login() {
       .value
       .trim();
 
-
   const password =
     document
       .getElementById("loginPassword")
       .value;
-
 
   const message =
     document.getElementById("loginMessage");
@@ -2017,29 +2130,17 @@ async function login() {
         SUPABASE_URL +
         "/auth/v1/token?grant_type=password",
         {
-
           method: "POST",
 
           headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY
-
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
           },
 
           body: JSON.stringify({
-
-            email:
-              email,
-
-            password:
-              password
-
+            email: email,
+            password: password
           })
-
         }
       );
 
@@ -2066,109 +2167,29 @@ async function login() {
       data.user;
 
 
-    saveSession();
+    localStorage.setItem(
+      "goskill_access_token",
+      accessToken
+    );
+
+    localStorage.setItem(
+      "goskill_user",
+      JSON.stringify(currentUser)
+    );
+
 
     updateAuthUI();
 
     showPage("homePage");
 
-  }
 
-  catch (error) {
+  } catch (error) {
 
-    console.error(
-      "Login error:",
-      error
-    );
+    console.error(error);
 
     message.textContent =
       "Connection error. Please try again.";
-
   }
-
-}
-
-
-/* =========================================================
-   SESSION
-========================================================= */
-
-function saveSession() {
-
-  if (!currentUser || !accessToken) {
-    return;
-  }
-
-
-  localStorage.setItem(
-    "goskill_access_token",
-    accessToken
-  );
-
-
-  localStorage.setItem(
-    "goskill_user",
-    JSON.stringify(currentUser)
-  );
-
-}
-
-
-function restoreSession() {
-
-  const token =
-    localStorage.getItem(
-      "goskill_access_token"
-    );
-
-
-  const user =
-    localStorage.getItem(
-      "goskill_user"
-    );
-
-
-  if (!token || !user) {
-    return;
-  }
-
-
-  try {
-
-    accessToken =
-      token;
-
-    currentUser =
-      JSON.parse(user);
-
-    updateAuthUI();
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "Session restore error:",
-      error
-    );
-
-    clearSession();
-
-  }
-
-}
-
-
-function clearSession() {
-
-  localStorage.removeItem(
-    "goskill_access_token"
-  );
-
-  localStorage.removeItem(
-    "goskill_user"
-  );
-
 }
 
 
@@ -2179,22 +2200,72 @@ function clearSession() {
 function logout() {
 
   currentUser = null;
+
   accessToken = null;
 
   selectedAvatarFile = null;
-  selectedProfile = null;
 
-  clearSession();
+  localStorage.removeItem(
+    "goskill_access_token"
+  );
+
+  localStorage.removeItem(
+    "goskill_user"
+  );
 
   updateAuthUI();
 
   showPage("homePage");
-
 }
 
 
 /* =========================================================
-   AVATAR
+   RESTORE SESSION
+========================================================= */
+
+function restoreSession() {
+
+  try {
+
+    const savedToken =
+      localStorage.getItem(
+        "goskill_access_token"
+      );
+
+    const savedUser =
+      localStorage.getItem(
+        "goskill_user"
+      );
+
+
+    if (savedToken && savedUser) {
+
+      accessToken =
+        savedToken;
+
+      currentUser =
+        JSON.parse(savedUser);
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Session restore error:",
+      error
+    );
+
+    currentUser = null;
+    accessToken = null;
+  }
+
+
+  updateAuthUI();
+}
+
+
+/* =========================================================
+   AVATAR INPUT
 ========================================================= */
 
 document
@@ -2205,7 +2276,6 @@ document
 
       const file =
         event.target.files[0];
-
 
       const preview =
         document.getElementById(
@@ -2218,20 +2288,15 @@ document
       }
 
 
-      if (
-        file.size >
-        5 * 1024 * 1024
-      ) {
+      if (file.size > 5 * 1024 * 1024) {
 
         alert(
           "Please choose an image smaller than 5MB."
         );
 
-        event.target.value =
-          "";
+        event.target.value = "";
 
-        selectedAvatarFile =
-          null;
+        selectedAvatarFile = null;
 
         return;
       }
@@ -2249,11 +2314,9 @@ document
           "Please choose a JPG, PNG or WebP image."
         );
 
-        event.target.value =
-          "";
+        event.target.value = "";
 
-        selectedAvatarFile =
-          null;
+        selectedAvatarFile = null;
 
         return;
       }
@@ -2270,8 +2333,10 @@ document
       reader.onload =
         function(e) {
 
-          preview.innerHTML =
-            "";
+          preview.className =
+            "avatar-preview";
+
+          preview.innerHTML = "";
 
           preview.style.backgroundImage =
             "url('" +
@@ -2283,7 +2348,6 @@ document
 
           preview.style.backgroundPosition =
             "center";
-
         };
 
 
@@ -2306,7 +2370,6 @@ async function uploadAvatar() {
   ) {
 
     return null;
-
   }
 
 
@@ -2331,13 +2394,10 @@ async function uploadAvatar() {
 
   const response =
     await fetch(
-
       SUPABASE_URL +
       "/storage/v1/object/avatars/" +
       filePath,
-
       {
-
         method: "POST",
 
         headers: {
@@ -2354,14 +2414,10 @@ async function uploadAvatar() {
 
           "x-upsert":
             "true"
-
         },
 
-        body:
-          file
-
+        body: file
       }
-
     );
 
 
@@ -2378,7 +2434,6 @@ async function uploadAvatar() {
     throw new Error(
       "Could not upload profile photo."
     );
-
   }
 
 
@@ -2387,7 +2442,6 @@ async function uploadAvatar() {
     "/storage/v1/object/public/avatars/" +
     filePath
   );
-
 }
 
 
@@ -2397,7 +2451,7 @@ async function uploadAvatar() {
 
 async function createProfile() {
 
-  if (!currentUser) {
+  if (!currentUser || !accessToken) {
 
     alert(
       "Please log in before creating a profile."
@@ -2406,7 +2460,6 @@ async function createProfile() {
     showPage("loginPage");
 
     return;
-
   }
 
 
@@ -2416,13 +2469,11 @@ async function createProfile() {
       .value
       .trim();
 
-
   const skill =
     document
       .getElementById("skill")
       .value
       .trim();
-
 
   const description =
     document
@@ -2430,18 +2481,15 @@ async function createProfile() {
       .value
       .trim();
 
-
   const hourlyPrice =
     document
       .getElementById("hourlyPrice")
       .value;
 
-
   const projectPrice =
     document
       .getElementById("projectPrice")
       .value;
-
 
   const message =
     document.getElementById(
@@ -2455,7 +2503,6 @@ async function createProfile() {
       "Please enter your name and skill.";
 
     return;
-
   }
 
 
@@ -2465,8 +2512,7 @@ async function createProfile() {
 
   try {
 
-    let avatarUrl =
-      null;
+    let avatarUrl = null;
 
 
     if (selectedAvatarFile) {
@@ -2474,10 +2520,8 @@ async function createProfile() {
       message.textContent =
         "Uploading profile photo...";
 
-
       avatarUrl =
         await uploadAvatar();
-
     }
 
 
@@ -2487,12 +2531,9 @@ async function createProfile() {
 
     const response =
       await fetch(
-
         SUPABASE_URL +
         "/rest/v1/profiles",
-
         {
-
           method: "POST",
 
           headers: {
@@ -2509,44 +2550,37 @@ async function createProfile() {
 
             "Prefer":
               "return=minimal"
-
           },
 
-          body:
-            JSON.stringify({
+          body: JSON.stringify({
 
-              name:
-                name,
+            name: name,
 
-              skill:
-                skill,
+            skill: skill,
 
-              description:
-                description,
+            description: description,
 
-              hourly_price:
-                hourlyPrice
-                  ? Number(hourlyPrice)
-                  : null,
+            hourly_price:
+              hourlyPrice
+                ? Number(hourlyPrice)
+                : null,
 
-              project_price:
-                projectPrice
-                  ? Number(projectPrice)
-                  : null,
+            project_price:
+              projectPrice
+                ? Number(projectPrice)
+                : null,
 
-              user_id:
-                currentUser.id,
+            user_id:
+              currentUser.id,
 
-              avatar_url:
-                avatarUrl,
+            avatar_url:
+              avatarUrl,
 
-              created_at:
-                new Date().toISOString()
+            created_at:
+              new Date().toISOString()
 
-            })
-
+          })
         }
-
       );
 
 
@@ -2561,10 +2595,9 @@ async function createProfile() {
       );
 
       message.textContent =
-        "Could not save profile.";
+        "Could not save profile. Check your database policies.";
 
       return;
-
     }
 
 
@@ -2576,34 +2609,28 @@ async function createProfile() {
       .getElementById("name")
       .value = "";
 
-
     document
       .getElementById("skill")
       .value = "";
-
 
     document
       .getElementById("description")
       .value = "";
 
-
     document
       .getElementById("hourlyPrice")
       .value = "";
 
-
     document
       .getElementById("projectPrice")
       .value = "";
-
 
     document
       .getElementById("avatarInput")
       .value = "";
 
 
-    selectedAvatarFile =
-      null;
+    selectedAvatarFile = null;
 
 
     const preview =
@@ -2612,28 +2639,34 @@ async function createProfile() {
       );
 
 
+    preview.className =
+      "avatar-preview avatar-placeholder";
+
     preview.style.backgroundImage =
       "none";
-
 
     preview.innerHTML =
       "+";
 
-  }
 
-  catch (error) {
+    setTimeout(
+      function() {
 
-    console.error(
-      "Profile connection error:",
-      error
+        message.textContent = "";
+
+      },
+      3000
     );
+
+
+  } catch (error) {
+
+    console.error(error);
 
     message.textContent =
       error.message ||
       "Connection error. Please try again.";
-
   }
-
 }
 
 
@@ -2643,10 +2676,13 @@ async function createProfile() {
 
 async function searchSkill(skill) {
 
+  skill =
+    (skill || "").trim();
+
+
   if (!skill) {
 
     return;
-
   }
 
 
@@ -2659,6 +2695,17 @@ async function searchSkill(skill) {
     );
 
 
+  const subtitle =
+    document.getElementById(
+      "resultsSubtitle"
+    );
+
+
+  subtitle.textContent =
+    "Showing professionals for: " +
+    skill;
+
+
   list.innerHTML =
     "<p>Searching...</p>";
 
@@ -2669,21 +2716,16 @@ async function searchSkill(skill) {
       SUPABASE_URL +
       "/rest/v1/profiles?select=*&skill=ilike." +
       encodeURIComponent(
-        "*" +
-        skill +
-        "*"
-      );
+        "*" + skill + "*"
+      ) +
+      "&order=created_at.desc";
 
 
     const response =
       await fetch(
-
         url,
-
         {
-
-          method:
-            "GET",
+          method: "GET",
 
           headers: {
 
@@ -2695,9 +2737,7 @@ async function searchSkill(skill) {
               SUPABASE_KEY
 
           }
-
         }
-
       );
 
 
@@ -2715,7 +2755,6 @@ async function searchSkill(skill) {
         "<p>Could not load profiles.</p>";
 
       return;
-
     }
 
 
@@ -2727,20 +2766,14 @@ async function searchSkill(skill) {
       profiles
     );
 
-  }
 
-  catch (error) {
+  } catch (error) {
 
-    console.error(
-      "Search connection error:",
-      error
-    );
+    console.error(error);
 
     list.innerHTML =
       "<p>Could not load profiles.</p>";
-
   }
-
 }
 
 
@@ -2762,15 +2795,29 @@ function displayProfiles(profiles) {
   ) {
 
     list.innerHTML =
-      "<p>No profiles found yet.</p>";
+      `
+        <div
+          style="
+            grid-column:1/-1;
+            background:white;
+            border:1px solid var(--border);
+            border-radius:18px;
+            padding:30px;
+            text-align:center;
+          "
+        >
+          <h3>No professionals found</h3>
+          <p style="color:var(--muted);">
+            Try searching for another skill.
+          </p>
+        </div>
+      `;
 
     return;
-
   }
 
 
-  list.innerHTML =
-    "";
+  list.innerHTML = "";
 
 
   profiles.forEach(
@@ -2821,9 +2868,7 @@ function displayProfiles(profiles) {
           image
         );
 
-      }
-
-      else {
+      } else {
 
         avatar.textContent =
           profile.name
@@ -2831,7 +2876,6 @@ function displayProfiles(profiles) {
                 .charAt(0)
                 .toUpperCase()
             : "?";
-
       }
 
 
@@ -2850,8 +2894,7 @@ function displayProfiles(profiles) {
         "profile-name";
 
       name.textContent =
-        profile.name ||
-        "";
+        profile.name || "";
 
 
       const skill =
@@ -2863,8 +2906,7 @@ function displayProfiles(profiles) {
         "profile-skill";
 
       skill.textContent =
-        profile.skill ||
-        "";
+        profile.skill || "";
 
 
       info.appendChild(
@@ -2937,7 +2979,6 @@ function displayProfiles(profiles) {
         prices.appendChild(
           hourly
         );
-
       }
 
 
@@ -2962,7 +3003,6 @@ function displayProfiles(profiles) {
         prices.appendChild(
           project
         );
-
       }
 
 
@@ -2974,11 +3014,8 @@ function displayProfiles(profiles) {
       verified.className =
         "verified-text";
 
-      verified.style.marginTop =
-        "12px";
-
       verified.textContent =
-        "GoSkill member";
+        "✓ GoSkill member";
 
 
       const viewButton =
@@ -3039,7 +3076,6 @@ function displayProfiles(profiles) {
 
     }
   );
-
 }
 
 
@@ -3047,7 +3083,9 @@ function displayProfiles(profiles) {
    PROFILE DETAIL
 ========================================================= */
 
-function openProfileDetail(profile) {
+function openProfileDetail(
+  profile
+) {
 
   selectedProfile =
     profile;
@@ -3059,8 +3097,7 @@ function openProfileDetail(profile) {
     );
 
 
-  detail.innerHTML =
-    "";
+  detail.innerHTML = "";
 
 
   const card =
@@ -3099,9 +3136,7 @@ function openProfileDetail(profile) {
       image
     );
 
-  }
-
-  else {
+  } else {
 
     avatar.textContent =
       profile.name
@@ -3109,7 +3144,6 @@ function openProfileDetail(profile) {
             .charAt(0)
             .toUpperCase()
         : "?";
-
   }
 
 
@@ -3175,20 +3209,14 @@ function openProfileDetail(profile) {
       "detail-price";
 
     hourly.innerHTML =
-      "<span class=\"detail-price-label\">" +
-      "Hourly" +
-      "</span>" +
-
-      "<span class=\"detail-price-value\">" +
-      "₹" +
+      "<span class='detail-price-label'>Hourly</span>" +
+      "<span class='detail-price-value'>₹" +
       profile.hourly_price +
-      "/hr" +
-      "</span>";
+      "/hr</span>";
 
     prices.appendChild(
       hourly
     );
-
   }
 
 
@@ -3206,19 +3234,14 @@ function openProfileDetail(profile) {
       "detail-price";
 
     project.innerHTML =
-      "<span class=\"detail-price-label\">" +
-      "Project" +
-      "</span>" +
-
-      "<span class=\"detail-price-value\">" +
-      "₹" +
+      "<span class='detail-price-label'>Project</span>" +
+      "<span class='detail-price-value'>₹" +
       profile.project_price +
       "</span>";
 
     prices.appendChild(
       project
     );
-
   }
 
 
@@ -3248,6 +3271,9 @@ function openProfileDetail(profile) {
   hireButton.style.marginTop =
     "20px";
 
+  hireButton.style.width =
+    "100%";
+
   hireButton.textContent =
     "Contact / Hire";
 
@@ -3265,9 +3291,7 @@ function openProfileDetail(profile) {
         );
 
         return;
-
       }
-
 
       openContactModal(
         profile
@@ -3314,7 +3338,6 @@ function openProfileDetail(profile) {
   showPage(
     "detailPage"
   );
-
 }
 
 
@@ -3322,7 +3345,9 @@ function openProfileDetail(profile) {
    CONTACT MODAL
 ========================================================= */
 
-function openContactModal(profile) {
+function openContactModal(
+  profile
+) {
 
   selectedProfile =
     profile;
@@ -3351,8 +3376,7 @@ function openContactModal(profile) {
 
   document.getElementById(
     "contactStatus"
-  ).textContent =
-    "";
+  ).textContent = "";
 
 
   const contactEmail =
@@ -3368,19 +3392,34 @@ function openContactModal(profile) {
 
     contactEmail.value =
       currentUser.email;
+  }
 
+
+  const contactName =
+    document.getElementById(
+      "contactName"
+    );
+
+
+  if (
+    currentUser &&
+    currentUser.user_metadata &&
+    currentUser.user_metadata.name
+  ) {
+
+    contactName.value =
+      currentUser.user_metadata.name;
   }
 
 
   modal.classList.add(
     "active"
   );
-
 }
 
 
 /* =========================================================
-   CLOSE MODAL
+   CLOSE CONTACT MODAL
 ========================================================= */
 
 function closeContactModal() {
@@ -3392,12 +3431,11 @@ function closeContactModal() {
     .classList.remove(
       "active"
     );
-
 }
 
 
 /* =========================================================
-   SEND CONTACT REQUEST
+   SEND HIRE REQUEST
 ========================================================= */
 
 async function sendContactRequest() {
@@ -3410,7 +3448,6 @@ async function sendContactRequest() {
       .value
       .trim();
 
-
   const email =
     document
       .getElementById(
@@ -3418,7 +3455,6 @@ async function sendContactRequest() {
       )
       .value
       .trim();
-
 
   const message =
     document
@@ -3428,10 +3464,14 @@ async function sendContactRequest() {
       .value
       .trim();
 
-
   const status =
     document.getElementById(
       "contactStatus"
+    );
+
+  const sendButton =
+    document.getElementById(
+      "sendContactButton"
     );
 
 
@@ -3441,17 +3481,19 @@ async function sendContactRequest() {
       "Please log in before sending a request.";
 
     return;
-
   }
 
 
-  if (!name || !email || !message) {
+  if (
+    !name ||
+    !email ||
+    !message
+  ) {
 
     status.textContent =
       "Please fill in all fields.";
 
     return;
-
   }
 
 
@@ -3461,14 +3503,16 @@ async function sendContactRequest() {
       "Profile information is unavailable.";
 
     return;
-
   }
 
 
-  const sendButton =
-    document.getElementById(
-      "sendContactButton"
-    );
+  if (!selectedProfile.id) {
+
+    status.textContent =
+      "This profile cannot receive requests.";
+
+    return;
+  }
 
 
   sendButton.disabled =
@@ -3476,7 +3520,6 @@ async function sendContactRequest() {
 
   sendButton.textContent =
     "Sending...";
-
 
   status.textContent =
     "Sending your request...";
@@ -3486,13 +3529,9 @@ async function sendContactRequest() {
 
     const response =
       await fetch(
-
         HIRE_FUNCTION_URL,
-
         {
-
-          method:
-            "POST",
+          method: "POST",
 
           headers: {
 
@@ -3503,30 +3542,30 @@ async function sendContactRequest() {
               SUPABASE_KEY,
 
             "Authorization":
-              "Bearer " +
               accessToken
+                ? "Bearer " +
+                  accessToken
+                : "Bearer " +
+                  SUPABASE_KEY
 
           },
 
-          body:
-            JSON.stringify({
+          body: JSON.stringify({
 
-              freelancer_id:
-                selectedProfile.id,
+            freelancer_id:
+              selectedProfile.id,
 
-              sender_name:
-                name,
+            sender_name:
+              name,
 
-              sender_email:
-                email,
+            sender_email:
+              email,
 
-              message:
-                message
+            message:
+              message
 
-            })
-
+          })
         }
-
       );
 
 
@@ -3537,9 +3576,7 @@ async function sendContactRequest() {
       data =
         await response.json();
 
-    }
-
-    catch {
+    } catch (error) {
 
       data = {};
 
@@ -3560,7 +3597,6 @@ async function sendContactRequest() {
         "Could not send the request. Please try again.";
 
       return;
-
     }
 
 
@@ -3573,12 +3609,9 @@ async function sendContactRequest() {
       ".";
 
 
-    document
-      .getElementById(
-        "contactMessage"
-      )
-      .value =
-      "";
+    document.getElementById(
+      "contactMessage"
+    ).value = "";
 
 
     setTimeout(
@@ -3586,16 +3619,12 @@ async function sendContactRequest() {
 
         closeContactModal();
 
-        status.textContent =
-          "";
-
       },
       1800
     );
 
-  }
 
-  catch (error) {
+  } catch (error) {
 
     console.error(
       "Hire request error:",
@@ -3605,37 +3634,22 @@ async function sendContactRequest() {
     status.textContent =
       "Connection error. Please try again.";
 
-  }
-
-  finally {
+  } finally {
 
     sendButton.disabled =
       false;
 
     sendButton.textContent =
       "Send Request";
-
   }
-
 }
 
 
 /* =========================================================
-   REQUESTS PAGE
+   LOAD REQUESTS
 ========================================================= */
 
 async function loadRequests() {
-
-  if (!currentUser) {
-
-    showPage(
-      "loginPage"
-    );
-
-    return;
-
-  }
-
 
   const list =
     document.getElementById(
@@ -3643,42 +3657,45 @@ async function loadRequests() {
     );
 
 
-  showPage(
-    "requestsPage"
-  );
+  if (!currentUser || !accessToken) {
+
+    list.innerHTML =
+      `
+        <div class="request-card">
+          <h3>Please log in</h3>
+          <p style="color:var(--muted);">
+            Log in to see your requests.
+          </p>
+        </div>
+      `;
+
+    return;
+  }
 
 
   list.innerHTML =
-    "<p>Loading requests...</p>";
+    "<p style='color:var(--muted);'>Loading requests...</p>";
 
 
   try {
 
     /*
-      Requests are fetched using the
-      logged-in user's email.
+      The requests table should contain
+      the freelancer/profile relationship.
 
-      This works with the common
-      hire_requests structure where
-      sender_email identifies the requester.
+      We first find the current user's
+      profile IDs.
     */
 
-    const url =
-      SUPABASE_URL +
-      "/rest/v1/hire_requests?select=*&sender_email=eq." +
-      encodeURIComponent(
-        currentUser.email
-      ) +
-      "&order=created_at.desc";
-
-
-    const response =
+    const profileResponse =
       await fetch(
-        url,
+        SUPABASE_URL +
+        "/rest/v1/profiles?select=id&user_id=eq." +
+        encodeURIComponent(
+          currentUser.id
+        ),
         {
-
-          method:
-            "GET",
+          method: "GET",
 
           headers: {
 
@@ -3690,7 +3707,88 @@ async function loadRequests() {
               accessToken
 
           }
+        }
+      );
 
+
+    if (!profileResponse.ok) {
+
+      throw new Error(
+        "Could not load profile."
+      );
+    }
+
+
+    const profiles =
+      await profileResponse.json();
+
+
+    if (
+      !profiles ||
+      profiles.length === 0
+    ) {
+
+      list.innerHTML =
+        `
+          <div class="request-card">
+            <h3>No professional profile yet</h3>
+            <p style="color:var(--muted);">
+              Create your professional profile first
+              to receive requests.
+            </p>
+          </div>
+        `;
+
+      return;
+    }
+
+
+    const profileIds =
+      profiles.map(
+        function(profile) {
+          return profile.id;
+        }
+      );
+
+
+    /*
+      Requests table.
+
+      This expects:
+      freelancer_id
+      sender_name
+      sender_email
+      message
+      status
+      created_at
+    */
+
+    const requestUrl =
+      SUPABASE_URL +
+      "/rest/v1/hire_requests" +
+      "?select=*" +
+      "&freelancer_id=in.(" +
+      profileIds.join(",") +
+      ")" +
+      "&order=created_at.desc";
+
+
+    const response =
+      await fetch(
+        requestUrl,
+        {
+          method: "GET",
+
+          headers: {
+
+            "apikey":
+              SUPABASE_KEY,
+
+            "Authorization":
+              "Bearer " +
+              accessToken
+
+          }
         }
       );
 
@@ -3706,10 +3804,16 @@ async function loadRequests() {
       );
 
       list.innerHTML =
-        "<p>Could not load requests.</p>";
+        `
+          <div class="request-card">
+            <h3>Could not load requests</h3>
+            <p style="color:var(--muted);">
+              ${escapeHtml(error)}
+            </p>
+          </div>
+        `;
 
       return;
-
     }
 
 
@@ -3721,20 +3825,24 @@ async function loadRequests() {
       requests
     );
 
-  }
 
-  catch (error) {
+  } catch (error) {
 
     console.error(
-      "Requests connection error:",
+      "Request loading error:",
       error
     );
 
     list.innerHTML =
-      "<p>Could not load requests.</p>";
-
+      `
+        <div class="request-card">
+          <h3>Could not load requests</h3>
+          <p style="color:var(--muted);">
+            ${escapeHtml(error.message)}
+          </p>
+        </div>
+      `;
   }
-
 }
 
 
@@ -3742,7 +3850,9 @@ async function loadRequests() {
    DISPLAY REQUESTS
 ========================================================= */
 
-function displayRequests(requests) {
+function displayRequests(
+  requests
+) {
 
   const list =
     document.getElementById(
@@ -3756,15 +3866,26 @@ function displayRequests(requests) {
   ) {
 
     list.innerHTML =
-      "<p>No hire requests yet.</p>";
+      `
+        <div class="request-card">
+
+          <h3>
+            No requests yet
+          </h3>
+
+          <p style="color:var(--muted);">
+            Project requests sent to your profile
+            will appear here.
+          </p>
+
+        </div>
+      `;
 
     return;
-
   }
 
 
-  list.innerHTML =
-    "";
+  list.innerHTML = "";
 
 
   requests.forEach(
@@ -3804,7 +3925,7 @@ function displayRequests(requests) {
 
       name.textContent =
         request.sender_name ||
-        "Unknown sender";
+        "GoSkill user";
 
 
       const email =
@@ -3839,7 +3960,7 @@ function displayRequests(requests) {
 
       status.textContent =
         request.status ||
-        "Sent";
+        "New";
 
 
       top.appendChild(
@@ -3872,26 +3993,12 @@ function displayRequests(requests) {
       date.className =
         "request-date";
 
-
       if (request.created_at) {
 
-        const parsed =
-          new Date(
+        date.textContent =
+          formatDate(
             request.created_at
           );
-
-
-        if (
-          !Number.isNaN(
-            parsed.getTime()
-          )
-        ) {
-
-          date.textContent =
-            parsed.toLocaleString();
-
-        }
-
       }
 
 
@@ -3914,17 +4021,79 @@ function displayRequests(requests) {
 
     }
   );
-
 }
 
 
 /* =========================================================
-   BUTTON EVENTS
+   HELPERS
+========================================================= */
+
+function escapeHtml(
+  value
+) {
+
+  const div =
+    document.createElement(
+      "div"
+    );
+
+  div.textContent =
+    value || "";
+
+  return div.innerHTML;
+}
+
+
+function formatDate(
+  value
+) {
+
+  try {
+
+    return new Date(
+      value
+    ).toLocaleString(
+      undefined,
+      {
+        dateStyle: "medium",
+        timeStyle: "short"
+      }
+    );
+
+  } catch (error) {
+
+    return value;
+  }
+}
+
+
+/* =========================================================
+   NAVIGATION EVENTS
 ========================================================= */
 
 document
   .getElementById(
-    "logoButton"
+    "mobileMenuButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      document
+        .getElementById(
+          "mainNav"
+        )
+        .classList.toggle(
+          "open"
+        );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "homeNavButton"
   )
   .addEventListener(
     "click",
@@ -3932,6 +4101,76 @@ document
 
       showPage(
         "homePage"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "requestsNavButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!currentUser) {
+
+        showPage(
+          "loginPage"
+        );
+
+        return;
+      }
+
+      showPage(
+        "requestsPage"
+      );
+
+      loadRequests();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "requestsUserButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage(
+        "requestsPage"
+      );
+
+      loadRequests();
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "offerNavButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      if (!currentUser) {
+
+        showPage(
+          "loginPage"
+        );
+
+        return;
+      }
+
+      showPage(
+        "profilePage"
       );
 
     }
@@ -3977,32 +4216,6 @@ document
   .addEventListener(
     "click",
     logout
-  );
-
-
-document
-  .getElementById(
-    "requestsButton"
-  )
-  .addEventListener(
-    "click",
-    loadRequests
-  );
-
-
-document
-  .getElementById(
-    "requestsBackButton"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      showPage(
-        "homePage"
-      );
-
-    }
   );
 
 
@@ -4092,7 +4305,7 @@ document
 
 document
   .getElementById(
-    "offerButton"
+    "heroOfferButton"
   )
   .addEventListener(
     "click",
@@ -4105,13 +4318,29 @@ document
         );
 
         return;
-
       }
-
 
       showPage(
         "profilePage"
       );
+
+    }
+  );
+
+
+document
+  .getElementById(
+    "heroBrowseButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      document
+        .getElementById(
+          "searchInput"
+        )
+        .focus();
 
     }
   );
@@ -4167,6 +4396,22 @@ document
 
 document
   .getElementById(
+    "requestsBackButton"
+  )
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage(
+        "homePage"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById(
     "createProfileButton"
   )
   .addEventListener(
@@ -4174,6 +4419,10 @@ document
     createProfile
   );
 
+
+/* =========================================================
+   SEARCH EVENTS
+========================================================= */
 
 document
   .getElementById(
@@ -4190,7 +4439,6 @@ document
           )
           .value
           .trim();
-
 
       searchSkill(
         value
@@ -4215,9 +4463,8 @@ document
 
         event.preventDefault();
 
-
         searchSkill(
-          event.target.value.trim()
+          event.target.value
         );
 
       }
@@ -4247,6 +4494,10 @@ document
     }
   );
 
+
+/* =========================================================
+   CONTACT EVENTS
+========================================================= */
 
 document
   .getElementById(
@@ -4292,12 +4543,31 @@ document
 
 
 /* =========================================================
-   START
+   ESCAPE KEY
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  function(event) {
+
+    if (
+      event.key ===
+      "Escape"
+    ) {
+
+      closeContactModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   START APPLICATION
 ========================================================= */
 
 restoreSession();
-
-updateAuthUI();
 
 console.log(
   "GoSkill loaded successfully."
