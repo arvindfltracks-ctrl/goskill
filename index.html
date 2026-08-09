@@ -4,17 +4,11 @@
 
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GoSkill</title>
 
   <style>
-
-    @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap');
 
     * {
       box-sizing: border-box;
@@ -42,10 +36,10 @@
        ========================= */
 
     .logo-small {
-      font-family: "Sacramento", cursive;
-      font-size: 42px;
+      font-family: "DM Serif Display", Georgia, "Times New Roman", serif;
+      font-size: 34px;
       font-weight: 400;
-      letter-spacing: 0;
+      letter-spacing: -0.8px;
       color: #111111;
       line-height: 1;
     }
@@ -123,7 +117,6 @@
       font-size: 16px;
       outline: none;
       font-family: inherit;
-      transition: 0.2s ease;
     }
 
     .search:focus {
@@ -140,7 +133,6 @@
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
-      transition: 0.2s ease;
     }
 
     .search-button:hover {
@@ -173,7 +165,6 @@
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
-      transition: 0.2s ease;
     }
 
     .primary-button:hover {
@@ -250,7 +241,6 @@
       font-size: 16px;
       outline: none;
       font-family: inherit;
-      transition: 0.2s ease;
     }
 
     .field:focus {
@@ -295,31 +285,24 @@
        ========================= */
 
     .profile-card {
-      position: relative;
-      padding: 20px;
-      margin-bottom: 16px;
-      border: 1px solid #dddddd;
-      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 14px;
+      border: 1px solid #d5d5d5;
+      border-radius: 14px;
       background: #ffffff;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .profile-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .profile-top {
       display: flex;
       align-items: center;
-      gap: 13px;
-      margin-bottom: 16px;
+      gap: 12px;
+      margin-bottom: 14px;
     }
 
     .profile-avatar {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -327,27 +310,26 @@
       background: #111111;
       color: #ffffff;
       font-weight: 700;
-      font-size: 19px;
+      font-size: 18px;
       flex-shrink: 0;
     }
 
     .profile-name {
       font-size: 18px;
       font-weight: 700;
-      color: #111111;
     }
 
     .profile-skill {
-      margin-top: 4px;
+      margin-top: 3px;
       color: #666666;
       font-size: 14px;
     }
 
     .profile-description {
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       color: #444444;
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .price-row {
@@ -357,7 +339,7 @@
     }
 
     .price {
-      padding: 7px 11px;
+      padding: 7px 10px;
       border-radius: 8px;
       background: #eeeeee;
       color: #222222;
@@ -365,17 +347,7 @@
       font-weight: 600;
     }
 
-    .results-empty {
-      padding: 30px 15px;
-      text-align: center;
-      color: #666666;
-      border: 1px dashed #cccccc;
-      border-radius: 14px;
-      background: #fafafa;
-    }
-
   </style>
-
 </head>
 
 
@@ -383,13 +355,9 @@
 
 <div class="app">
 
-
   <!-- HOME -->
 
-  <section
-    id="homePage"
-    class="page active"
-  >
+  <section id="homePage" class="page active">
 
     <div class="top-bar">
 
@@ -397,45 +365,23 @@
         GoSkill
       </div>
 
-      <div
-        id="authButtons"
-        class="auth-buttons"
-      >
+      <div id="authButtons" class="auth-buttons">
 
-        <button
-          id="loginButton"
-          class="small-button"
-          type="button"
-        >
+        <button id="loginButton" class="small-button" type="button">
           Log In
         </button>
 
-        <button
-          id="signupButton"
-          class="small-button dark"
-          type="button"
-        >
+        <button id="signupButton" class="small-button dark" type="button">
           Sign Up
         </button>
 
       </div>
 
+      <div id="userArea" class="user-area">
 
-      <div
-        id="userArea"
-        class="user-area"
-      >
+        <span id="userEmail" class="user-email"></span>
 
-        <span
-          id="userEmail"
-          class="user-email"
-        ></span>
-
-        <button
-          id="logoutButton"
-          class="small-button dark"
-          type="button"
-        >
+        <button id="logoutButton" class="small-button dark" type="button">
           Log Out
         </button>
 
@@ -453,11 +399,7 @@
         placeholder="Search for a skill or profession..."
       >
 
-      <button
-        id="searchButton"
-        class="search-button"
-        type="button"
-      >
+      <button id="searchButton" class="search-button" type="button">
         Search
       </button>
 
@@ -471,35 +413,19 @@
 
     <div class="skills">
 
-      <button
-        class="skill"
-        type="button"
-        data-skill="Video Editor"
-      >
+      <button class="skill" type="button" data-skill="Video Editor">
         Video Editor
       </button>
 
-      <button
-        class="skill"
-        type="button"
-        data-skill="Graphic Designer"
-      >
+      <button class="skill" type="button" data-skill="Graphic Designer">
         Graphic Designer
       </button>
 
-      <button
-        class="skill"
-        type="button"
-        data-skill="Developer"
-      >
+      <button class="skill" type="button" data-skill="Developer">
         Developer
       </button>
 
-      <button
-        class="skill"
-        type="button"
-        data-skill="Photographer"
-      >
+      <button class="skill" type="button" data-skill="Photographer">
         Photographer
       </button>
 
@@ -511,11 +437,7 @@
     </p>
 
 
-    <button
-      id="offerButton"
-      class="primary-button"
-      type="button"
-    >
+    <button id="offerButton" class="primary-button" type="button">
       Offer Your Skill
     </button>
 
@@ -525,16 +447,9 @@
 
   <!-- LOGIN -->
 
-  <section
-    id="loginPage"
-    class="page"
-  >
+  <section id="loginPage" class="page">
 
-    <button
-      id="loginBackButton"
-      class="back"
-      type="button"
-    >
+    <button id="loginBackButton" class="back" type="button">
       ← Back
     </button>
 
@@ -558,28 +473,17 @@
       placeholder="Password"
     >
 
-    <button
-      id="doLoginButton"
-      class="primary-button"
-      type="button"
-    >
+    <button id="doLoginButton" class="primary-button" type="button">
       Log In
     </button>
 
-    <p
-      id="loginMessage"
-      class="message"
-    ></p>
+    <p id="loginMessage" class="message"></p>
 
     <div class="auth-switch">
 
       Don't have an account?
 
-      <button
-        id="switchToSignup"
-        class="text-button"
-        type="button"
-      >
+      <button id="switchToSignup" class="text-button" type="button">
         Sign Up
       </button>
 
@@ -591,16 +495,9 @@
 
   <!-- SIGN UP -->
 
-  <section
-    id="signupPage"
-    class="page"
-  >
+  <section id="signupPage" class="page">
 
-    <button
-      id="signupBackButton"
-      class="back"
-      type="button"
-    >
+    <button id="signupBackButton" class="back" type="button">
       ← Back
     </button>
 
@@ -631,28 +528,17 @@
       placeholder="Confirm password"
     >
 
-    <button
-      id="doSignupButton"
-      class="primary-button"
-      type="button"
-    >
+    <button id="doSignupButton" class="primary-button" type="button">
       Sign Up
     </button>
 
-    <p
-      id="signupMessage"
-      class="message"
-    ></p>
+    <p id="signupMessage" class="message"></p>
 
     <div class="auth-switch">
 
       Already have an account?
 
-      <button
-        id="switchToLogin"
-        class="text-button"
-        type="button"
-      >
+      <button id="switchToLogin" class="text-button" type="button">
         Log In
       </button>
 
@@ -664,16 +550,9 @@
 
   <!-- CREATE PROFILE -->
 
-  <section
-    id="profilePage"
-    class="page"
-  >
+  <section id="profilePage" class="page">
 
-    <button
-      id="profileBackButton"
-      class="back"
-      type="button"
-    >
+    <button id="profileBackButton" class="back" type="button">
       ← Back
     </button>
 
@@ -725,10 +604,7 @@
       Create Profile
     </button>
 
-    <p
-      id="profileMessage"
-      class="message"
-    ></p>
+    <p id="profileMessage" class="message"></p>
 
   </section>
 
@@ -736,16 +612,9 @@
 
   <!-- RESULTS -->
 
-  <section
-    id="resultsPage"
-    class="page"
-  >
+  <section id="resultsPage" class="page">
 
-    <button
-      id="resultsBackButton"
-      class="back"
-      type="button"
-    >
+    <button id="resultsBackButton" class="back" type="button">
       ← Back
     </button>
 
@@ -755,12 +624,9 @@
 
     <br>
 
-    <div
-      id="profilesList"
-    ></div>
+    <div id="profilesList"></div>
 
   </section>
-
 
 </div>
 
@@ -768,15 +634,12 @@
 
 <script>
 
-
 /* =========================
    SUPABASE
    ========================= */
 
-
 const SUPABASE_URL =
   "https://ffovbypaoltxuuycppgo.supabase.co";
-
 
 const SUPABASE_KEY =
   "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
@@ -786,31 +649,22 @@ const SUPABASE_KEY =
    PAGE NAVIGATION
    ========================= */
 
-
 function showPage(pageId) {
 
   document
     .querySelectorAll(".page")
     .forEach(function(page) {
-
       page.classList.remove("active");
-
     });
-
 
   const page =
     document.getElementById(pageId);
 
-
   if (page) {
-
     page.classList.add("active");
-
   }
 
-
   window.scrollTo(0, 0);
-
 }
 
 
@@ -818,9 +672,7 @@ function showPage(pageId) {
    AUTH STATE
    ========================= */
 
-
 let currentUser = null;
-
 let accessToken = null;
 
 
@@ -835,11 +687,9 @@ function updateAuthUI() {
   const userEmail =
     document.getElementById("userEmail");
 
-
   if (currentUser) {
 
     authButtons.style.display = "none";
-
     userArea.style.display = "flex";
 
     userEmail.textContent =
@@ -848,20 +698,16 @@ function updateAuthUI() {
   } else {
 
     authButtons.style.display = "flex";
-
     userArea.style.display = "none";
 
     userEmail.textContent = "";
-
   }
-
 }
 
 
 /* =========================
    SIGN UP
    ========================= */
-
 
 async function signUp() {
 
@@ -871,18 +717,15 @@ async function signUp() {
       .value
       .trim();
 
-
   const password =
     document
       .getElementById("signupPassword")
       .value;
 
-
   const confirmPassword =
     document
       .getElementById("signupPasswordConfirm")
       .value;
-
 
   const message =
     document.getElementById("signupMessage");
@@ -894,7 +737,6 @@ async function signUp() {
       "Please enter your email and password.";
 
     return;
-
   }
 
 
@@ -904,7 +746,6 @@ async function signUp() {
       "Passwords do not match.";
 
     return;
-
   }
 
 
@@ -914,7 +755,6 @@ async function signUp() {
       "Password must be at least 6 characters.";
 
     return;
-
   }
 
 
@@ -926,38 +766,27 @@ async function signUp() {
 
     const response =
       await fetch(
-        SUPABASE_URL +
-        "/auth/v1/signup",
+        SUPABASE_URL + "/auth/v1/signup",
         {
-
           method: "POST",
 
           headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY
-
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
           },
 
-          body:
-            JSON.stringify({
+          body: JSON.stringify({
 
-              email: email,
+            email: email,
 
-              password: password,
+            password: password,
 
-              options: {
+            options: {
+              emailRedirectTo:
+                "https://goskill-nine.vercel.app/"
+            }
 
-                emailRedirectTo:
-                  "https://goskill-nine.vercel.app/"
-
-              }
-
-            })
-
+          })
         }
       );
 
@@ -973,14 +802,13 @@ async function signUp() {
         data
       );
 
-
       message.textContent =
         data.message ||
         data.error_description ||
+        data.msg ||
         "Could not create account.";
 
       return;
-
     }
 
 
@@ -1000,7 +828,6 @@ async function signUp() {
 
       message.textContent =
         "Account created. Check your email to confirm your account.";
-
     }
 
 
@@ -1011,19 +838,15 @@ async function signUp() {
       error
     );
 
-
     message.textContent =
       "Connection error. Please try again.";
-
   }
-
 }
 
 
 /* =========================
    LOGIN
    ========================= */
-
 
 async function login() {
 
@@ -1033,12 +856,10 @@ async function login() {
       .value
       .trim();
 
-
   const password =
     document
       .getElementById("loginPassword")
       .value;
-
 
   const message =
     document.getElementById("loginMessage");
@@ -1050,7 +871,6 @@ async function login() {
       "Please enter your email and password.";
 
     return;
-
   }
 
 
@@ -1065,28 +885,17 @@ async function login() {
         SUPABASE_URL +
         "/auth/v1/token?grant_type=password",
         {
-
           method: "POST",
 
           headers: {
-
-            "Content-Type":
-              "application/json",
-
-            "apikey":
-              SUPABASE_KEY
-
+            "Content-Type": "application/json",
+            "apikey": SUPABASE_KEY
           },
 
-          body:
-            JSON.stringify({
-
-              email: email,
-
-              password: password
-
-            })
-
+          body: JSON.stringify({
+            email: email,
+            password: password
+          })
         }
       );
 
@@ -1102,27 +911,22 @@ async function login() {
         data
       );
 
-
       message.textContent =
         data.error_description ||
         data.msg ||
         "Invalid email or password.";
 
       return;
-
     }
 
 
     accessToken =
       data.access_token;
 
-
     currentUser =
       data.user;
 
-
     updateAuthUI();
-
 
     showPage("homePage");
 
@@ -1134,12 +938,9 @@ async function login() {
       error
     );
 
-
     message.textContent =
       "Connection error. Please try again.";
-
   }
-
 }
 
 
@@ -1147,24 +948,20 @@ async function login() {
    LOGOUT
    ========================= */
 
-
 function logout() {
 
   currentUser = null;
-
   accessToken = null;
 
   updateAuthUI();
 
   showPage("homePage");
-
 }
 
 
 /* =========================
    CREATE PROFILE
    ========================= */
-
 
 async function createProfile() {
 
@@ -1177,7 +974,6 @@ async function createProfile() {
     showPage("loginPage");
 
     return;
-
   }
 
 
@@ -1187,13 +983,11 @@ async function createProfile() {
       .value
       .trim();
 
-
   const skill =
     document
       .getElementById("skill")
       .value
       .trim();
-
 
   const description =
     document
@@ -1201,18 +995,15 @@ async function createProfile() {
       .value
       .trim();
 
-
   const hourlyPrice =
     document
       .getElementById("hourlyPrice")
       .value;
 
-
   const projectPrice =
     document
       .getElementById("projectPrice")
       .value;
-
 
   const message =
     document.getElementById(
@@ -1226,7 +1017,6 @@ async function createProfile() {
       "Please enter your name and skill.";
 
     return;
-
   }
 
 
@@ -1241,7 +1031,6 @@ async function createProfile() {
         SUPABASE_URL +
         "/rest/v1/profiles",
         {
-
           method: "POST",
 
           headers: {
@@ -1254,40 +1043,37 @@ async function createProfile() {
 
             "Authorization":
               "Bearer " +
-              SUPABASE_KEY,
+              accessToken,
 
             "Prefer":
               "return=minimal"
-
           },
 
-          body:
-            JSON.stringify({
+          body: JSON.stringify({
 
-              name: name,
+            name: name,
 
-              skill: skill,
+            skill: skill,
 
-              description: description,
+            description: description,
 
-              hourly_price:
-                hourlyPrice
-                  ? Number(hourlyPrice)
-                  : null,
+            hourly_price:
+              hourlyPrice
+                ? Number(hourlyPrice)
+                : null,
 
-              project_price:
-                projectPrice
-                  ? Number(projectPrice)
-                  : null,
+            project_price:
+              projectPrice
+                ? Number(projectPrice)
+                : null,
 
-              user_id:
-                currentUser.id,
+            user_id:
+              currentUser.id,
 
-              created_at:
-                new Date().toISOString()
+            created_at:
+              new Date().toISOString()
 
-            })
-
+          })
         }
       );
 
@@ -1297,18 +1083,15 @@ async function createProfile() {
       const error =
         await response.text();
 
-
       console.error(
         "Profile error:",
         error
       );
 
-
       message.textContent =
         "Could not save profile. Check the database settings.";
 
       return;
-
     }
 
 
@@ -1317,13 +1100,9 @@ async function createProfile() {
 
 
     document.getElementById("name").value = "";
-
     document.getElementById("skill").value = "";
-
     document.getElementById("description").value = "";
-
     document.getElementById("hourlyPrice").value = "";
-
     document.getElementById("projectPrice").value = "";
 
 
@@ -1334,19 +1113,15 @@ async function createProfile() {
       error
     );
 
-
     message.textContent =
       "Connection error. Please try again.";
-
   }
-
 }
 
 
 /* =========================
    SEARCH
    ========================= */
-
 
 async function searchSkill(skill) {
 
@@ -1380,7 +1155,6 @@ async function searchSkill(skill) {
       await fetch(
         url,
         {
-
           method: "GET",
 
           headers: {
@@ -1391,9 +1165,7 @@ async function searchSkill(skill) {
             "Authorization":
               "Bearer " +
               SUPABASE_KEY
-
           }
-
         }
       );
 
@@ -1403,18 +1175,15 @@ async function searchSkill(skill) {
       const error =
         await response.text();
 
-
       console.error(
         "Search error:",
         error
       );
 
-
       list.innerHTML =
         "<p>Could not load profiles.</p>";
 
       return;
-
     }
 
 
@@ -1432,19 +1201,15 @@ async function searchSkill(skill) {
       error
     );
 
-
     list.innerHTML =
       "<p>Could not load profiles.</p>";
-
   }
-
 }
 
 
 /* =========================
    DISPLAY PROFILES
    ========================= */
-
 
 function displayProfiles(profiles) {
 
@@ -1460,10 +1225,9 @@ function displayProfiles(profiles) {
   ) {
 
     list.innerHTML =
-      '<div class="results-empty">No profiles found yet.</div>';
+      "<p>No profiles found yet.</p>";
 
     return;
-
   }
 
 
@@ -1475,7 +1239,6 @@ function displayProfiles(profiles) {
     const card =
       document.createElement("div");
 
-
     card.className =
       "profile-card";
 
@@ -1483,14 +1246,12 @@ function displayProfiles(profiles) {
     const top =
       document.createElement("div");
 
-
     top.className =
       "profile-top";
 
 
     const avatar =
       document.createElement("div");
-
 
     avatar.className =
       "profile-avatar";
@@ -1511,10 +1272,8 @@ function displayProfiles(profiles) {
     const name =
       document.createElement("div");
 
-
     name.className =
       "profile-name";
-
 
     name.textContent =
       profile.name || "";
@@ -1523,31 +1282,25 @@ function displayProfiles(profiles) {
     const skill =
       document.createElement("div");
 
-
     skill.className =
       "profile-skill";
-
 
     skill.textContent =
       profile.skill || "";
 
 
     info.appendChild(name);
-
     info.appendChild(skill);
 
     top.appendChild(avatar);
-
     top.appendChild(info);
 
 
     const description =
       document.createElement("div");
 
-
     description.className =
       "profile-description";
-
 
     description.textContent =
       profile.description || "";
@@ -1556,82 +1309,63 @@ function displayProfiles(profiles) {
     const prices =
       document.createElement("div");
 
-
     prices.className =
       "price-row";
 
 
     if (
       profile.hourly_price !== null &&
-      profile.hourly_price !== undefined &&
-      profile.hourly_price !== ""
+      profile.hourly_price !== undefined
     ) {
 
       const hourly =
         document.createElement("div");
 
-
       hourly.className =
         "price";
-
 
       hourly.textContent =
         "₹" +
         profile.hourly_price +
         "/hr";
 
-
       prices.appendChild(hourly);
-
     }
 
 
     if (
       profile.project_price !== null &&
-      profile.project_price !== undefined &&
-      profile.project_price !== ""
+      profile.project_price !== undefined
     ) {
 
       const project =
         document.createElement("div");
 
-
       project.className =
         "price";
-
 
       project.textContent =
         "₹" +
         profile.project_price +
         " project";
 
-
       prices.appendChild(project);
-
     }
 
 
     card.appendChild(top);
-
-    if (profile.description) {
-      card.appendChild(description);
-    }
-
-    if (prices.children.length > 0) {
-      card.appendChild(prices);
-    }
+    card.appendChild(description);
+    card.appendChild(prices);
 
     list.appendChild(card);
 
   });
-
 }
 
 
 /* =========================
    BUTTON EVENTS
    ========================= */
-
 
 document
   .getElementById("loginButton")
@@ -1728,7 +1462,6 @@ document
         showPage("loginPage");
 
         return;
-
       }
 
       showPage("profilePage");
@@ -1777,9 +1510,7 @@ document
           .value
           .trim();
 
-
       searchSkill(value);
-
     }
   );
 
@@ -1797,9 +1528,7 @@ document
         searchSkill(
           event.target.value.trim()
         );
-
       }
-
     }
   );
 
@@ -1816,10 +1545,8 @@ document
           searchSkill(
             button.dataset.skill
           );
-
         }
       );
-
     }
   );
 
@@ -1828,9 +1555,7 @@ document
    START
    ========================= */
 
-
 updateAuthUI();
-
 
 console.log(
   "GoSkill loaded successfully."
