@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +31,7 @@
     }
 
     /* =========================
-       GOSKILL BRAND
+       BRAND
        ========================= */
 
     .logo-small {
@@ -171,8 +170,26 @@
       background: #333333;
     }
 
+    .secondary-button {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cccccc;
+      border-radius: 12px;
+      background: #ffffff;
+      color: #111111;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 10px;
+    }
+
+    .secondary-button:hover {
+      background: #f2f2f2;
+    }
+
     /* =========================
-       POPULAR SKILLS
+       SKILLS
        ========================= */
 
     .skills {
@@ -421,6 +438,165 @@
       font-size: 12px;
     }
 
+    .view-profile-button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: 1px solid #cccccc;
+      border-radius: 10px;
+      background: #ffffff;
+      color: #111111;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .view-profile-button:hover {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+    }
+
+    /* =========================
+       PROFILE DETAIL
+       ========================= */
+
+    .detail-card {
+      padding: 24px;
+      border: 1px solid #dddddd;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .detail-avatar {
+      width: 125px;
+      height: 125px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #111111;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    .detail-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-name {
+      text-align: center;
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    .detail-skill {
+      text-align: center;
+      color: #666666;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+
+    .detail-description {
+      margin-top: 22px;
+      color: #444444;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .detail-prices {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .detail-price {
+      flex: 1;
+      min-width: 120px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f2f2f2;
+      text-align: center;
+    }
+
+    .detail-price-label {
+      display: block;
+      color: #666666;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .detail-price-value {
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .contact-box {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 12px;
+      background: #f7f7f7;
+      color: #555555;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    /* =========================
+       MODAL
+       ========================= */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 1000;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      padding: 24px;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal h2 {
+      margin-bottom: 8px;
+    }
+
+    .modal-subtitle {
+      color: #666666;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    .modal-close {
+      float: right;
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+      cursor: pointer;
+      color: #555555;
+    }
+
   </style>
 </head>
 
@@ -518,7 +694,6 @@
   </section>
 
 
-
   <!-- LOGIN -->
 
   <section id="loginPage" class="page">
@@ -564,7 +739,6 @@
     </div>
 
   </section>
-
 
 
   <!-- SIGN UP -->
@@ -619,7 +793,6 @@
     </div>
 
   </section>
-
 
 
   <!-- CREATE PROFILE -->
@@ -706,7 +879,6 @@
   </section>
 
 
-
   <!-- RESULTS -->
 
   <section id="resultsPage" class="page">
@@ -725,8 +897,73 @@
 
   </section>
 
+
+  <!-- PROFILE DETAIL -->
+
+  <section id="detailPage" class="page">
+
+    <button id="detailBackButton" class="back" type="button">
+      ← Back
+    </button>
+
+    <div id="profileDetail"></div>
+
+  </section>
+
 </div>
 
+
+<!-- CONTACT MODAL -->
+
+<div id="contactModal" class="modal-overlay">
+
+  <div class="modal">
+
+    <button id="closeContactModal" class="modal-close" type="button">
+      ×
+    </button>
+
+    <h2>
+      Contact / Hire
+    </h2>
+
+    <p id="contactSubtitle" class="modal-subtitle">
+      Send a message about your project.
+    </p>
+
+    <input
+      id="contactName"
+      class="field"
+      type="text"
+      placeholder="Your name"
+    >
+
+    <input
+      id="contactEmail"
+      class="field"
+      type="email"
+      placeholder="Your email"
+    >
+
+    <textarea
+      id="contactMessage"
+      class="field"
+      placeholder="Tell them about your project..."
+    ></textarea>
+
+    <button
+      id="sendContactButton"
+      class="primary-button"
+      type="button"
+    >
+      Send Request
+    </button>
+
+    <p id="contactStatus" class="message"></p>
+
+  </div>
+
+</div>
 
 
 <script>
@@ -740,6 +977,16 @@ const SUPABASE_URL =
 
 const SUPABASE_KEY =
   "sb_publishable_SNuI9r78c55zT8EgryTK_A_bLrkpuUQ";
+
+
+/* =========================
+   STATE
+   ========================= */
+
+let currentUser = null;
+let accessToken = null;
+let selectedAvatarFile = null;
+let selectedProfile = null;
 
 
 /* =========================
@@ -763,15 +1010,6 @@ function showPage(pageId) {
 
   window.scrollTo(0, 0);
 }
-
-
-/* =========================
-   AUTH STATE
-   ========================= */
-
-let currentUser = null;
-let accessToken = null;
-let selectedAvatarFile = null;
 
 
 /* =========================
@@ -1709,15 +1947,344 @@ function displayProfiles(profiles) {
       "GoSkill member";
 
 
+    const viewButton =
+      document.createElement("button");
+
+    viewButton.className =
+      "view-profile-button";
+
+    viewButton.type =
+      "button";
+
+    viewButton.textContent =
+      "View Profile";
+
+
+    viewButton.addEventListener(
+      "click",
+      function() {
+        openProfileDetail(profile);
+      }
+    );
+
+
     card.appendChild(top);
     card.appendChild(divider);
     card.appendChild(description);
     card.appendChild(prices);
     card.appendChild(verified);
+    card.appendChild(viewButton);
 
     list.appendChild(card);
 
   });
+}
+
+
+/* =========================
+   PROFILE DETAIL
+   ========================= */
+
+function openProfileDetail(profile) {
+
+  selectedProfile =
+    profile;
+
+
+  const detail =
+    document.getElementById(
+      "profileDetail"
+    );
+
+
+  detail.innerHTML =
+    "";
+
+
+  const card =
+    document.createElement("div");
+
+  card.className =
+    "detail-card";
+
+
+  const avatar =
+    document.createElement("div");
+
+  avatar.className =
+    "detail-avatar";
+
+
+  if (profile.avatar_url) {
+
+    const image =
+      document.createElement("img");
+
+    image.src =
+      profile.avatar_url;
+
+    image.alt =
+      profile.name ||
+      "Profile photo";
+
+    avatar.appendChild(image);
+
+  } else {
+
+    avatar.textContent =
+      profile.name
+        ? profile.name
+            .charAt(0)
+            .toUpperCase()
+        : "?";
+  }
+
+
+  const name =
+    document.createElement("div");
+
+  name.className =
+    "detail-name";
+
+  name.textContent =
+    profile.name ||
+    "GoSkill Member";
+
+
+  const skill =
+    document.createElement("div");
+
+  skill.className =
+    "detail-skill";
+
+  skill.textContent =
+    profile.skill ||
+    "Professional";
+
+
+  const description =
+    document.createElement("div");
+
+  description.className =
+    "detail-description";
+
+  description.textContent =
+    profile.description ||
+    "This member has not added a description yet.";
+
+
+  const prices =
+    document.createElement("div");
+
+  prices.className =
+    "detail-prices";
+
+
+  if (
+    profile.hourly_price !== null &&
+    profile.hourly_price !== undefined
+  ) {
+
+    const hourly =
+      document.createElement("div");
+
+    hourly.className =
+      "detail-price";
+
+    hourly.innerHTML =
+      '<span class="detail-price-label">Hourly</span>' +
+      '<span class="detail-price-value">₹' +
+      profile.hourly_price +
+      '/hr</span>';
+
+    prices.appendChild(hourly);
+  }
+
+
+  if (
+    profile.project_price !== null &&
+    profile.project_price !== undefined
+  ) {
+
+    const project =
+      document.createElement("div");
+
+    project.className =
+      "detail-price";
+
+    project.innerHTML =
+      '<span class="detail-price-label">Project</span>' +
+      '<span class="detail-price-value">₹' +
+      profile.project_price +
+      '</span>';
+
+    prices.appendChild(project);
+  }
+
+
+  const contactBox =
+    document.createElement("div");
+
+  contactBox.className =
+    "contact-box";
+
+  contactBox.textContent =
+    "Interested in working with this professional? Send a project request through GoSkill.";
+
+
+  const hireButton =
+    document.createElement("button");
+
+  hireButton.className =
+    "primary-button";
+
+  hireButton.type =
+    "button";
+
+  hireButton.style.marginTop =
+    "20px";
+
+  hireButton.textContent =
+    "Contact / Hire";
+
+
+  hireButton.addEventListener(
+    "click",
+    function() {
+      openContactModal(profile);
+    }
+  );
+
+
+  card.appendChild(avatar);
+  card.appendChild(name);
+  card.appendChild(skill);
+  card.appendChild(description);
+  card.appendChild(prices);
+  card.appendChild(contactBox);
+  card.appendChild(hireButton);
+
+
+  detail.appendChild(card);
+
+
+  showPage("detailPage");
+}
+
+
+/* =========================
+   CONTACT MODAL
+   ========================= */
+
+function openContactModal(profile) {
+
+  selectedProfile =
+    profile;
+
+
+  const modal =
+    document.getElementById(
+      "contactModal"
+    );
+
+
+  const subtitle =
+    document.getElementById(
+      "contactSubtitle"
+    );
+
+
+  subtitle.textContent =
+    "Send a project request regarding " +
+    (profile.name || "this professional") +
+    ".";
+
+
+  document.getElementById(
+    "contactStatus"
+  ).textContent =
+    "";
+
+
+  modal.classList.add("active");
+}
+
+
+function closeContactModal() {
+
+  document
+    .getElementById("contactModal")
+    .classList.remove("active");
+}
+
+
+function sendContactRequest() {
+
+  const name =
+    document
+      .getElementById("contactName")
+      .value
+      .trim();
+
+  const email =
+    document
+      .getElementById("contactEmail")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("contactMessage")
+      .value
+      .trim();
+
+  const status =
+    document.getElementById(
+      "contactStatus"
+    );
+
+
+  if (!name || !email || !message) {
+
+    status.textContent =
+      "Please fill in all fields.";
+
+    return;
+  }
+
+
+  if (!selectedProfile) {
+
+    status.textContent =
+      "Profile information is unavailable.";
+
+    return;
+  }
+
+
+  status.textContent =
+    "Your request is ready to send.";
+
+
+  /*
+    At this stage the form validates the
+    project request locally.
+
+    The next marketplace step will connect
+    this form to a real GoSkill messaging
+    system in Supabase.
+  */
+
+
+  setTimeout(
+    function() {
+
+      status.textContent =
+        "Request prepared successfully.";
+
+    },
+    500
+  );
 }
 
 
@@ -1823,7 +2390,6 @@ document
       }
 
       showPage("profilePage");
-
     }
   );
 
@@ -1844,6 +2410,18 @@ document
     "click",
     function() {
       showPage("homePage");
+    }
+  );
+
+
+document
+  .getElementById("detailBackButton")
+  .addEventListener(
+    "click",
+    function() {
+
+      showPage("resultsPage");
+
     }
   );
 
@@ -1909,6 +2487,39 @@ document
   );
 
 
+document
+  .getElementById("closeContactModal")
+  .addEventListener(
+    "click",
+    closeContactModal
+  );
+
+
+document
+  .getElementById("sendContactButton")
+  .addEventListener(
+    "click",
+    sendContactRequest
+  );
+
+
+document
+  .getElementById("contactModal")
+  .addEventListener(
+    "click",
+    function(event) {
+
+      if (
+        event.target ===
+        document.getElementById("contactModal")
+      ) {
+
+        closeContactModal();
+      }
+    }
+  );
+
+
 /* =========================
    START
    ========================= */
@@ -1923,4 +2534,3 @@ console.log(
 
 </body>
 </html>
-```
