@@ -39,18 +39,19 @@
        ========================= */
 
     .logo-small {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 30px;
-      font-weight: 600;
-      letter-spacing: -0.8px;
+      font-family: "Honest", "Honest Script", "Brush Script MT", cursive;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: 0;
       color: #111111;
+      line-height: 1;
     }
 
     .top-bar {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .auth-buttons {
@@ -66,16 +67,17 @@
       color: #111111;
       cursor: pointer;
       font-family: inherit;
+      transition: 0.2s ease;
+    }
+
+    .small-button:hover {
+      background: #eeeeee;
     }
 
     .small-button.dark {
       background: #111111;
       color: #ffffff;
       border-color: #111111;
-    }
-
-    .small-button:hover {
-      background: #eeeeee;
     }
 
     .small-button.dark:hover {
@@ -104,7 +106,7 @@
     .search-container {
       display: flex;
       gap: 8px;
-      margin-bottom: 30px;
+      margin-bottom: 32px;
     }
 
     .search {
@@ -118,6 +120,7 @@
       font-size: 16px;
       outline: none;
       font-family: inherit;
+      transition: 0.2s ease;
     }
 
     .search:focus {
@@ -134,6 +137,7 @@
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
+      transition: 0.2s ease;
     }
 
     .search-button:hover {
@@ -166,6 +170,7 @@
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
+      transition: 0.2s ease;
     }
 
     .primary-button:hover {
@@ -192,11 +197,13 @@
       cursor: pointer;
       font-size: 15px;
       font-family: inherit;
+      transition: 0.2s ease;
     }
 
     .skill:hover {
       background: #111111;
       color: #ffffff;
+      border-color: #111111;
     }
 
     /* =========================
@@ -221,6 +228,10 @@
       font-family: inherit;
     }
 
+    .back:hover {
+      color: #111111;
+    }
+
     /* =========================
        INPUTS
        ========================= */
@@ -236,6 +247,7 @@
       font-size: 16px;
       outline: none;
       font-family: inherit;
+      transition: 0.2s ease;
     }
 
     .field:focus {
@@ -271,29 +283,40 @@
       font-family: inherit;
     }
 
+    .text-button:hover {
+      text-decoration: underline;
+    }
+
     /* =========================
        PROFILE CARDS
        ========================= */
 
     .profile-card {
-      padding: 18px;
-      margin-bottom: 14px;
-      border: 1px solid #d5d5d5;
-      border-radius: 14px;
+      position: relative;
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid #dddddd;
+      border-radius: 16px;
       background: #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.10);
     }
 
     .profile-top {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+      gap: 13px;
+      margin-bottom: 16px;
     }
 
     .profile-avatar {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -301,26 +324,27 @@
       background: #111111;
       color: #ffffff;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 19px;
       flex-shrink: 0;
     }
 
     .profile-name {
       font-size: 18px;
       font-weight: 700;
+      color: #111111;
     }
 
     .profile-skill {
-      margin-top: 3px;
+      margin-top: 4px;
       color: #666666;
       font-size: 14px;
     }
 
     .profile-description {
-      margin-bottom: 14px;
+      margin-bottom: 16px;
       color: #444444;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .price-row {
@@ -330,12 +354,21 @@
     }
 
     .price {
-      padding: 7px 10px;
+      padding: 7px 11px;
       border-radius: 8px;
       background: #eeeeee;
       color: #222222;
       font-size: 13px;
       font-weight: 600;
+    }
+
+    .results-empty {
+      padding: 30px 15px;
+      text-align: center;
+      color: #666666;
+      border: 1px dashed #cccccc;
+      border-radius: 14px;
+      background: #fafafa;
     }
 
   </style>
@@ -1424,7 +1457,7 @@ function displayProfiles(profiles) {
   ) {
 
     list.innerHTML =
-      "<p>No profiles found yet.</p>";
+      '<div class="results-empty">No profiles found yet.</div>';
 
     return;
 
@@ -1525,7 +1558,11 @@ function displayProfiles(profiles) {
       "price-row";
 
 
-    if (profile.hourly_price) {
+    if (
+      profile.hourly_price !== null &&
+      profile.hourly_price !== undefined &&
+      profile.hourly_price !== ""
+    ) {
 
       const hourly =
         document.createElement("div");
@@ -1546,7 +1583,11 @@ function displayProfiles(profiles) {
     }
 
 
-    if (profile.project_price) {
+    if (
+      profile.project_price !== null &&
+      profile.project_price !== undefined &&
+      profile.project_price !== ""
+    ) {
 
       const project =
         document.createElement("div");
@@ -1569,9 +1610,13 @@ function displayProfiles(profiles) {
 
     card.appendChild(top);
 
-    card.appendChild(description);
+    if (profile.description) {
+      card.appendChild(description);
+    }
 
-    card.appendChild(prices);
+    if (prices.children.length > 0) {
+      card.appendChild(prices);
+    }
 
     list.appendChild(card);
 
